@@ -1,27 +1,58 @@
-# DigitalBankingWeb
+# digital-banking-web
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.13.
+Angular workspace for the customer-facing web frontends: Bank of America **Online Banking**
+(`retail-banking`) and Merrill **Wealth Management** (`wealth-portal`), both built on the
+shared **BofA Design System** component library (`@bofa/ui-components`).
 
-## Development server
+> This repository is a representative reference application used for framework-migration
+> rehearsals. It is not production code.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Projects
 
-## Code scaffolding
+| Project | Path | What it is |
+|---|---|---|
+| `ui-components` | `libs/ui-components` | `@bofa/ui-components` — the BofA Design System: shared components (button, card, text input, table, confirm dialog, datepicker) wrapping Angular Material 14 with our theme |
+| `retail-banking` | `apps/retail-banking` | Online Banking accounts dashboard (port 4200) |
+| `wealth-portal` | `apps/wealth-portal` | Merrill portfolio page (port 4300) |
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Both apps consume the library **as a built package**: the root `tsconfig.json` maps
+`@bofa/ui-components` to `dist/ui-components`. The theme Sass, by contrast, is consumed
+from library source.
 
-## Build
+## Toolchain
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Node 16.20.2** (`.nvmrc` — run `nvm use`). Angular 14 does not support Node 18+.
+- npm only (lockfile is `package-lock.json`); no yarn/pnpm.
+- Angular 14.2.x, Angular Material 14.2.x, TypeScript 4.7.x — versions are pinned exactly
+  in `package.json`; do not upgrade ad hoc.
 
-## Running unit tests
+## Build order constraint
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+**The library must be built before either app will compile or test.** The npm scripts
+below encode this; if you bypass them, run `npm run build:lib` first. A "Cannot find
+module '@bofa/ui-components'" error means `dist/ui-components` is missing or stale.
 
-## Running end-to-end tests
+## Scripts
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+| Script | What it does |
+|---|---|
+| `npm run build:lib` | Build `ui-components` into `dist/ui-components` |
+| `npm run build:apps` | Build both apps (requires the lib to be built) |
+| `npm run build:all` | Lib, then both apps |
+| `npm run test:all` | Build the lib, then run all three test suites headlessly |
+| `npm run start:retail` | Build the lib, serve Online Banking on http://localhost:4200 |
+| `npm run start:wealth` | Build the lib, serve the Merrill portal on http://localhost:4300 |
 
-## Further help
+## Testing notes
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Unit tests run on Karma + Jasmine with `ChromeHeadless` (works with current Chrome).
+Every `karma.conf.js` sets `clearContext: true`; the schematic default of `false` makes
+the Jasmine HTML reporter navigate after the run, which Karma logs as a spurious
+"full page reload" ERROR. If the launcher ever hangs or crashes on a new machine,
+install the pinned `puppeteer` contingency and point `CHROME_BIN` at its bundled
+Chromium in each `karma.conf.js` (see `plans/02-applications.md`).
+
+## Migration baseline
+
+The tag `baseline-angular-14` marks the completed Angular 14 baseline. Migration
+rehearsals branch from — and reset to — this tag.
