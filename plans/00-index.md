@@ -62,7 +62,7 @@ git tag --list baseline-angular-14   # the migration-rehearsal restore point exi
 test -f README.md                    # repo README written (phase 6)
 ```
 
-Downstream-coupling sanity check (the property the demo depends on): renaming an `@Input()` in `libs/ui-components/src/lib/button/button.component.ts` and running `npm run build:all` must fail in the **app** builds, not just the lib.
+Downstream-coupling sanity check (the property the demo depends on): renaming the exported `BofaTableColumn` interface in `libs/ui-components/src/lib/table/table.component.ts` and running `npm run build:all` must fail in the **app** builds (TS2305 on the import), not the lib. (Renaming a component `@Input` does *not* work as a probe — the apps set inputs as static attributes, which degrade silently; see plan 06.)
 
 ## Assumptions and uncertainties
 

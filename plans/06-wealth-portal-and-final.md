@@ -313,7 +313,9 @@ git tag --list baseline-angular-14   # tag exists
 test -f README.md && head -3 README.md   # README in place
 ```
 
-Downstream-coupling check (proves the demo's core property): temporarily rename `variant` to `kind` in `libs/ui-components/src/lib/button/button.component.ts`, run `npm run build:all` — the **retail-banking build fails** on its template even though the lib builds. Revert with `git checkout -- libs/`.
+Downstream-coupling check (proves the demo's core property): temporarily rename the exported `BofaTableColumn` interface to `BofaTableCol` in `libs/ui-components/src/lib/table/table.component.ts` (both the `export interface` and the `@Input() columns` type), run `npm run build:all` — the lib builds, then the **retail-banking build fails** with `TS2305: Module '"@bofa/ui-components"' has no exported member 'BofaTableColumn'`. Revert with `git checkout -- libs/` and rebuild so `dist/` isn't left stale.
+
+Do **not** probe by renaming the button's `variant` `@Input` (verified 2026-08-29): the apps set it as a *static attribute* (`variant="primary"`), which Angular silently downgrades to a plain HTML attribute when the input disappears — the apps compile cleanly and the probe proves nothing. The coupling must be probed through something the apps type-check against, i.e. an exported TS symbol they import.
 
 ## Done when
 
