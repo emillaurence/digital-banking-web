@@ -119,3 +119,26 @@ Only edits: dependency versions in `package.json`, `.nvmrc`, and the library's p
 
 Bundle budget warnings persist and shrank slightly (retail 705 kB, wealth 495 kB — the latter
 now under budget).
+
+---
+
+## Angular 17
+
+Commands: `ng update @angular/core@17 @angular/cli@17`, then `ng update @angular/material@17`.
+Node stays 18.20.5. TypeScript 4.9.5 → 5.4.5. zone.js 0.13.3 → 0.14.10.
+
+**No breakages.** 10/10 green on the first attempt with no source edits.
+
+- The CLI schematic renamed `browserTarget` → `buildTarget` in `angular.json` (6 occurrences
+  across the `serve` and `extract-i18n` targets of both apps).
+- Material 17 **deletes** the `@angular/material/legacy-*` entry points. This was a complete
+  no-op here, which is the payoff for having taken MDC at v15 instead of the legacy shim —
+  had we shimmed, this step would have been the v15 MDC migration all over again, on top of
+  three versions of drift.
+- Deliberately **not** switched to the esbuild `application` builder; still on
+  `@angular-devkit/build-angular:browser`. That is a build-system change orthogonal to the
+  framework migration.
+- Library peer ranges → `^17.3.0`.
+
+Bundle budget warnings: retail 728 kB, wealth 595 kB (both above the 500 kB warning budget,
+builds still succeed).
