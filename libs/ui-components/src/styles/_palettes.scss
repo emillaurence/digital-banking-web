@@ -1,0 +1,73 @@
+@use '@angular/material' as mat;
+
+// BofA Design System palettes — built around the brand anchors
+// (navy #012169, red #E31837), not stock Material colors.
+$bofa-navy: (
+  50: #e1e4ed,
+  100: #b3bcd2,
+  200: #8090b4,
+  300: #4d6496,
+  400: #274280,
+  500: #012169,
+  600: #011d61,
+  700: #011856,
+  800: #01144c,
+  900: #000b3b,
+  A100: #6f79ff,
+  A200: #3c4aff,
+  A400: #091bff,
+  A700: #0012ee,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: white,
+    A400: white,
+    A700: white,
+  ),
+);
+
+$bofa-red: (
+  50: #fce3e7,
+  100: #f7bac3,
+  200: #f18c9b,
+  300: #eb5d73,
+  400: #e73b55,
+  500: #e31837,
+  600: #e01531,
+  700: #dc112a,
+  800: #d80e23,
+  900: #d00816,
+  A100: #ffd7da,
+  A200: #ffa4ab,
+  A400: #ff717c,
+  A700: #ff5865,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: white,
+    A700: white,
+  ),
+);
+
+$bofa-primary: mat.define-palette($bofa-navy, 500, 200, 800);
+$bofa-accent: mat.define-palette($bofa-red, 500, 200, 800);
+$bofa-warn: mat.define-palette(mat.$red-palette, 700);

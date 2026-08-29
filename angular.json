@@ -209,6 +209,37 @@
           }
         }
       }
+    },
+    "ui-components": {
+      "projectType": "library",
+      "root": "libs/ui-components",
+      "sourceRoot": "libs/ui-components/src",
+      "prefix": "bofa",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "libs/ui-components/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/ui-components/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/ui-components/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/ui-components/src/test.ts",
+            "tsConfig": "libs/ui-components/tsconfig.spec.json",
+            "karmaConfig": "libs/ui-components/karma.conf.js"
+          }
+        }
+      }
     }
   }
 }

@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+@use '../../../libs/ui-components/src/styles/theme' as bofa;
+
+@include bofa.bofa-theme();
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Public Sans', 'Helvetica Neue', Arial, sans-serif;
+  background: #f4f6fa;
+  color: #1c2540;
+}
