@@ -34,7 +34,15 @@
   }
 
   .mat-mdc-form-field.mat-form-field-appearance-outline .mdc-notched-outline {
-    color: #aab6cf;
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: #aab6cf;
+    }
+
+    .mdc-notched-outline__notch {
+      border-right-color: transparent;
+    }
   }
 
   .mat-mdc-dialog-container {
@@ -43,7 +51,7 @@
     box-shadow: 0 12px 40px rgba(1, 33, 105, 0.25);
   }
 
-  .mat-calendar-body-selected {
+  .mat-calendar-body-cell-content.mat-calendar-body-selected {
     box-shadow: 0 0 0 2px #f18c9b;
   }
 }
