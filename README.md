@@ -11,7 +11,7 @@ shared **BofA Design System** component library (`@bofa/ui-components`).
 
 | Project | Path | What it is |
 |---|---|---|
-| `ui-components` | `libs/ui-components` | `@bofa/ui-components` — the BofA Design System: shared components (button, card, text input, table, confirm dialog, datepicker) wrapping Angular Material 14 with our theme |
+| `ui-components` | `libs/ui-components` | `@bofa/ui-components` — the BofA Design System: shared components (button, card, text input, table, confirm dialog, datepicker) wrapping Angular Material 18 with our theme |
 | `retail-banking` | `apps/retail-banking` | Online Banking accounts dashboard (port 4200) |
 | `wealth-portal` | `apps/wealth-portal` | Merrill portfolio page (port 4300) |
 
@@ -21,10 +21,13 @@ from library source.
 
 ## Toolchain
 
-- **Node 16.20.2** (`.nvmrc` — run `nvm use`). Angular 14 does not support Node 18+.
+- **Node 20.18.1** (`.nvmrc` — run `nvm use`). Angular 18 requires Node 18.19+ or 20.11+.
 - npm only (lockfile is `package-lock.json`); no yarn/pnpm.
-- Angular 14.2.x, Angular Material 14.2.x, TypeScript 4.7.x — versions are pinned exactly
+- Angular 18.2.x, Angular Material 18.2.x, TypeScript 5.4.x — versions are pinned exactly
   in `package.json`; do not upgrade ad hoc.
+- Material is MDC-based and themed with the M2 Sass API (`mat.m2-define-light-theme`); the
+  design system's overrides in `libs/ui-components/src/styles/_theme.scss` target `mat-mdc-*`
+  class names.
 
 ## Build order constraint
 
@@ -56,3 +59,5 @@ Chromium in each `karma.conf.js` (see `plans/02-applications.md`).
 
 The tag `baseline-angular-14` marks the completed Angular 14 baseline. Migration
 rehearsals branch from — and reset to — this tag.
+
+The 14 → 18 migration is recorded in `MIGRATION_NOTES.md`, one commit per major version.
