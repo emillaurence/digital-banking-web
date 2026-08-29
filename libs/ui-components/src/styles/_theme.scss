@@ -2,25 +2,25 @@
 @use 'palettes';
 @use 'typography';
 
-// Design-system restyling of Material internals. These target v14 (pre-MDC,
-// "legacy") class names and must live in global styles, not component styles.
+// Design-system restyling of Material internals. These target the MDC-based
+// class names and must live in global styles, not component styles.
 @mixin overrides() {
-  .mat-button-base.bofa-button {
+  .mat-mdc-button-base.bofa-button {
     border-radius: 9999px;
     padding: 0 22px;
     min-width: 96px;
   }
 
-  .mat-card.bofa-card {
+  .mat-mdc-card.bofa-card {
     border-radius: 12px;
     border: 1px solid #e2e7f0;
     box-shadow: 0 2px 10px rgba(1, 33, 105, 0.07) !important;
   }
 
-  table.mat-table.bofa-table {
+  table.mat-mdc-table.bofa-table {
     width: 100%;
 
-    th.mat-header-cell {
+    th.mat-mdc-header-cell {
       color: #012169;
       font-weight: 600;
       font-size: 13px;
@@ -29,16 +29,18 @@
       border-bottom: 2px solid #012169;
     }
 
-    tr.mat-row:hover {
+    tr.mat-mdc-row:hover {
       background: #f2f5fb;
     }
   }
 
-  .mat-form-field-appearance-outline .mat-form-field-outline {
-    color: #aab6cf;
+  .mat-mdc-form-field .mdc-notched-outline__leading,
+  .mat-mdc-form-field .mdc-notched-outline__notch,
+  .mat-mdc-form-field .mdc-notched-outline__trailing {
+    border-color: #aab6cf;
   }
 
-  .mat-dialog-container {
+  .mat-mdc-dialog-container .mdc-dialog__surface {
     border-radius: 16px;
     padding: 28px;
     box-shadow: 0 12px 40px rgba(1, 33, 105, 0.25);
@@ -51,7 +53,7 @@
 
 // Single entry point every app includes exactly once.
 @mixin bofa-theme() {
-  @include mat.core(typography.$bofa-typography);
+  @include mat.core();
 
   $theme: mat.define-light-theme((
     color: (
@@ -59,6 +61,8 @@
       accent: palettes.$bofa-accent,
       warn: palettes.$bofa-warn,
     ),
+    typography: typography.$bofa-typography,
+    density: 0,
   ));
 
   @include mat.all-component-themes($theme);
