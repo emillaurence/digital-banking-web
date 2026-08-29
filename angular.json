@@ -6,5 +6,208 @@
   },
   "newProjectRoot": "apps",
   "projects": {
+    "retail-banking": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/retail-banking",
+      "sourceRoot": "apps/retail-banking/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/retail-banking",
+            "index": "apps/retail-banking/src/index.html",
+            "main": "apps/retail-banking/src/main.ts",
+            "polyfills": "apps/retail-banking/src/polyfills.ts",
+            "tsConfig": "apps/retail-banking/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/retail-banking/src/favicon.ico",
+              "apps/retail-banking/src/assets"
+            ],
+            "styles": [
+              "apps/retail-banking/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/retail-banking/src/environments/environment.ts",
+                  "with": "apps/retail-banking/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "retail-banking:build:production"
+            },
+            "development": {
+              "browserTarget": "retail-banking:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "retail-banking:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "apps/retail-banking/src/test.ts",
+            "polyfills": "apps/retail-banking/src/polyfills.ts",
+            "tsConfig": "apps/retail-banking/tsconfig.spec.json",
+            "karmaConfig": "apps/retail-banking/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/retail-banking/src/favicon.ico",
+              "apps/retail-banking/src/assets"
+            ],
+            "styles": [
+              "apps/retail-banking/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "wealth-portal": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/wealth-portal",
+      "sourceRoot": "apps/wealth-portal/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/wealth-portal",
+            "index": "apps/wealth-portal/src/index.html",
+            "main": "apps/wealth-portal/src/main.ts",
+            "polyfills": "apps/wealth-portal/src/polyfills.ts",
+            "tsConfig": "apps/wealth-portal/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/wealth-portal/src/favicon.ico",
+              "apps/wealth-portal/src/assets"
+            ],
+            "styles": [
+              "apps/wealth-portal/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/wealth-portal/src/environments/environment.ts",
+                  "with": "apps/wealth-portal/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "port": 4300
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "wealth-portal:build:production"
+            },
+            "development": {
+              "browserTarget": "wealth-portal:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "wealth-portal:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "apps/wealth-portal/src/test.ts",
+            "polyfills": "apps/wealth-portal/src/polyfills.ts",
+            "tsConfig": "apps/wealth-portal/tsconfig.spec.json",
+            "karmaConfig": "apps/wealth-portal/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/wealth-portal/src/favicon.ico",
+              "apps/wealth-portal/src/assets"
+            ],
+            "styles": [
+              "apps/wealth-portal/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
   }
 }
