@@ -142,3 +142,86 @@ Node stays 18.20.5. TypeScript 4.9.5 → 5.4.5. zone.js 0.13.3 → 0.14.10.
 
 Bundle budget warnings: retail 728 kB, wealth 595 kB (both above the 500 kB warning budget,
 builds still succeed).
+
+---
+
+## Angular 18
+
+Commands: `ng update @angular/core@18 @angular/cli@18`, then `ng update @angular/material@18`.
+Node 18.20.5 → **20.18.1** (`.nvmrc`). TypeScript stays 5.4.5.
+
+**No breakages.** 10/10 green on the first attempt.
+
+### Handled automatically — Material's M2 Sass API rename
+
+The v18 Material migration rewrote all three theme partials to the `m2-` prefixed API:
+`define-palette` → `m2-define-palette`, `$red-palette` → `$m2-red-palette`,
+`define-light-theme` → `m2-define-light-theme`, `define-typography-config` /
+`define-typography-level` → `m2-define-typography-config` / `m2-define-typography-level`.
+Purely a rename; palettes, brand anchors, and every size/weight are unchanged. Staying on M2
+theming — M3 would change the rendered design system.
+
+### Toolchain pins the CLI does not manage
+
+`ng update` leaves the test-tooling pins alone, so they were still on their Angular 14
+values. Bumped by hand to the versions the v18 schematics generate:
+`@types/node` 16.18.126 → 20.14.10, `@types/jasmine` ~4.0.0 → ~5.1.0,
+`jasmine-core` ~4.3.0 → ~5.1.0. `karma` ~6.4.0 / `karma-jasmine` ~5.1.0 were already current.
+Tests re-run green after the Jasmine 5 bump (`toBeTrue`/`toBeFalse` are unaffected).
+
+### `karma-jasmine-html-reporter` peer conflict on a clean install
+
+Symptom — incremental installs were fine, but a from-scratch `rm -rf node_modules && npm ci`
+failed:
+
+```
+npm error ERESOLVE could not resolve
+While resolving: karma-jasmine-html-reporter@2.0.0
+Found: jasmine-core@5.1.2
+Could not resolve dependency: peer jasmine-core@"^4.0.0" from karma-jasmine-html-reporter@2.0.0
+```
+
+Cause — the Jasmine 5 bump above left `karma-jasmine-html-reporter@~2.0.0` in place, and that
+release still declares a `jasmine-core@^4` peer.
+
+Fix — `npm i -D karma-jasmine-html-reporter@~2.1.0` (the release that widened the peer to
+Jasmine 5). Clean `npm ci` + `build:all` + `test:all` green afterwards.
+
+### MDC theming tokens beat plain CSS declarations (found by runtime UI testing)
+
+Symptom — two overrides compiled and matched their elements but rendered default Material
+styling: outlined form fields drew `rgba(0,0,0,.38)` outlines instead of `#aab6cf`, and the
+`secondary`/`ghost` buttons drew a white fill with a black label instead of transparent/navy.
+Unit tests can't see this; it only showed up in the browser via computed styles.
+
+Cause — MDC ships its own themed rules whose selectors are more specific than ours and which
+read from CSS custom properties, e.g.
+
+```css
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mat-mdc-notch-piece {
+  border-color: var(--mdc-outlined-text-field-outline-color, var(--mat-app-outline));
+}
+.mat-mdc-unelevated-button:not(:disabled) {
+  background-color: var(--mdc-filled-button-container-color);
+}
+```
+
+Pre-MDC Material had no such rules, so the old flat declarations used to win.
+
+Fix — set the tokens rather than the properties, so MDC's own rules produce the brand values:
+`--mdc-outlined-text-field-outline-color` on `.mat-mdc-form-field`, and
+`--mdc-filled-button-container-color` / `--mdc-filled-button-label-text-color` on the button
+variant classes. The button variant fill/label moved out of `button.component.scss` into the
+global `overrides()` mixin for the same reason the other Material internals live there
+(component-scoped styles can't outrank MDC's theme rules); the `inset` ring stays local.
+
+General rule for this codebase: when restyling an MDC component, look for the token MDC reads
+before writing a declaration of your own.
+
+### Deliberately not adopted
+
+Standalone components, the new control flow (`@if`/`@for`), signals, and the optional
+`use-application-builder` migration the CLI offered. All are optional in v18; standalone-ifying
+the library would change how consumers import it, which the API-stability constraint rules out.
+
+Library peer ranges → `^18.2.0`.

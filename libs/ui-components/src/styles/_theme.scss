@@ -34,10 +34,14 @@
     }
   }
 
-  .mat-mdc-form-field .mdc-notched-outline__leading,
-  .mat-mdc-form-field .mdc-notched-outline__notch,
-  .mat-mdc-form-field .mdc-notched-outline__trailing {
-    border-color: #aab6cf;
+  .mat-mdc-form-field {
+    --mdc-outlined-text-field-outline-color: #aab6cf;
+  }
+
+  .mat-mdc-button-base.bofa-button--secondary,
+  .mat-mdc-button-base.bofa-button--ghost {
+    --mdc-filled-button-container-color: transparent;
+    --mdc-filled-button-label-text-color: #012169;
   }
 
   .mat-mdc-dialog-container .mdc-dialog__surface {
@@ -55,7 +59,7 @@
 @mixin bofa-theme() {
   @include mat.core();
 
-  $theme: mat.define-light-theme((
+  $theme: mat.m2-define-light-theme((
     color: (
       primary: palettes.$bofa-primary,
       accent: palettes.$bofa-accent,
