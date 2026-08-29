@@ -1,31 +1,24 @@
 import { TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { UiComponentsModule } from '@bofa/ui-components';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
+      imports: [NoopAnimationsModule, UiComponentsModule],
+      declarations: [AppComponent],
     }).compileComponents();
   });
 
-  it('should create the app', () => {
+  it('creates the portfolio page', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it(`should have as title 'wealth-portal'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('wealth-portal');
-  });
-
-  it('should render title', () => {
+  it('renders the holdings in the shared table', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('wealth-portal app is running!');
+    expect(fixture.nativeElement.querySelectorAll('bofa-table tr.mat-row').length).toBe(5);
   });
 });

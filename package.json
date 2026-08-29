@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "build:lib": "ng build ui-components",
+    "build:apps": "ng build retail-banking && ng build wealth-portal",
+    "build:all": "npm run build:lib && npm run build:apps",
+    "test:all": "npm run build:lib && ng test ui-components --watch=false --browsers=ChromeHeadless && ng test retail-banking --watch=false --browsers=ChromeHeadless && ng test wealth-portal --watch=false --browsers=ChromeHeadless",
+    "start:retail": "npm run build:lib && ng serve retail-banking",
+    "start:wealth": "npm run build:lib && ng serve wealth-portal"
   },
   "private": true,
   "dependencies": {
