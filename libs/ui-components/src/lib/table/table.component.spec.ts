@@ -22,7 +22,7 @@ describe('BofaTableComponent', () => {
     ];
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelectorAll('th.mat-header-cell').length).toBe(2);
-    expect(fixture.nativeElement.querySelectorAll('tr.mat-row').length).toBe(2);
+    expect(fixture.nativeElement.querySelectorAll('th.mat-mdc-header-cell').length).toBe(2);
+    expect(fixture.nativeElement.querySelectorAll('tr.mat-mdc-row').length).toBe(2);
   });
 });

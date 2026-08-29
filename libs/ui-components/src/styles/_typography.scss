@@ -1,11 +1,12 @@
 @use '@angular/material' as mat;
 
-// v14 uses the legacy typography level names (headline/title/body-1/...).
+// v15 maps the v14 levels headline/title/subheading-2/body-1 to
+// headline-5/headline-6/subtitle-1/body-2.
 $bofa-typography: mat.define-typography-config(
   $font-family: '"Public Sans", "Helvetica Neue", Arial, sans-serif',
-  $headline: mat.define-typography-level(28px, 36px, 700),
-  $title: mat.define-typography-level(20px, 28px, 600),
-  $subheading-2: mat.define-typography-level(16px, 24px, 600),
-  $body-1: mat.define-typography-level(15px, 24px, 400),
+  $headline-5: mat.define-typography-level(28px, 36px, 700),
+  $headline-6: mat.define-typography-level(20px, 28px, 600),
+  $subtitle-1: mat.define-typography-level(16px, 24px, 600),
+  $body-2: mat.define-typography-level(15px, 24px, 400),
   $button: mat.define-typography-level(15px, 16px, 600),
 );
