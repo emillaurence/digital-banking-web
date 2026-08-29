@@ -6,7 +6,7 @@
 
 ## Prerequisites
 
-- Plan 03 done (`ng build ui-components` green, theme applied). Node 16.20.2 active, a working headless Chrome for Karma (see plan 02's risks — if the apps' test runs needed the Puppeteer fallback, apply the same `CHROME_BIN` line to `libs/ui-components/karma.conf.js`).
+- Plan 03 done (`ng build ui-components` green, theme applied, library `karma.conf.js` has `clearContext: true` per plan 03 step 1). Node 16.20.2 active, a working headless Chrome for Karma (verified at phase 2; if a different machine needed the Puppeteer contingency, apply the same `CHROME_BIN` line to `libs/ui-components/karma.conf.js`).
 
 ## Steps
 

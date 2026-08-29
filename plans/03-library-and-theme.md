@@ -20,6 +20,8 @@ All commands from the repo root.
 
    Then change `newProjectRoot` **back to** `"apps"`. Expected result: `libs/ui-components/` with `src/public-api.ts`, `ng-package.json`, `package.json`, and a `ui-components` project in `angular.json`. The schematic also adds `ng-packagr` to devDependencies.
 
+   The schematic also writes `libs/ui-components/karma.conf.js` with the same `clearContext: false` default as the app configs. Apply the same change as plan 02 step 2 — set `clearContext: true` (and replace the stale trailing comment) — or phase 4's library test suite reintroduces the spurious `Some of your tests did a full page reload!` ERROR lines.
+
 2. **Pin ng-packagr and install Material:**
 
    ```bash

@@ -269,10 +269,12 @@ Branding rules: Merrill is Bank of America's wealth management arm — the heade
 
    ## Testing notes
 
-   Unit tests run on Karma + Jasmine with `ChromeHeadless`. Recent Chrome versions removed
-   the old headless mode that Angular 14's `karma-chrome-launcher` uses; if test runs hang
-   or the launcher crashes, install the pinned `puppeteer` fallback and point `CHROME_BIN`
-   at its bundled Chromium in each `karma.conf.js` (see `plans/02-applications.md`).
+   Unit tests run on Karma + Jasmine with `ChromeHeadless` (works with current Chrome).
+   Every `karma.conf.js` sets `clearContext: true`; the schematic default of `false` makes
+   the Jasmine HTML reporter navigate after the run, which Karma logs as a spurious
+   "full page reload" ERROR. If the launcher ever hangs or crashes on a new machine,
+   install the pinned `puppeteer` contingency and point `CHROME_BIN` at its bundled
+   Chromium in each `karma.conf.js` (see `plans/02-applications.md`).
 
    ## Migration baseline
 
@@ -321,5 +323,5 @@ Downstream-coupling check (proves the demo's core property): temporarily rename 
 
 - **Stale `dist/ui-components`.** Any "missing export" or type mismatch against the lib usually means `dist/` predates the latest lib source. `npm run build:lib` and retry — the scripts exist precisely to prevent this.
 - **Port already in use** when serving both apps at once — wealth-portal was pinned to 4300 in plan 02; if that edit was missed, `ng serve wealth-portal --port 4300`.
-- **Karma runs serially three times in `test:all`** and takes a few minutes; a hang at "Connected on socket" is a Chrome-launch failure (old headless mode removed — see plan 02 risks and the Puppeteer fallback), not a slow test run.
+- **Karma runs serially three times in `test:all`** and takes a few minutes; a hang at "Connected on socket" is a Chrome-launch failure (see plan 02 risks and the Puppeteer contingency), not a slow test run. Chrome Headless 151 + karma-chrome-launcher 3.1 is verified working on this machine, so a hang here would point at an environment change.
 - **Tagging before the README commit.** The tag is the rehearsal restore point and should include the README — step 9 runs after step 8's commit deliberately. If tagged too early: `git tag -d baseline-angular-14` and re-tag.

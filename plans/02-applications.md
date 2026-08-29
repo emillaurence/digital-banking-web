@@ -22,7 +22,21 @@ All commands from the repo root.
 
    Expected result: `apps/retail-banking/` and `apps/wealth-portal/` with `src/`, `tsconfig.app.json`, `tsconfig.spec.json`, and two new projects in `angular.json`.
 
-2. **Give the apps distinct dev ports** so both can run at once. In `angular.json`, inside `projects.wealth-portal.architect.serve`, add an `options` block (the generated `serve` target has none):
+2. **Enable `clearContext` in both generated `karma.conf.js` files.** The schematic default is `clearContext: false`, which makes `karma-jasmine-html-reporter` navigate the page after the run finishes; Karma reports that navigation as `Some of your tests did a full page reload!` and prints `ERROR` lines even though every spec passed (the exit code stays 0, but the noise is misleading and could mask a real failure). In `apps/retail-banking/karma.conf.js` **and** `apps/wealth-portal/karma.conf.js`, change:
+
+   ```js
+   clearContext: false // leave Jasmine Spec Runner output visible in browser
+   ```
+
+   to:
+
+   ```js
+   clearContext: true // false makes the HTML reporter navigate post-run, which Karma logs as a spurious "full page reload" ERROR
+   ```
+
+   Replace the trailing comment as shown — the generated one describes the `false` behaviour and goes stale with the new value.
+
+3. **Give the apps distinct dev ports** so both can run at once. In `angular.json`, inside `projects.wealth-portal.architect.serve`, add an `options` block (the generated `serve` target has none):
 
    ```json
    "serve": {
@@ -36,7 +50,7 @@ All commands from the repo root.
 
    Leave `retail-banking` on the default 4200.
 
-3. **Commit:**
+4. **Commit:**
 
    ```bash
    git add -A
@@ -52,7 +66,7 @@ npx ng test retail-banking --watch=false --browsers=ChromeHeadless   # 3 specs, 
 npx ng test wealth-portal  --watch=false --browsers=ChromeHeadless   # 3 specs, 0 failures
 ```
 
-**This is the Karma/Chrome gate — the highest-risk step in the entire build, verified here deliberately rather than discovered at phase 6.** If a test run hangs (e.g. sits at "Connected on socket" or never launches a browser), treat it as a launcher failure, not a slow test run — see the first risk below.
+**This is the Karma/Chrome gate, verified here deliberately rather than discovered at phase 6.** Verified on this machine: Chrome Headless 151 launches fine under `karma-chrome-launcher` 3.1, so this is expected to pass. If a test run does hang (e.g. sits at "Connected on socket" or never launches a browser), treat it as a launcher failure, not a slow test run — see the first risk below.
 
 Then, briefly:
 
@@ -67,8 +81,8 @@ Both `ng build` commands exit 0, both headless test runs report `SUCCESS` with 0
 
 ## Risks
 
-- **Headless Chrome fails to launch — two distinct failure modes.** This is the most machine-dependent step in the whole build and the likeliest hard blocker.
-  1. **Old headless mode removed (the likelier failure in 2026).** Angular 14's `karma-chrome-launcher` 3.x starts Chrome with the **old headless mode**, which recent Chrome versions have removed. Symptom: the test run **hangs** (Karma waits forever for a browser that never connects) or the launcher **crashes immediately** — *not* a "binary not found" message. Fix: install a Puppeteer version that bundles a Chromium old enough for karma-chrome-launcher 3.x, and point Karma at it:
+- **Headless Chrome fails to launch.** **Verified working on this machine** (2026-08-29): Chrome Headless 151 launches and runs the suites under `karma-chrome-launcher` 3.1 — the old-headless-mode removal did not bite here, so this risk is a contingency, not the expected path. If it does fail on another machine, two distinct failure modes:
+  1. **Hang or immediate launcher crash** (*not* a "binary not found" message) — the installed Chrome doesn't support the mode the launcher requests. Contingency: install a Puppeteer version that bundles its own compatible Chromium and point Karma at it:
      ```bash
      npm install --save-exact --save-dev puppeteer@19.7.5
      ```
@@ -76,7 +90,8 @@ Both `ng build` commands exit 0, both headless test runs report `SUCCESS` with 0
      ```js
      process.env.CHROME_BIN = require('puppeteer').executablePath();
      ```
-     `puppeteer@19.7.5` bundles Chromium ~111, which still supports old headless; Puppeteer 20+ switched to downloading Chrome for Testing, which may not. That version choice is best-effort recall, not verified on this machine — if 19.7.5's Chromium also fails, try an older 19.x/18.x; the requirement is simply "a bundled Chromium with old headless mode".
-  2. **Binary genuinely not found** (`No binary for ChromeHeadless browser on your platform`). Chrome is installed somewhere non-standard. Fix: `export CHROME_BIN="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"` (or the actual path) and re-run. If the run then hangs, you are in failure mode 1 — use the Puppeteer fallback.
+     `puppeteer@19.7.5` bundles Chromium ~111 (Puppeteer 20+ downloads Chrome for Testing instead). The version choice is best-effort recall; if its Chromium also fails, try another 19.x/18.x.
+  2. **Binary genuinely not found** (`No binary for ChromeHeadless browser on your platform`). Chrome is installed somewhere non-standard. Fix: `export CHROME_BIN="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"` (or the actual path) and re-run. If the run then hangs, you are in failure mode 1 — use the Puppeteer contingency.
+- **`Some of your tests did a full page reload!` ERROR lines after a successful run.** Caused by the generated `clearContext: false` (the Jasmine HTML reporter navigates post-run); step 2 fixes it. If the lines appear anyway, check step 2 was applied to that project's `karma.conf.js`.
 - **Apps land in the wrong folder** (`projects/` instead of `apps/`). Means step 4 of plan 01 was skipped. Fix: delete the generated folders, remove their entries from `angular.json`, correct `newProjectRoot`, regenerate.
 - **Schematic prompts interactively.** Both prompt-worthy options (`--style`, `--routing`) are passed explicitly; if anything else prompts, accept the default.
