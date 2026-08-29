@@ -1,0 +1,9 @@
+<button
+  mat-flat-button
+  class="bofa-button bofa-button--{{ variant }}"
+  [color]="variant === 'primary' ? 'primary' : undefined"
+  [disabled]="disabled"
+  [type]="type"
+>
+  <ng-content></ng-content>
+</button>

@@ -1,0 +1,14 @@
+<mat-form-field appearance="outline" class="bofa-field">
+  <mat-label>{{ label }}</mat-label>
+  <input
+    matInput
+    [matDatepicker]="picker"
+    [value]="value"
+    [disabled]="disabled"
+    (dateChange)="handleDateChange($event)"
+    (blur)="onTouched()"
+  />
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+  <mat-hint *ngIf="hint">{{ hint }}</mat-hint>
+</mat-form-field>

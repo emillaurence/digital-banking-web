@@ -1,0 +1,13 @@
+<table mat-table [dataSource]="data" class="bofa-table">
+  <ng-container *ngFor="let column of columns" [matColumnDef]="column.key">
+    <th mat-header-cell *matHeaderCellDef [class.bofa-table__cell--right]="column.align === 'right'">
+      {{ column.header }}
+    </th>
+    <td mat-cell *matCellDef="let row" [class.bofa-table__cell--right]="column.align === 'right'">
+      {{ row[column.key] }}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnKeys"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnKeys"></tr>
+</table>

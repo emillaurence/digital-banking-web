@@ -1,0 +1,13 @@
+<mat-form-field appearance="outline" class="bofa-field">
+  <mat-label>{{ label }}</mat-label>
+  <input
+    matInput
+    [type]="type"
+    [placeholder]="placeholder"
+    [value]="value"
+    [disabled]="disabled"
+    (input)="handleInput($event)"
+    (blur)="onTouched()"
+  />
+  <mat-hint *ngIf="hint">{{ hint }}</mat-hint>
+</mat-form-field>

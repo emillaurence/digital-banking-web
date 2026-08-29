@@ -1,0 +1,6 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>{{ data.message }}</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <bofa-button variant="ghost" (click)="close(false)">{{ data.cancelLabel || 'Cancel' }}</bofa-button>
+  <bofa-button variant="primary" (click)="close(true)">{{ data.confirmLabel || 'Confirm' }}</bofa-button>
+</mat-dialog-actions>
