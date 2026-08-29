@@ -100,3 +100,22 @@ Both production app builds emit `bundle initial exceeded maximum budget` warning
 (retail 713 kB, wealth 525 kB against a 500 kB warning budget). These are **warnings**, the
 builds succeed, and MDC ships more CSS/JS than the legacy components. The budgets were left
 as-is rather than quietly raised.
+
+---
+
+## Angular 16
+
+Commands: `ng update @angular/core@16 @angular/cli@16`, then `ng update @angular/material@16`.
+Node 16.20.2 → **18.20.5** (`.nvmrc` updated; Angular 16 drops Node 16.10-). zone.js
+0.11.8 → 0.13.3. TypeScript stays 4.9.5 (in range for v16).
+
+**No breakages.** All three CLI/core migrations reported "No changes made", the CDK/Material
+v16 migrations likewise, and `npm run test:all` was 10/10 on the first attempt with no source
+edits. `ng-packagr` 16 built the library without complaint, so no `ng-package.json` or
+`tsconfig.lib*.json` changes were needed after all.
+
+Only edits: dependency versions in `package.json`, `.nvmrc`, and the library's peer ranges
+→ `^16.2.0`.
+
+Bundle budget warnings persist and shrank slightly (retail 705 kB, wealth 495 kB — the latter
+now under budget).
