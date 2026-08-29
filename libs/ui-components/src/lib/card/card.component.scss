@@ -1,7 +1,9 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 
 .bofa-card {
-  height: 100%;
+  flex: 1;
+  box-sizing: border-box;
 }

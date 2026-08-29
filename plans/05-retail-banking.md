@@ -89,8 +89,13 @@ Branding rules: the header is a **text wordmark** styled with the brand colours 
        }
 
        const { payee, amount, date } = this.paymentForm.getRawValue();
-       const formattedAmount = Number(amount).toFixed(2);
-       const formattedDate = date ? date.toLocaleDateString('en-US') : '';
+       const formattedAmount = Number(amount).toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+       const formattedDate = date
+      ? date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })
+      : '';
 
        this.dialogs
          .confirm({

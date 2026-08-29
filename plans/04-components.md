@@ -94,13 +94,17 @@ All file paths relative to the repo root. Create each file with exactly the cont
 
    ```scss
    :host {
-     display: block;
+     display: flex;
+     flex-direction: column;
    }
 
    .bofa-card {
-     height: 100%;
+     flex: 1;
+     box-sizing: border-box;
    }
    ```
+
+   (Flex, not `height: 100%`: the card fills its grid cell when the host is stretched, but a percentage height resolved against an auto-sized parent can overflow and overlap the next grid row — observed with the phase 5 summary/panel grids.)
 
 3. **Text input (ControlValueAccessor)** — `libs/ui-components/src/lib/text-input/text-input.component.ts`:
 
