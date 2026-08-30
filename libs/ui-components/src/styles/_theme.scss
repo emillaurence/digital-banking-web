@@ -50,9 +50,6 @@
   }
 
   .mat-mdc-dialog-container {
-    --mdc-dialog-container-shape: 16px;
-    --mdc-dialog-container-elevation: 0 12px 40px rgba(1, 33, 105, 0.25);
-
     .mat-mdc-dialog-title,
     .mat-mdc-dialog-actions {
       padding-left: 0;
@@ -66,6 +63,8 @@
   }
 
   .mat-mdc-dialog-container .mdc-dialog__surface {
+    --mdc-dialog-container-shape: 16px;
+    --mdc-dialog-container-elevation: 0 12px 40px rgba(1, 33, 105, 0.25);
     padding: 28px;
   }
 

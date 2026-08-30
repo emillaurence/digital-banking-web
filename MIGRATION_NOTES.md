@@ -35,3 +35,24 @@
 
 - Updated `@bofa/ui-components` Angular peer dependency ranges to `^15.2.0`.
 - Updated `zone.js` to the Angular 15-compatible `0.12.0` release.
+
+## Step 2: Angular 15.2 and Material 15.2 to 16.2
+
+### Update tooling
+
+- Ran `npx ng update @angular/core@16 @angular/cli@16` under Node 16.20.2. The temporary Angular CLI 16.2.16 updated the workspace to Angular 16.2.x, `@angular-devkit/build-angular`/CLI 16.2.16, compiler CLI 16.2.12, and ng-packagr 16.2.3. Its required migrations made no source or workspace-configuration changes.
+- Ran `npx ng update @angular/material@16 --allow-dirty` after the Angular update. Material/CDK 16.2.14 migrations completed without source changes; no legacy imports, standalone migrations, or optional app-structure rewrites were introduced.
+- Updated TypeScript from 4.9.5 to the Angular 16-compatible exact pin 5.1.6, and zone.js from 0.12.0 to 0.13.3. The existing `zone.js/testing` test imports remain valid.
+- Updated `@bofa/ui-components` Angular peer dependency ranges to `^16.2.0`.
+- The package manager emitted one non-fatal engine warning for a transitive `node-releases@2.0.54` package requiring Node `>=18` while the prescribed Node version is `16.20.2`; the Angular 16 build and tests still completed successfully.
+
+### Breakage and theming checks
+
+- No Angular 16 TypeScript, strict-template, DOM assertion, Sass, or MDC theming breakages were found. Existing module-based architecture, selectors, inputs, service contracts, and test assertions remained unchanged.
+- Computed-style auditing initially found that Material 16 now redeclares the dialog shape and elevation custom properties directly on the surface, so declarations inherited from `.mat-mdc-dialog-container` computed back to the Material defaults (`4px` radius and the default black shadow). Moved the same public MDC token declarations to the existing more-specific `.mat-mdc-dialog-container .mdc-dialog__surface` selector; the surface then computed to the intended `16px` radius and navy shadow. Dialog padding and all other existing MDC tokens retained their Material 15 behavior.
+- Re-checked the remaining Material 15 typography and MDC overrides after the Material 16 update by computed style rather than class presence. No additional selector or compatibility shim was required.
+
+### Verification
+
+- The Angular 16 regression gate passed with the baseline suite counts: ui-components 5, retail-banking 3, and wealth-portal 2. Application builds completed with only the existing initial bundle budget warnings; no `ERROR` lines were emitted.
+- The public API comparison against the Angular 14 baseline retained the same declaration file and FESM export lists. Only the previously characterized Angular/TypeScript declaration metadata differences are acceptable; no public symbol or signature changed.
