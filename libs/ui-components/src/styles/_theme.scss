@@ -51,7 +51,7 @@
     box-shadow: 0 12px 40px rgba(1, 33, 105, 0.25);
   }
 
-  .mat-calendar-body-cell-content.mat-calendar-body-selected {
+  .mat-calendar-body-cell > .mat-calendar-body-cell-content.mat-calendar-body-selected {
     box-shadow: 0 0 0 2px #f18c9b;
   }
 }
