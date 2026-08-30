@@ -56,3 +56,31 @@
 
 - The Angular 16 regression gate passed with the baseline suite counts: ui-components 5, retail-banking 3, and wealth-portal 2. Application builds completed with only the existing initial bundle budget warnings; no `ERROR` lines were emitted.
 - The public API comparison against the Angular 14 baseline retained the same declaration file and FESM export lists. Only the previously characterized Angular/TypeScript declaration metadata differences are acceptable; no public symbol or signature changed.
+
+## Step 3: Angular 16.2 and Material 16.2 to 17.3
+
+### Update tooling
+
+- Installed and selected Node `20.20.2` with `nvm install 20 && nvm use 20`, then updated `.nvmrc` to the exact settled version. Angular 17 was not run on the previous Node 16 toolchain.
+- Ran `npx ng update @angular/core@17 @angular/cli@17 --allow-dirty`. The temporary Angular CLI `17.3.17` updated the workspace to Angular `17.3.12`, CLI/build-angular `17.3.17`, compiler CLI `17.3.12`, ng-packagr `17.3.0`, TypeScript `5.4.5`, and zone.js `0.14.10`.
+- Ran `npx ng update @angular/material@17 --allow-dirty`; Material and CDK were updated to `17.3.10`. Both schematics completed successfully.
+- The Angular CLI migration renamed deprecated dev-server and extract-i18n option keys from `browserTarget` to `buildTarget` in `angular.json`. The existing application `:browser` builders and Karma builders were preserved; no application-builder/esbuild migration was applied.
+- No standalone, control-flow, or other optional app-structure migration was applied. No `@angular/material/legacy-*` imports remain.
+- Updated `@bofa/ui-components` Angular peer dependency ranges to `^17.3.0`.
+
+### Breakage and theming checks
+
+- No Angular 17 TypeScript, strict-template, test bootstrap, or component DOM assertion breakages were found. The existing module-based architecture, `clearContext: true` Karma settings, selectors, inputs, service contract, and test assertions remain intact.
+- No Material 17 legacy entry-point or MDC selector migration was required. Rebuilt the library and audited every existing `overrides()` rule by computed style in both running applications rather than relying on class names.
+- Pill buttons retained `border-radius: 9999px`, `padding: 0 22px`, and `min-width: 96px` for primary and ghost/secondary variants. Button typography remained Public Sans `15px/16px/600`.
+- Cards retained `12px` radius, `1px solid #e2e7f0` border, and the BofA navy shadow.
+- Tables retained 100% width (614px in the retail layout and 966px in the wealth layout), navy 13px/600 uppercase headers with `.04em` spacing and a 2px navy rule, plus the `#f2f5fb` row hover.
+- Resting MDC form-field outline segments continued to compute to `rgb(170, 182, 207)`.
+- Dialog tokens continued to compute to a `16px` radius and the BofA navy shadow. Surface padding remained `28px`; title/content/actions horizontal padding remained zero, producing an effective 28px text inset while preserving vertical rhythm.
+- The selected date content span (`.mat-calendar-body-cell-content.mat-calendar-body-selected`) continued to compute the BofA ring as `rgb(241, 140, 155) 0 0 0 2px`.
+- Card titles remained `20px/28px/600`, and native `h1` remained Public Sans `32px` with browser-default line-height rather than receiving a new global Material hierarchy rule.
+
+### Verification
+
+- Angular 17 regression verification passed with the baseline suite counts: ui-components 5, retail-banking 3, and wealth-portal 2. Application builds completed with only the known initial bundle budget warnings; no `ERROR` lines were emitted.
+- The public API comparison against the Angular 14 baseline retained the same declaration file and runtime export lists. Only the previously characterized Angular/TypeScript declaration metadata and FESM target differences were present; no public symbol or signature changed.
