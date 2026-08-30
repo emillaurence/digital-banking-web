@@ -23,6 +23,7 @@
 - Updated the BofA overrides to MDC classes while preserving the pill button, card, table, row-hover, dialog, and calendar styling.
 - The outline color requires the MDC internal `.mdc-notched-outline` descendant because the outline is rendered by the MDC form-field surface rather than the Angular Material host. The dialog radius/padding/shadow requires the MDC internal `.mdc-dialog__surface` descendant for the same reason. These are the only internal MDC selectors targeted; no `::ng-deep` is used.
 - `.mat-calendar-body-selected` remains the datepicker selection class in Material 15, so the selected-date ring override is unchanged.
+- The initial `.mat-mdc-form-field .mdc-notched-outline { color: #aab6cf; }` override was a no-op: MDC sets `border-color` explicitly on the `__leading`, `__notch`, and `__trailing` segments rather than inheriting `currentColor`. Limited the override to resting, non-focused, non-invalid form fields and set `border-color` on all three segments, leaving focus and error states to Material's theme.
 
 ### Package metadata
 
