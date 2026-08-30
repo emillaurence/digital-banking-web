@@ -16,7 +16,7 @@ describe('BofaButtonComponent', () => {
     fixture.detectChanges();
 
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
-    expect(button.classList).toContain('mat-flat-button');
+    expect(button.classList).toContain('mat-mdc-unelevated-button');
     expect(button.classList).toContain('bofa-button--secondary');
   });
 
