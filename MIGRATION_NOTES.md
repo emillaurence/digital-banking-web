@@ -84,3 +84,29 @@
 
 - Angular 17 regression verification passed with the baseline suite counts: ui-components 5, retail-banking 3, and wealth-portal 2. Application builds completed with only the known initial bundle budget warnings; no `ERROR` lines were emitted.
 - The public API comparison against the Angular 14 baseline retained the same declaration file and runtime export lists. Only the previously characterized Angular/TypeScript declaration metadata and FESM target differences were present; no public symbol or signature changed.
+
+## Step 4: Angular 17.3 and Material 17.3 to 18.2
+
+### Update tooling
+
+- Selected the pinned Node `20.20.2` toolchain with `source ~/.nvm/nvm.sh && nvm use`; `.nvmrc` remains pinned to `20.20.2`.
+- Ran `npx ng update @angular/core@18 @angular/cli@18`, then `npx ng update @angular/material@18 --allow-dirty`. The workspace now uses Angular packages `18.2.14`, Angular CLI/build-angular `18.2.21`, Angular compiler CLI `18.2.14`, Material/CDK `18.2.14`, ng-packagr `18.2.1`, TypeScript `5.4.5`, and zone.js `0.14.10`.
+- Updated `@bofa/ui-components` Angular peer dependency ranges to `^18.2.0`.
+- The optional Angular 18 application-builder migration was declined. Existing `@angular-devkit/build-angular:browser` application builders and `:karma` test builders remain in place, with `clearContext: true` retained in both application Karma configurations. No standalone, `inject()`, control-flow, or legacy Material entry-point migration was applied.
+- Material 18 renamed the Material 2 Sass APIs to the `m2-*` namespace (`m2-define-palette`, `m2-define-light-theme`, `m2-define-typography-config`, and `m2-define-typography-level`). The theme remains Material 2; no `mat.define-theme` or Material 3 configuration was adopted.
+
+### Breakage and theming checks
+
+- Nothing broke in the TypeScript, strict-template, module bootstrap, test bootstrap, or component behavior checks. No specs were deleted, skipped, weakened, or changed; suite counts remain 5/3/2.
+- The computed-style audit found one Material 18 token-location change. The existing `--mdc-dialog-container-elevation` declaration became a no-op because Material 18's dialog surface reads `--mat-dialog-container-elevation-shadow`. Replaced it with `--mat-dialog-container-elevation-shadow: 0 12px 40px rgba(1, 33, 105, 0.25)` on the existing surface selector. The public `--mdc-dialog-container-shape` token continued to produce the intended 16px radius.
+- Dialog surface padding remained `28px`; title, content, and actions retained zero horizontal padding while preserving vertical rhythm, producing an effective 28px text inset.
+- Every design-system override was rechecked against rendered computed styles in the restarted Angular 18 applications. Buttons retained pill geometry, cards retained their border/radius/shadow, tables retained their width/header/hover treatment, resting MDC outline segments retained `rgb(170, 182, 207)`, the selected date retained the BofA ring, and component typography remained supplied through the theme's typography key. Native `h1` remained the browser-default 32px style rather than receiving a global Material hierarchy.
+
+### Verification and warnings
+
+- Under Node `20.20.2`, `npm run build:lib`, the `ui-components`, `retail-banking`, and `wealth-portal` Karma suites, and `npm run build:apps` all exited successfully. Counts were `5 SUCCESS`, `3 SUCCESS`, and `2 SUCCESS`, with no `ERROR` lines.
+- Application builds emitted only the known initial bundle budget warnings:
+  - Retail: budget `512.00 kB` exceeded by `222.61 kB` (`734.61 kB` total).
+  - Wealth: budget `512.00 kB` exceeded by `103.03 kB` (`615.02 kB` total).
+- No Sass deprecation warnings or Node engine warnings were emitted by the Angular 18 build/test gate.
+- The API artifacts were regenerated under `/home/ubuntu/step4-api/`. The declaration file list and runtime FESM export set remain unchanged. Differences versus `/home/ubuntu/baseline-api/` are limited to the characterized Angular/TypeScript declaration metadata (`export type`, input metadata, and trailing `never`) and the expected FESM target change to `fesm2022`; no public symbol, selector, input, service contract, or module export changed.

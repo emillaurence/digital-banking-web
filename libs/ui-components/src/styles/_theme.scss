@@ -64,7 +64,7 @@
 
   .mat-mdc-dialog-container .mdc-dialog__surface {
     --mdc-dialog-container-shape: 16px;
-    --mdc-dialog-container-elevation: 0 12px 40px rgba(1, 33, 105, 0.25);
+    --mat-dialog-container-elevation-shadow: 0 12px 40px rgba(1, 33, 105, 0.25);
     padding: 28px;
   }
 
@@ -75,7 +75,7 @@
 
 // Single entry point every app includes exactly once.
 @mixin bofa-theme() {
-  $theme: mat.define-light-theme((
+  $theme: mat.m2-define-light-theme((
     color: (
       primary: palettes.$bofa-primary,
       accent: palettes.$bofa-accent,
