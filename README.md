@@ -11,7 +11,7 @@ shared **BofA Design System** component library (`@bofa/ui-components`).
 
 | Project | Path | What it is |
 |---|---|---|
-| `ui-components` | `libs/ui-components` | `@bofa/ui-components` — the BofA Design System: shared components (button, card, text input, table, confirm dialog, datepicker) wrapping Angular Material 14 with our theme |
+| `ui-components` | `libs/ui-components` | `@bofa/ui-components` — the BofA Design System: shared components (button, card, text input, table, confirm dialog, datepicker) wrapping Angular Material 18 with our theme |
 | `retail-banking` | `apps/retail-banking` | Online Banking accounts dashboard (port 4200) |
 | `wealth-portal` | `apps/wealth-portal` | Merrill portfolio page (port 4300) |
 
@@ -21,9 +21,9 @@ from library source.
 
 ## Toolchain
 
-- **Node 16.20.2** (`.nvmrc` — run `nvm use`). Angular 14 does not support Node 18+.
+- **Node 20.20.2** (`.nvmrc` — run `nvm use`).
 - npm only (lockfile is `package-lock.json`); no yarn/pnpm.
-- Angular 14.2.x, Angular Material 14.2.x, TypeScript 4.7.x — versions are pinned exactly
+- Angular 18.2.x, Angular Material 18.2.x, TypeScript 5.x — versions are pinned exactly
   in `package.json`; do not upgrade ad hoc.
 
 ## Build order constraint
@@ -50,9 +50,10 @@ Every `karma.conf.js` sets `clearContext: true`; the schematic default of `false
 the Jasmine HTML reporter navigate after the run, which Karma logs as a spurious
 "full page reload" ERROR. If the launcher ever hangs or crashes on a new machine,
 install the pinned `puppeteer` contingency and point `CHROME_BIN` at its bundled
-Chromium in each `karma.conf.js` (see `plans/02-applications.md`).
+Chromium in each `karma.conf.js`.
 
 ## Migration baseline
 
-The tag `baseline-angular-14` marks the completed Angular 14 baseline. Migration
-rehearsals branch from — and reset to — this tag.
+The workspace is now on Angular 18. The protected tag `baseline-angular-14` marks
+the completed Angular 14 baseline and remains the restore point for migration
+rehearsals, which branch from — and reset to — this tag.
