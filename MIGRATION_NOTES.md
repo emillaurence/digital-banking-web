@@ -110,3 +110,10 @@
   - Wealth: budget `512.00 kB` exceeded by `103.03 kB` (`615.02 kB` total).
 - No Sass deprecation warnings or Node engine warnings were emitted by the Angular 18 build/test gate.
 - The API artifacts were regenerated under `/home/ubuntu/step4-api/`. The declaration file list and runtime FESM export set remain unchanged. Differences versus `/home/ubuntu/baseline-api/` are limited to the characterized Angular/TypeScript declaration metadata (`export type`, input metadata, and trailing `never`) and the expected FESM target change to `fesm2022`; no public symbol, selector, input, service contract, or module export changed.
+
+### Final clean-install verification
+
+- With Node `20.20.2`, removed `node_modules` and `dist`, then ran `npm ci` followed by `npm run build:all` and `npm run test:all`. `npm ci` completed directly from `package-lock.json` without requiring `npm install`; `package.json` and the lockfile agree.
+- The clean build passed for the library and both applications. The clean test cycle passed with `ui-components` 5, `retail-banking` 3, and `wealth-portal` 2; no `ERROR` lines were emitted. Total wall-clock time for install, build, and test was 50 seconds.
+- `npm ci` emitted dependency deprecation notices for `inflight`, `rimraf@3`, `glob@7`, `critters`, `tar`, `uuid@8`, and `glob@10`, plus the existing audit summary of 55 vulnerabilities (7 low, 14 moderate, 33 high, 1 critical). No install error occurred. Application bundle budget warnings remained the only build warnings.
+- The final clean-build API artifacts are under `/home/ubuntu/final-api/`. Against `/home/ubuntu/baseline-api/`, `BofaButtonVariant` changed from `export declare type` to `export type` due to TypeScript declaration syntax; each component's Angular `ɵcmp` metadata now records input aliases with `required: false` and adds the trailing `never` metadata parameter; and FESM output moved from `fesm2015`/`fesm2020` to `fesm2022`. These are generated metadata/packaging changes only. The declaration file list, runtime exports, selectors, inputs, public signatures, service contract, and module exports are unchanged.

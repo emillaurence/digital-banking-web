@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
 
-// Material 15 typography levels preserve the v14 design-system values.
+// M2 typography levels preserve the v14 design-system values.
 $bofa-typography: mat.m2-define-typography-config(
   $font-family: '"Public Sans", "Helvetica Neue", Arial, sans-serif',
   $headline-5: mat.m2-define-typography-level(28px, 36px, 700),
