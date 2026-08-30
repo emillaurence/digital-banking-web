@@ -9,6 +9,13 @@
     border-radius: 9999px;
     padding: 0 22px;
     min-width: 96px;
+    line-height: 16px;
+  }
+
+  .mat-mdc-button-base.bofa-button.bofa-button--secondary,
+  .mat-mdc-button-base.bofa-button.bofa-button--ghost {
+    background-color: transparent;
+    color: #012169;
   }
 
   .mat-mdc-card.bofa-card {
@@ -42,10 +49,26 @@
     }
   }
 
+  .mat-mdc-dialog-container {
+    --mdc-dialog-container-shape: 16px;
+    --mdc-dialog-container-elevation: 0 12px 40px rgba(1, 33, 105, 0.25);
+  }
+
   .mat-mdc-dialog-container .mdc-dialog__surface {
-    border-radius: 16px;
     padding: 28px;
-    box-shadow: 0 12px 40px rgba(1, 33, 105, 0.25);
+  }
+
+  .mat-mdc-dialog-container {
+    .mat-mdc-dialog-title,
+    .mat-mdc-dialog-actions {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .mat-mdc-dialog-content.mdc-dialog__content {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 
   .mat-calendar-body-selected {
@@ -65,6 +88,7 @@
   ));
 
   @include mat.core();
+  @include mat.typography-hierarchy(typography.$bofa-typography, 'body');
   @include mat.all-component-themes($theme);
   @include overrides();
 }
