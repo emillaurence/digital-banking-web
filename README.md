@@ -21,9 +21,9 @@ from library source.
 
 ## Toolchain
 
-- **Node 16.20.2** (`.nvmrc` — run `nvm use`). Angular 14 does not support Node 18+.
+- **Node 18.20.4** (`.nvmrc` — run `nvm use`). Angular 18 requires Node 18.19+.
 - npm only (lockfile is `package-lock.json`); no yarn/pnpm.
-- Angular 14.2.x, Angular Material 14.2.x, TypeScript 4.7.x — versions are pinned exactly
+- Angular 18.2.x, Angular Material 18.2.x, TypeScript 5.5.x — versions are pinned exactly
   in `package.json`; do not upgrade ad hoc.
 
 ## Build order constraint
