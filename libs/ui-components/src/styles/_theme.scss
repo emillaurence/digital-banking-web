@@ -2,25 +2,72 @@
 @use 'palettes';
 @use 'typography';
 
-// Design-system restyling of Material internals. These target v14 (pre-MDC,
-// "legacy") class names and must live in global styles, not component styles.
+// v14-rendered hint-row height that MDC no longer reserves.
+$v14-form-field-hint-row-height: 26.78px;
+
+// Design-system restyling of Material internals in global styles.
 @mixin overrides() {
-  .mat-button-base.bofa-button {
+  .mat-mdc-button-base.bofa-button {
     border-radius: 9999px;
     padding: 0 22px;
     min-width: 96px;
   }
 
-  .mat-card.bofa-card {
+  .mat-mdc-card.bofa-card {
     border-radius: 12px;
     border: 1px solid #e2e7f0;
     box-shadow: 0 2px 10px rgba(1, 33, 105, 0.07) !important;
+
+    .mat-mdc-card-header {
+      padding: 16px 32px 0;
+    }
+
+    .mat-mdc-card-title {
+      line-height: normal;
+      color: rgba(0, 0, 0, 0.87);
+      margin: 0 0 12px;
+    }
+
+    .mat-mdc-card-subtitle {
+      margin: -8px 0 16px;
+      line-height: normal;
+    }
+
+    .mat-mdc-card-content {
+      font-size: 15px;
+      line-height: normal;
+      color: rgba(0, 0, 0, 0.87);
+    }
   }
 
-  table.mat-table.bofa-table {
+  table.mat-mdc-table.bofa-table {
     width: 100%;
 
-    th.mat-header-cell {
+    th.mat-mdc-header-cell,
+    td.mat-mdc-cell {
+      padding: 0 0 0 24px;
+      line-height: normal;
+    }
+
+    th.mat-mdc-header-cell:not(:first-child),
+    td.mat-mdc-cell:not(:first-child) {
+      padding-left: 0;
+    }
+
+    th.mat-mdc-header-cell:last-child,
+    td.mat-mdc-cell:last-child {
+      padding-right: 24px;
+    }
+
+    tr.mat-mdc-header-row {
+      height: 56px;
+    }
+
+    tr.mat-mdc-row {
+      height: 48px;
+    }
+
+    th.mat-mdc-header-cell {
       color: #012169;
       font-weight: 600;
       font-size: 13px;
@@ -29,29 +76,95 @@
       border-bottom: 2px solid #012169;
     }
 
-    tr.mat-row:hover {
+    tr.mat-mdc-row:hover {
       background: #f2f5fb;
     }
   }
 
-  .mat-form-field-appearance-outline .mat-form-field-outline {
-    color: #aab6cf;
+  .mat-mdc-form-field.mat-form-field-appearance-outline {
+    .mat-mdc-text-field-wrapper {
+      padding-left: 11.25px;
+      padding-right: 11.25px;
+      margin-top: 4px;
+      margin-bottom: -4px;
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+      min-height: $v14-form-field-hint-row-height;
+      padding-left: 11.25px;
+      padding-right: 11.25px;
+    }
+
+    .mdc-notched-outline .mdc-notched-outline__leading,
+    .mdc-notched-outline .mdc-notched-outline__notch,
+    .mdc-notched-outline .mdc-notched-outline__trailing {
+      border-color: #aab6cf;
+      color: #aab6cf;
+    }
+
+    .mat-mdc-form-field-hint {
+      color: rgba(0, 0, 0, 0.6);
+    }
+
+    .mdc-floating-label.mat-mdc-floating-label {
+      left: 0;
+      line-height: 16.875px;
+    }
+
+    .mat-mdc-form-field-input-control.mdc-text-field__input {
+      line-height: 16.875px;
+    }
+
+    .mat-mdc-form-field-icon-suffix {
+      .mat-mdc-icon-button.mat-mdc-button-base {
+        width: 38px;
+        height: 38px;
+        padding: 7px;
+      }
+    }
   }
 
-  .mat-dialog-container {
-    border-radius: 16px;
-    padding: 28px;
-    box-shadow: 0 12px 40px rgba(1, 33, 105, 0.25);
+  .mat-mdc-dialog-container .mat-mdc-dialog-surface {
+    // v14's padding and radius override was ineffective; match its rendered baseline.
+    border-radius: 4px;
+    padding: 24px;
+    // Beat MDC's .mdc-dialog__surface elevation rule.
+    box-shadow: 0 12px 40px rgba(1, 33, 105, 0.25) !important;
   }
 
-  .mat-calendar-body-selected {
+  .mat-mdc-dialog-container .mat-mdc-dialog-title {
+    padding: 0;
+    margin: 0 0 20px;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .mat-mdc-dialog-container .mat-mdc-dialog-surface .mat-mdc-dialog-content {
+    // v14 rendered 16px here; body-1 is 15px, so this is deliberate parity.
+    font-size: 16px;
+    line-height: normal;
+    color: rgba(0, 0, 0, 0.87);
+    margin: 0 -24px;
+    padding: 0 24px;
+  }
+
+  .mat-mdc-dialog-container .mat-mdc-dialog-actions {
+    padding: 8px 0;
+    margin: 0 0 -24px;
+    box-sizing: content-box;
+  }
+
+  .mat-calendar-body-selected,
+  .mat-calendar-body-today.mat-calendar-body-selected {
     box-shadow: 0 0 0 2px #f18c9b;
   }
 }
 
 // Single entry point every app includes exactly once.
 @mixin bofa-theme() {
-  @include mat.core(typography.$bofa-typography);
+  @include mat.core();
 
   $theme: mat.define-light-theme((
     color: (
@@ -59,6 +172,7 @@
       accent: palettes.$bofa-accent,
       warn: palettes.$bofa-warn,
     ),
+    typography: typography.$bofa-typography,
   ));
 
   @include mat.all-component-themes($theme);
