@@ -145,3 +145,13 @@
 ## Angular 15 -> 16
 
 No Angular 16-specific source or Material breakage surfaced in this step. The core/CLI and Material schematics completed without source edits, the existing MDC entry points remained valid, and no compatibility shims were introduced. The framework-only package, TypeScript, `ng-packagr`, and `zone.js` version updates are recorded in `package.json`; the existing Angular 15 design-system styles and tests remained compatible.
+
+## Angular 16 -> 17
+
+### Workspace target option rename
+
+- **Symptom:** Angular CLI 17 no longer accepts the workspace's `browserTarget` option on the dev-server and extract-i18n targets.
+- **Cause:** CLI 17 renamed this target option to `buildTarget`.
+- **Fix:** Kept the existing browser and Karma builders and accepted the CLI schematic's focused rename to `buildTarget`; no application-builder migration was performed.
+
+No Angular 17-specific Angular or Material source breakage surfaced beyond this required workspace option rename. The Material schematic made no source changes, existing MDC entry points remained valid, and no standalone-component, signals, new control-flow, or theming-system migrations were introduced.
