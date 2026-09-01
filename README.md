@@ -21,9 +21,9 @@ from library source.
 
 ## Toolchain
 
-- **Node 18.20.4** (`.nvmrc` — run `nvm use`). Angular 17 requires Node 18+.
+- **Node 18.20.4** (`.nvmrc` — run `nvm use`). Angular 18 requires Node 18.19+.
 - npm only (lockfile is `package-lock.json`); no yarn/pnpm.
-- Angular 17.3.x, Angular Material 17.3.x, TypeScript 5.3.x — versions are pinned exactly
+- Angular 18.2.x, Angular Material 18.2.x, TypeScript 5.5.x — versions are pinned exactly
   in `package.json`; do not upgrade ad hoc.
 
 ## Build order constraint

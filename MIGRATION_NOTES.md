@@ -155,3 +155,23 @@ No Angular 16-specific source or Material breakage surfaced in this step. The co
 - **Fix:** Kept the existing browser and Karma builders and accepted the CLI schematic's focused rename to `buildTarget`; no application-builder migration was performed.
 
 No Angular 17-specific Angular or Material source breakage surfaced beyond this required workspace option rename. The Material schematic made no source changes, existing MDC entry points remained valid, and no standalone-component, signals, new control-flow, or theming-system migrations were introduced.
+
+## Angular 17 -> 18
+
+### Material M2 Sass API names
+
+- **Symptom:** Material 18 no longer exposes the unprefixed `define-palette`, `define-light-theme`, `define-typography-config`, and `define-typography-level` Sass APIs, or the unprefixed `$red-palette` value used by the existing theme.
+- **Cause:** Material 18 makes the Material 2 Sass APIs explicit while sharing theming internals with the M3-capable token and system-variable implementation.
+- **Fix:** Accepted the schematic's `m2-` API renames and `$m2-red-palette` value in the existing palette, theme, and typography files. Retained the existing `define-light-theme`-based M2 theme, palettes, and typography rather than migrating to M3 or the new theming system.
+
+### Angular 18 workspace and dependency updates
+
+- **Symptom:** The Angular 17 workspace dependencies and library peer contract did not satisfy Angular 18.
+- **Cause:** Angular 18 requires the framework, CLI, CDK/Material, compiler, `ng-packagr`, TypeScript, `zone.js`, and library peer ranges to advance together.
+- **Fix:** Updated the pinned Angular packages to 18.2.x, `ng-packagr` to 18.2.1, TypeScript to 5.5.4, `zone.js` remained at the Angular 18-compatible exact pin 0.14.10, and the library peers to `^18.2.0`. Existing Karma/Jasmine tilde ranges were left unchanged because the schematic did not request updates.
+
+### Node and out-of-scope schematic migrations
+
+- **Symptom:** Angular 18's migration offered an application-builder migration after the required framework update.
+- **Cause:** The Angular CLI 18 update presents the application/esbuild builder migration as an optional follow-up; Angular 18 itself accepts the declared Node 18.20.4 toolchain.
+- **Fix:** Kept `.nvmrc` at Node 18.20.4 and updated the README requirement to Node 18.19+. Did not run the optional application-builder migration, and introduced no standalone components, signals, new control-flow syntax, or M3/new theming migration.
