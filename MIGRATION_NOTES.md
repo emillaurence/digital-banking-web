@@ -141,3 +141,7 @@
 - **Symptom:** The Angular 15 workspace was still declared and documented as requiring Node 16.20.2.
 - **Cause:** The Node declaration and README had not been advanced with the Angular major-version migration.
 - **Fix:** Set `.nvmrc` and the README toolchain entry to Node 18.20.4, then verified the complete build and test suite on that declared version.
+
+## Angular 15 -> 16
+
+No Angular 16-specific source or Material breakage surfaced in this step. The core/CLI and Material schematics completed without source edits, the existing MDC entry points remained valid, and no compatibility shims were introduced. The framework-only package, TypeScript, `ng-packagr`, and `zone.js` version updates are recorded in `package.json`; the existing Angular 15 design-system styles and tests remained compatible.

@@ -21,9 +21,9 @@ from library source.
 
 ## Toolchain
 
-- **Node 18.20.4** (`.nvmrc` — run `nvm use`). Angular 15 requires Node 18+.
+- **Node 18.20.4** (`.nvmrc` — run `nvm use`). Angular 16 requires Node 18+.
 - npm only (lockfile is `package-lock.json`); no yarn/pnpm.
-- Angular 14.2.x, Angular Material 14.2.x, TypeScript 4.7.x — versions are pinned exactly
+- Angular 16.2.x, Angular Material 16.2.x, TypeScript 5.1.x — versions are pinned exactly
   in `package.json`; do not upgrade ad hoc.
 
 ## Build order constraint
