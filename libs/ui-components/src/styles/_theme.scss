@@ -51,7 +51,8 @@
 
 // Single entry point every app includes exactly once.
 @mixin bofa-theme() {
-  @include mat.core(typography.$bofa-typography);
+  @include mat.all-legacy-component-typographies(typography.$bofa-typography);
+  @include mat.legacy-core();
 
   $theme: mat.define-light-theme((
     color: (
@@ -61,6 +62,6 @@
     ),
   ));
 
-  @include mat.all-component-themes($theme);
+  @include mat.all-legacy-component-themes($theme);
   @include overrides();
 }
