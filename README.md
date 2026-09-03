@@ -21,9 +21,9 @@ from library source.
 
 ## Toolchain
 
-- **Node 20.18.1** (`.nvmrc` — run `nvm use`). Angular 17+ requires Node 18.13+ / 20.9+.
+- **Node 20.18.1** (`.nvmrc` — run `nvm use`). Angular 18 requires Node 18.19+ / 20.11+ / 22.
 - npm only (lockfile is `package-lock.json`); no yarn/pnpm.
-- Angular 17.3.x, Angular Material 17.3.x (MDC components), TypeScript 5.4.x — versions are
+- Angular 18.2.x, Angular Material 18.2.x (MDC components, M2 theme API), TypeScript 5.4.x — versions are
   pinned exactly in `package.json`; do not upgrade ad hoc. See `MIGRATION_NOTES.md` for the
   step-by-step record of the migration from 14.
 

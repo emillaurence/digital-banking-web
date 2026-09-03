@@ -301,3 +301,91 @@ node -v            -> v20.18.1
 npm run test:all   -> ui-components 5/5 SUCCESS, retail-banking 3/3 SUCCESS, wealth-portal 2/2 SUCCESS, EXIT=0, 0 ERROR lines
 npm run build:apps -> retail-banking Initial total 730.28 kB (warning budget), wealth-portal 597.17 kB (warning budget), EXIT=0
 ```
+
+---
+
+## Step 5 — Angular 17 → 18 (Node 20.18.1)
+
+Commands: `ng update @angular/core@18 @angular/cli@18`, then `ng update @angular/material@18 --allow-dirty`.
+Resulting versions: core/common/… 18.2.14, cli/build-angular 18.2.21, cdk/material 18.2.14, ng-packagr 18.2.1;
+TypeScript stays 5.4.5 (inside v18's `>=5.4 <5.6`), zone.js stays 0.14.10. Library `peerDependencies`
+bumped `^14.2.0` → `^18.2.0` for `@angular/{common,core,forms,cdk,material}` (`rxjs ^7.5.0` unchanged).
+README toolchain section updated to Angular 18.
+
+Migrations run — `@angular/cli`: the *optional* `use-application-builder` migration was offered and **not run**
+(builders stay `browser` / `ng-packagr` / `karma` per plan). `@angular/core`: invalid two-way binding
+longform, `HttpClientModule` → `provideHttpClient`, `afterRender` phase API, `BootstrapContext` in
+`main.server.ts` — all "No changes made". `@angular/material` v18: **3 files modified** —
+`_palettes.scss`, `_theme.scss`, `_typography.scss`: `mat.define-palette` → `mat.m2-define-palette`,
+`mat.$red-palette` → `mat.$m2-red-palette`, `mat.define-light-theme` → `mat.m2-define-light-theme`,
+`mat.define-typography-config/-level` → `mat.m2-define-…`. Pure rename of the 2018 (M2) theming API so
+it can coexist with the new M3 API; no values changed.
+
+### Breakages
+
+None.
+
+### Silent changes (compiled/passed, but different)
+
+- Probe diff step 4 → step 5, both apps: **no computed-style differences**. Only `ng-tns-c<hash>` values and
+  one new structural class on the form-field outline pieces (`mat-mdc-notch-piece` alongside
+  `mdc-notched-outline__leading`). Our `#aab6cf` outline override still targets the `mdc-notched-outline__*`
+  classes, which are still present, and the probe confirms `border-bottom: 1px solid rgb(170, 182, 207)`.
+- Budget reporting: CLI 18 prints the 500 kB budget as `512.00 kB` (it now reports in KiB). Same configured
+  budget; retail 736.49 kB and wealth 616.90 kB initial are both over the *warning* budget and far under the
+  1 MB *error* budget → no budget change.
+- No console errors in either app.
+
+### No-ops / superseded
+
+None.
+
+### Did not break
+
+Library partial build under ng-packagr 18, all 10 specs under Karma builder 18, M2 theme Sass after the API
+rename (no deprecation output), CVA form components, `browser` builder apps.
+
+### Deviation from plan
+
+None. Optional application-builder migration deliberately declined (plan item 5).
+
+### Evidence
+
+```
+node -v            -> v20.18.1
+npm run test:all   -> ui-components 5/5 SUCCESS, retail-banking 3/3 SUCCESS, wealth-portal 2/2 SUCCESS, EXIT=0, 0 ERROR lines
+npm run build:apps -> retail-banking Initial total 736.49 kB (warning budget), wealth-portal 616.90 kB (warning budget), EXIT=0
+```
+
+---
+
+## Wrap-up: public API and cumulative visual delta (Angular 14 → 18)
+
+**Public API is unchanged.** `git diff baseline-angular-14 -- libs/ui-components/src/public-api.ts
+libs/ui-components/src/lib/**/*.component.ts libs/ui-components/src/lib/dialog/dialog.service.ts
+libs/ui-components/src/lib/**/*.html` is empty: every exported symbol (`UiComponentsModule`, the six `Bofa*`
+components, `BofaDialogService`, `BofaTableColumn`, `BofaConfirmDialogData`), selector, `@Input`, CVA
+behaviour and the `confirm(): Observable<boolean>` contract are byte-identical to the baseline. The Step 1/2
+edits to `dialog.service.ts` / `confirm-dialog.component.ts` (legacy imports, then back) net to zero. The only
+source changes in the library are `ui-components.module.ts` (net zero as well), SCSS, and the spec
+DOM-class assertions. Consumers (`apps/*/app.module.ts`, `app.component.ts/html`, `styles.scss` via
+`bofa.bofa-theme()`) were not edited except for their two spec selectors.
+
+**Cumulative silent visual delta vs Angular 14** (all introduced at Step 2 by MDC; steps 3–5 added nothing).
+For the user to accept or reject:
+
+| Element | Angular 14 | Angular 18 |
+|---|---|---|
+| Card padding / height | 16px / 126px | 0 (header+content 16px each) / 115px |
+| Card title line box | 24px | 28px |
+| Table cell padding | `0 0 0 24px` | `0 16px` |
+| Table row height | 48px | 52px |
+| Table cell background | transparent | white (invisible on white cards) |
+| Card / form-field text colour | `rgba(0,0,0,.87)` | inherits app body `#1c2540` |
+| Table text colour | `rgba(0,0,0,.87)` | `rgba(0,0,0,.87)` (navy at step 2 only; v16 tokens restored it) |
+| `<input>` box height / form-field height | 16.9px / 83px | 24px / 78px |
+| Dialog inset | 24px on container | 24px on title/content/actions |
+
+Everything else the design system specifies (pill buttons, navy primary / navy-on-transparent secondary
+and ghost, card radius/border/shadow, uppercase navy table headers with 2px rule, `#aab6cf` outline,
+15px body, dialog shadow, calendar selected ring) renders identically to the baseline.
