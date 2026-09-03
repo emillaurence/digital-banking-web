@@ -200,3 +200,53 @@ npm run build:apps -> retail-banking Initial Total 715.48 kB (warning budget; +5
                       CSS is heavier), wealth-portal 527.54 kB (now also over the 500 kB warning budget; both
                       far under the 1 MB error budget), EXIT=0
 ```
+
+---
+
+## Step 3 — Angular 15 → 16 (Node 16.20.2)
+
+Commands: `ng update @angular/core@16 @angular/cli@16`, then `ng update @angular/material@16 --allow-dirty`
+(`--allow-dirty` only because the first update's `package.json`/lock changes were intentionally left
+uncommitted so both updates land in this one commit). Resulting versions: core/common/… 16.2.12,
+cli/build-angular 16.2.16, cdk/material 16.2.14, ng-packagr 16.2.3, zone.js 0.13.3; TypeScript stays 4.9.5
+(inside v16's `>=4.9.3 <5.2` range).
+
+Migrations run: `defaultProject` removal, `defaultCollection`→`schematicCollections`, server-builder
+`buildOptimizer`, guard/resolver interface removal, `moduleId` removal — all "No changes made" (nothing in
+this workspace used them). CDK/Material v16 migrations: no changes.
+
+### Breakages
+
+None. First run of the full sequence was green.
+
+### Silent changes (compiled/passed, but different)
+
+- **Table text colour** (both apps): `tr.mat-mdc-row` computed `color` `rgb(28,37,64)` (step 2) →
+  `rgba(0,0,0,.87)`. Material 16 moved table colours to tokens (`--mat-table-row-item-label-text-color`,
+  set by `mat.all-component-themes` to the theme foreground) so the MDC table once again paints its own
+  text colour instead of inheriting the app's navy-black body colour. This is the *Angular 14 baseline*
+  value returning — step 2's navy rows were the transient state. Reported, not fought.
+- `ng-tns-c<N>` scope attribute values changed (v16 hashes component ids) — not visual.
+- Everything else in the probe (buttons incl. secondary/ghost tokens, cards, table geometry, form-field
+  outline `#aab6cf`, 15px inputs, dialog surface shadow) is byte-identical to step 2.
+
+### No-ops / superseded
+
+None.
+
+### Did not break
+
+Library partial build under ng-packagr 16, all 10 specs (Karma builder discovery unchanged), MDC theme
+Sass under Material 16 (no deprecation output), CVA form components, app bootstrap.
+
+### Deviation from plan
+
+None.
+
+### Evidence
+
+```
+npm run test:all   -> ui-components 5/5 SUCCESS, retail-banking 3/3 SUCCESS, wealth-portal 2/2 SUCCESS, EXIT=0, 0 ERROR lines
+npm run build:apps -> retail-banking Initial Total 707.33 kB (warning budget), wealth-portal 497.40 kB
+                      (back under the 500 kB warning), EXIT=0
+```
