@@ -83,3 +83,120 @@ npm run test:all   -> TOTAL: 5 SUCCESS / 3 SUCCESS / 2 SUCCESS, EXIT=0
 npm run build:apps -> retail-banking Initial Total 663.32 kB (warning budget, +60 kB vs 14: legacy + MDC
                       styles both shipped by Material 15), wealth-portal 480.62 kB, EXIT=0
 ```
+
+---
+
+## Step 2 — Legacy → MDC Material components (still Angular 15.2 / Node 16.20.2)
+
+Command: `ng generate @angular/material:mdc-migration` (all components, `libs/ui-components`; the schematic rewrote imports, specs and SCSS selectors and left `TODO(mdc-migration)` comments). Because
+the Step 1 schematic had missed `ui-components.module.ts`, the module was reset to its baseline (already
+non-legacy) form so the library never sat in a mixed Legacy/MDC state. No dependency versions change here;
+this step exists so that MDC-caused differences can't be confused with framework-major ones.
+
+### Breakages
+
+1. **`BofaButtonComponent` spec — `mat-flat-button` class gone**
+   - Symptom: `Expected [ 'mdc-button', 'mdc-button--unelevated', 'mat-mdc-unelevated-button', … ] to contain 'mat-flat-button'`.
+   - Root cause: MDC renamed the host classes; `mat-flat-button` → `mat-mdc-unelevated-button`.
+   - Fix (authorised assertion update, same check): `toContain('mat-mdc-unelevated-button')`. The test still
+     proves the `mat-flat-button` directive is applied to the rendered `<button>`.
+   - Evidence: `ng test ui-components` → 5/5 SUCCESS.
+2. **`BofaTableComponent` spec + both app specs — `th.mat-header-cell` / `tr.mat-row` selectors match 0**
+   - Symptom: `Expected 0 to be 2` (lib), `Expected 0 to be 5` (retail, wealth).
+   - Root cause: MDC table cells/rows are `mat-mdc-header-cell` / `mat-mdc-row` (`mat-header-cell`/`mat-row`
+     no longer emitted).
+   - Fix (authorised): selectors → `th.mat-mdc-header-cell`, `tr.mat-mdc-row`, `bofa-table tr.mat-mdc-row`;
+     expected counts unchanged (2 / 2 / 5 / 5).
+   - Evidence: 5/5, 3/3, 2/2 SUCCESS.
+3. **Secondary / ghost button variants rendered black-on-white (silent at test time, loud in the probe)**
+   - Symptom: wealth `.bofa-button--secondary` computed `color: rgb(0,0,0)` / `background-color: rgb(255,255,255)`
+     (baseline `rgb(1,33,105)` / transparent). The design-system outline ring (inset box-shadow) still drew, so
+     the button was navy-ringed with black text. Same for the dialog's `Cancel` (ghost).
+   - Root cause: MDC buttons paint colour via CSS custom properties — `.mat-mdc-unelevated-button:not(:disabled)
+     { color: var(--mdc-filled-button-label-text-color) }` and `.mat-unthemed { --mdc-filled-button-label-text-color: #000 }`
+     — from *component* styles inserted after our component style block; equal specificity, later wins.
+   - Fix: `button.component.scss` now also sets the two tokens on the variant classes
+     (`--mdc-filled-button-container-color: transparent; --mdc-filled-button-label-text-color: #012169`), keeping
+     the plain `background`/`color` declarations as fallbacks.
+   - Evidence (probe, wealth): secondary `color rgb(1,33,105)` / `bg rgba(0,0,0,0)`; dialog ghost
+     `color rgb(1,33,105)` / `bg rgba(0,0,0,0)`; primary unchanged `rgb(255,255,255)` on `rgb(1,33,105)`.
+4. **Form-field resting outline lost its `#aab6cf` colour**
+   - Symptom: the schematic flagged the rule with `TODO(mdc-migration)`; probe showed the MDC outline at
+     Material's default `rgba(0,0,0,.38)`.
+   - Root cause: `.mat-form-field-outline` no longer exists; MDC draws the outline with
+     `.mdc-notched-outline__{leading,notch,trailing}` borders. (v15 has no `--mdc-outlined-text-field-*` tokens
+     yet — they arrive in v16/17, so a class-based override is the only option at this step.)
+   - Fix: `.bofa-field .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__* { border-color: #aab6cf }`
+     — specificity sits between Material's resting rule and its hover/focus rules, so hover (dark) and
+     focus (primary) outlines are untouched, matching the legacy behaviour.
+   - Evidence (probe, retail): `.mdc-notched-outline__leading` `border-bottom: 1px solid rgb(170, 182, 207)`.
+5. **Dialog override moved to the wrong box**
+   - Symptom: schematic rewrote `.mat-dialog-container` → `.mat-mdc-dialog-container` verbatim. On MDC the
+     container is a transparent, padding-less wrapper around `.mat-mdc-dialog-surface`, so `padding: 28px` +
+     our shadow produced a visible translucent halo 28px outside the white dialog (step2-wealth screenshot), and
+     the surface kept Material's default black elevation shadow.
+   - Root cause: MDC split container (layout) from surface (paint).
+   - Fix: override is now `.mat-mdc-dialog-container .mdc-dialog__surface.mat-mdc-dialog-surface { box-shadow: … }`
+     (three classes to out-rank the dialog's component-level elevation rule, which is injected after the theme).
+     The never-effective `border-radius: 16px` / `padding: 28px` were dropped rather than ported — see baseline
+     note: they did not render on Angular 14 either, so porting them would have *changed* the UI.
+   - Evidence (probe, wealth): dialog surface `box-shadow: rgba(1, 33, 105, 0.25) 0px 12px 40px 0px`, identical
+     to baseline; `border-radius: 4px` identical to baseline.
+6. **Body text in form fields grew 15px → 16px**
+   - Symptom: probe `form-field.font-size` and `text-input.font-size` `15px → 16px`.
+   - Root cause: the schematic mapped legacy `$body-1` (15px, used by inputs) to `$body-2`, but MDC form-field
+     and dialog body text read `body-1`, which fell back to Material's default 16px.
+   - Fix: `_typography.scss` defines `$body-1` **and** `$body-2` as the 15px/24px level.
+   - Evidence (probe, retail): `text-input.font-size 15px`, no longer in the diff.
+
+### Silent changes (compiled/passed, but different) — reported, not fought
+
+All measured with the probe, Angular 14 baseline → this step, both apps unless noted. None affects tests.
+
+| Element | Baseline | MDC | Notes |
+|---|---|---|---|
+| `mat-card` padding / height | `16px` / 126px | `0px` / 115px | MDC pads header+content (16px each) instead of the card; title moves 16px left (x 123→107), lines up with content. Density change. |
+| `mat-card-title` line box | 24px | 28px | MDC card title uses headline-6 line-height 28px. |
+| Table cell padding | `0 0 0 24px` | `0 16px` | MDC data-table default; last column now has right padding. |
+| Table row height | 48px | 52px | MDC default row height. |
+| Table header/cell `background-color` | transparent | `#fff` | MDC paints cells; invisible on white cards. |
+| Table/card/form-field `color` | `rgba(0,0,0,.87)` | `rgb(28,37,64)` | Legacy components set `.87` black themselves; MDC inherits the app's body colour. Text is now the design-system navy-black rather than Material grey-black. |
+| `<input>` box height | 16.9px | 24px | MDC input line-height; form-field overall 83px → 78px. |
+| Dialog padding | 24px on container | 0 on container; 24px on title/content/actions | Same visual inset, different DOM. |
+| Primary button `box-shadow` | three `0 0 0 0` layers | `none` | Zero-size shadow → none: no visible change. |
+| Material DOM classes | `mat-*` | `mat-mdc-*` + `mdc-*` | Not public API; only our own specs asserted on them (fixed above). |
+
+Counts unchanged: cards 5 / 4, rows 5 / 5, buttons per page identical. No console errors in either app.
+
+### No-ops / superseded
+
+- Schematic's `.mat-mdc-dialog-container { border-radius: 16px; padding: 28px }` (a literal rename of the legacy
+  rule) — superseded by the surface-targeted shadow-only rule (breakage 5). Porting the padding/radius was
+  attempted first; it produced the halo and is what the `step2-wealth` screenshot shows.
+- First dialog-shadow fix used `.mat-mdc-dialog-container .mat-mdc-dialog-surface` (two classes) — compiled,
+  no effect (component-level elevation rule injected later at equal specificity). Superseded by the three-class
+  selector.
+- Schematic's `TODO(mdc-migration)` comments removed once each flagged rule was resolved.
+- `mat.all-component-typographies` / `mat.core()` / `mat.all-component-themes` written by the schematic kept as-is.
+
+### Did not break
+
+Library build (ng-packagr), `BofaDialogService.confirm()` contract and its 2 specs (`MatDialog` from
+`@angular/material/dialog` replaces `MatLegacyDialog`, same `afterClosed()` shape), reactive-forms CVA on
+text-input/datepicker, datepicker (never had a legacy variant), theme Sass compile, app bootstrap.
+
+### Deviation from plan
+
+Four style fixes (breakages 3–6) go beyond "rename selectors". Justification: each restores a *design-system
+intent that rendered on Angular 14* (navy secondary/ghost buttons, `#aab6cf` outline, navy dialog shadow, 15px
+body) rather than normalising MDC density. Density/padding/row-height differences were deliberately left as-is
+and are tabled above for review.
+
+### Evidence
+
+```
+npm run test:all   -> ui-components 5/5 SUCCESS, retail-banking 3/3 SUCCESS, wealth-portal 2/2 SUCCESS, EXIT=0, 0 ERROR lines
+npm run build:apps -> retail-banking Initial Total 715.48 kB (warning budget; +52 kB vs step 1: MDC component
+                      CSS is heavier), wealth-portal 527.54 kB (now also over the 500 kB warning budget; both
+                      far under the 1 MB error budget), EXIT=0
+```
