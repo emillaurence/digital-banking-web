@@ -250,3 +250,54 @@ npm run test:all   -> ui-components 5/5 SUCCESS, retail-banking 3/3 SUCCESS, wea
 npm run build:apps -> retail-banking Initial Total 707.33 kB (warning budget), wealth-portal 497.40 kB
                       (back under the 500 kB warning), EXIT=0
 ```
+
+---
+
+## Step 4 — Angular 16 → 17, Node 16.20.2 → 20.18.1
+
+Node switched first (`nvm install 20.18.1 && nvm use 20.18.1`; Angular 17 requires ^18.13 || ^20.9), then
+`ng update @angular/core@17 @angular/cli@17` (the CLI installs a temporary 17.3.17 CLI to run the update),
+then `ng update @angular/material@17 --allow-dirty`. Resulting versions: core/common/… 17.3.12,
+cli/build-angular 17.3.17, cdk/material 17.3.10, ng-packagr 17.3.0, **typescript 5.4.5** (was 4.9.5),
+zone.js 0.14.10. `.nvmrc` → `20.18.1`; README toolchain section updated.
+
+Migrations run: `@nguniversal` → `@angular/ssr` (n/a), deprecated `angular.json` options
+(**1 file modified**: `browserTarget` → `buildTarget` in both apps' `serve` and `extract-i18n` targets —
+option rename only, the `browser`/`dev-server` builders are unchanged as planned), `browser-sync` (n/a),
+control-flow `@`/`}` entity escaping (no changes: no templates contain literal `@` or `}`), `TransferState`
+import move (n/a), `useJit`/`missingTranslation` removal (n/a), invalid two-way binding longform (n/a).
+CDK/Material v17: no changes.
+
+### Breakages
+
+None. TypeScript 5.4 under the workspace's strict flags compiled the library and both apps without edits.
+
+### Silent changes (compiled/passed, but different)
+
+- Probe diff step 3 → step 4, both apps: **no computed-style differences**. Only `ng-tns-c<hash>` values and
+  one new class on the open dialog container (`mat-mdc-dialog-container-with-actions`, Material 17 adds it
+  when `mat-dialog-actions` is present; no style attached in our theme).
+- Bundle sizes grew (retail 707 → 730 kB, wealth 497 → 597 kB initial) — wealth is now also over the 500 kB
+  *warning* budget. Both remain well under the 1 MB *error* budget, so no budget change per the approved
+  plan. Warnings are not red.
+
+### No-ops / superseded
+
+None.
+
+### Did not break
+
+Library partial build under ng-packagr 17 / TS 5.4, all 10 specs on Karma builder 17 under Node 20,
+MDC theme Sass under Material 17 (no deprecation output), CVA form components, `browser` builder apps.
+
+### Deviation from plan
+
+None (Node 20.18.1 at this step was the plan).
+
+### Evidence
+
+```
+node -v            -> v20.18.1
+npm run test:all   -> ui-components 5/5 SUCCESS, retail-banking 3/3 SUCCESS, wealth-portal 2/2 SUCCESS, EXIT=0, 0 ERROR lines
+npm run build:apps -> retail-banking Initial total 730.28 kB (warning budget), wealth-portal 597.17 kB (warning budget), EXIT=0
+```
