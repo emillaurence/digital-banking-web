@@ -376,8 +376,8 @@ For the user to accept or reject:
 
 | Element | Angular 14 | Angular 18 |
 |---|---|---|
-| Card padding / height | 16px / 126px | 0 (header+content 16px each) / 115px |
-| Card title line box | 24px | 28px |
+| Card padding / height | 16px / 126px | ~~0 (header+content 16px each) / 115px~~ → 16px / 126px (restored, see Post-review 1) |
+| Card title line box | 24px | ~~28px~~ → 24px (restored, see Post-review 1) |
 | Table cell padding | `0 0 0 24px` | `0 16px` |
 | Table row height | 48px | 52px |
 | Table cell background | transparent | white (invisible on white cards) |
@@ -389,3 +389,55 @@ For the user to accept or reject:
 Everything else the design system specifies (pill buttons, navy primary / navy-on-transparent secondary
 and ghost, card radius/border/shadow, uppercase navy table headers with 2px rule, `#aab6cf` outline,
 15px body, dialog shadow, calendar selected ring) renders identically to the baseline.
+
+## Post-review 1 — restore legacy card geometry (Angular 18, separate commit)
+
+User reviewed the Step 2 card density diff (screenshots of retail-banking) and rejected it: with MDC's
+layout the "Make a payment" panel no longer aligned with "Recent transactions", the title lost its 16px
+inset and the header→content gap disappeared. Decision: restore the legacy geometry in the design-system
+overrides (`.mat-mdc-card.bofa-card` in `_theme.scss`), not in Material.
+
+### Breakage (user-judged visual regression, no test involved)
+
+- Symptom: cards 115px tall instead of 126px; title/subtitle flush with content (x 107 vs 123); form starts
+  directly under the subtitle (y 376 vs 401 in the screenshot); subtitle 14px/22px instead of 15px/normal.
+- Root cause: legacy `mat-card` = `padding:16px`, `.mat-card-header-text{margin:0 16px}`,
+  `.mat-card-header .mat-card-title{margin-bottom:12px}`, `.mat-card-subtitle{margin:-8px 0 16px}`,
+  subtitle typography body-1 15px. MDC `mat-card` = `padding:0`, header `padding:16px 16px 0`, content
+  `padding:0 16px` (+16px bottom when last), no header margins, subtitle typography subtitle-2 14px/22px.
+- Fix (`libs/ui-components/src/styles/_theme.scss`):
+  ```scss
+  .mat-mdc-card.bofa-card {
+    padding: 16px;
+    .mat-mdc-card-header { padding: 0; }
+    .mat-mdc-card-header-text { margin: 0 16px; }
+    .mat-mdc-card-title { margin-bottom: 12px; line-height: normal; }
+    .mat-mdc-card-subtitle { margin: -8px 0 16px; font-size: 15px; line-height: normal; }
+    .mat-mdc-card-content { padding: 0; }
+  }
+  ```
+- Evidence: geometry probe (offsets relative to card top) on the Angular 14 worktree vs this branch, retail:
+  ```
+  base14: card 126  header y17 h61  title y17 h24  subtitle y45 h17 fs15  content y78 h31
+  fixed : card 126  header y17 h61  title y17 h24  subtitle y45 h17 fs15  content y78 h31
+  ```
+  `compare.py base14-retail fix-retail` / `base14-wealth fix-wealth`: the `card.padding`, `card.height`,
+  `card.size`, `card-title.height/size` lines have dropped out of the diff; remaining card lines are the
+  `mat-mdc-*` class names and the body-colour inheritance (`rgba(0,0,0,.87)` → `#1c2540`) already tabled.
+
+### No-ops / superseded
+
+- First attempt set `.mat-mdc-card-title{line-height:24px}` and left the subtitle at MDC's 14px/22px:
+  card came out 131px (5px too tall). Superseded by `line-height:normal` on both and `font-size:15px`
+  on the subtitle, which is what legacy actually rendered (legacy card title/subtitle had no explicit
+  line-height; the subtitle inherited the 15px body size).
+
+### Did not break
+
+Tests 5/5, 3/3, 2/2; both apps build; no other computed-style line changed in the probe diff.
+
+### Deviation from plan
+
+The plan said "report MDC density diffs, don't fight them"; this reverses one of them on explicit user
+instruction. Table density (52px rows, `0 16px` cell padding) and the other tabled diffs are still
+left as reported.
