@@ -107,3 +107,50 @@ Raw-schematic captures: `/home/ubuntu/visual/15b-raw/`, diffs `/home/ubuntu/visu
 - Tests: ui-components `5/5`, retail-banking `3/3`, wealth-portal `2/2`, all `rc=0`, 0 `ERROR` lines (`/home/ubuntu/green/15b/test-*.log`).
 - Public API: `/home/ubuntu/green/15b/dts.diff` is 59 lines, all generated-only (`export declare type` → `export type`; trailing `never` generic slot in private `ɵcmp`). The 15a transient `legacy-*` imports in generated declarations are gone. No exported class, interface, input, output, method or selector changed. `pkg-meta.diff`: only the peer-dependency range bump.
 - Visual: `/home/ubuntu/visual/15b/` vs baseline (`/home/ubuntu/green/15b/compare.txt`, diffs in `/home/ubuntu/visual/15b-diff/`). Cards and secondary button `SAME`; all remaining diffs are explained by the two density items above (table row height, form-field height) plus text anti-aliasing and the wealth timestamp. `metrics.diff` (24 lines) contains only `tableRowHeights`, `firstFormField.h`, `firstButton.y`, `buttonFont` (line-height), and ±1px dialog height. No horizontal overflow (`scrollWidth == clientWidth == 1280`), no card/table/button width change.
+
+## Step 16 — Angular 16 + Material 16
+
+Toolchain: Node 16.20.2, npm 8.19.4, Angular core 16.2.12, Angular CLI 16.2.16, Angular Material/CDK 16.2.14, TypeScript 4.9.5, zone.js 0.13.3, ng-packagr 16.2.3, rxjs 7.5.7.
+Commands:
+
+- `npx ng update @angular/core@16 @angular/cli@16`
+- `npx ng update @angular/material@16 --allow-dirty`
+- `/home/ubuntu/visual/green.sh 16 16.20.2`
+- `cd /home/ubuntu/visual && node compare.js 15b 16 16-vs-15b`
+
+### Automatic migration changes (kept as-is, per plan)
+
+- `package.json` — Angular core, CLI, compiler, build-angular, CDK, Material, ng-packagr, and zone.js updated to Angular 16-compatible versions. The CLI migration reported no workspace configuration changes and the core migration reported no source changes.
+- `package-lock.json` — lockfile entries updated for the Angular 16 dependency graph.
+- No `*.spec.ts`, application source, template, style, builder, NgModule, or Karma files were changed by either Step 16 schematic.
+
+### Loud breakages (symptom → cause → fix → evidence)
+
+- None. `npx ng build ui-components` compiled successfully without Sass or TypeScript errors. Evidence: `/home/ubuntu/green/16/build-lib-pre-gate.log`.
+
+### Silent changes
+
+- `libs/ui-components/package.json` — the five Angular peer ranges were manually bumped from `^15.2.0` to `^16.2.0` (`@angular/common`, `@angular/core`, `@angular/forms`, `@angular/cdk`, and `@angular/material`); `rxjs` was unchanged.
+- `/home/ubuntu/green/16/dts.diff` contains 59 generated declaration-diff lines versus the Angular 14 baseline. Every changed declaration is generated-only: `BofaButtonVariant` uses TypeScript's `export type` spelling instead of `export declare type`; the generated `ɵcmp` declarations for `BofaButtonComponent`, `BofaCardComponent`, `BofaDatepickerComponent`, `BofaConfirmDialogComponent`, `BofaTableComponent`, and `BofaTextInputComponent` gain Angular compiler metadata's trailing `never` generic slot; and the input metadata for button, card, datepicker, table, and text-input changes from string aliases to `{ alias, required: false }` objects. No exported class, type, input, method, or selector changed.
+- `/home/ubuntu/green/16/pkg-meta.diff` contains 22 lines versus the Angular 14 generated package metadata: the five generated Angular peer ranges are `^16.2.0` instead of `^14.2.0`, and the generated package exports move from the Angular 14 `esm2020`/`es2020`/`es2015`/`node` entries to Angular 16 `esm2022`/`esm`/`default` entries targeting `esm2022`/`fesm2022`.
+- The root `package.json` trailing newline was removed again by the Angular 16 schematic; this was retained as schematic output.
+
+### No-op fixes / deviations from plan
+
+- The Angular 16 core/CLI schematic completed without requiring `--force`; the Material update used the requested `--allow-dirty` because the preceding core/CLI update had modified the working tree.
+- The five UI library Angular peer ranges were updated manually as requested. No spec assertions or source modernization changes were made.
+
+### Material-owned differences (if any)
+
+- None observed in the Step 16 comparison against the Step 15b capture. The only non-`SAME` files were the two wealth confirmation captures, each differing by 49 pixels in the timestamp-rendering region.
+
+### Evidence
+
+- Schematic logs: `/home/ubuntu/green-16-ng-update-core.log` and `/home/ubuntu/green-16-ng-update-material.log`.
+- Library build: `npx ng build ui-components` returned `rc=0`; the full gate also reported library, retail, and wealth builds `rc=0`. The build warning was verbatim: `Warning: bundle initial exceeded maximum budget. Budget 500.00 kB was not met by 206.90 kB with a total of 706.90 kB.` This remained below the 1 MB maximum-error threshold. Evidence: `/home/ubuntu/green/16/build-lib-pre-gate.log` and `/home/ubuntu/green-16.out`.
+- Tests: ui-components `5/5`, retail-banking `3/3`, wealth-portal `2/2`, all `rc=0` with 0 `ERROR` lines. Evidence: `/home/ubuntu/green/16/test-*.log`.
+- Public API: `/home/ubuntu/green/16/dts.diff` contains 59 generated-only lines, classified above; `/home/ubuntu/green/16/pkg-meta.diff` contains 22 generated package-metadata lines, classified above.
+- Visual comparison against Step 15b: `/home/ubuntu/green/16/compare-vs-15b.log`; all files were `SAME` except:
+  - `{"file":"wealth-07-after-confirm.png","status":"DIFF","pixels":49,"pct":"0.137%","size":"966x37"}`
+  - `{"file":"wealth-08-after-confirm-full.png","status":"DIFF","pixels":49,"pct":"0.004%","size":"1280x900"}`
+- Step 15b versus Step 16 metrics were identical; `/home/ubuntu/green/16/metrics-vs-15b.diff` is empty. Diff PNGs are in `/home/ubuntu/visual/16-vs-15b/`.
