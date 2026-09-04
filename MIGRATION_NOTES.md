@@ -235,3 +235,93 @@ Commands:
   - `{"file":"wealth-07-after-confirm.png","status":"DIFF","pixels":1229,"pct":"3.439%","size":"966x37"}`
   - `{"file":"wealth-08-after-confirm-full.png","status":"DIFF","pixels":1229,"pct":"0.107%","size":"1280x900"}`
 - The Step 16 versus Step 17 metrics diff was empty (`/home/ubuntu/green/17/metrics-vs-16.diff`), so there were no metric differences to report. Diff PNGs are in `/home/ubuntu/visual/17-vs-16/`.
+
+## Step 18 — Angular 18 + Material 18 (M2 Sass API rename)
+
+Toolchain: Node 20.18.1, npm 10.8.2, Angular core 18.2.14, Angular CLI 18.2.21, Angular Material/CDK 18.2.14, TypeScript 5.4.5, zone.js 0.14.10, ng-packagr 18.2.1, rxjs 7.5.7.
+Commands:
+
+- `npx ng update @angular/core@18 @angular/cli@18`
+- `npx ng update @angular/material@18 --allow-dirty`
+- `/home/ubuntu/visual/green.sh 18 20.18.1`
+- `cd /home/ubuntu/visual && node compare.js 17 18 18-vs-17`
+
+### Automatic migration changes (kept as-is, per plan)
+
+- `package.json` — Angular core, CLI, compiler, build-angular, CDK, Material, and ng-packagr updated to Angular 18-compatible versions.
+- `package-lock.json` — lockfile entries updated for the Angular 18 dependency graph.
+- `libs/ui-components/src/styles/_palettes.scss`, `_theme.scss`, and `_typography.scss` — Material 18 schematic updates were retained; the M2 Sass API names are explicit (`m2-define-palette`, `m2-define-light-theme`, `m2-define-typography-config`, and `m2-define-typography-level`).
+- The optional Angular CLI application-builder migration was not run. Builders remain `@angular-devkit/build-angular:browser`; NgModules, Karma, and the existing webpack builder remain in use.
+- No `*.spec.ts` files were changed.
+
+### Repo/toolchain changes
+
+- `libs/ui-components/package.json` — the five Angular peer ranges were manually bumped from `^17.3.0` to `^18.2.0`; `rxjs` was unchanged.
+- `README.md` — the pinned-version line now reads: `Angular 18.2.14, Angular Material 18.2.14, TypeScript 5.4.5 — versions are pinned exactly`.
+
+### Loud breakages (symptom → cause → fix → evidence)
+
+- None. `npx ng build ui-components` and the full gate compiled successfully without Sass or TypeScript errors. No additional Sass fixes were required beyond the M2 API names retained in the schematic output. Evidence: `/home/ubuntu/green/18/build-lib-pre-gate.log`.
+
+### Silent changes
+
+- `/home/ubuntu/green/18/dts.diff` contains 59 generated declaration-diff lines versus the Angular 14 baseline. The `BofaButtonVariant` line changes only TypeScript declaration spelling from `export declare type` to `export type`. The generated private Angular `ɵcmp` metadata for `BofaButtonComponent`, `BofaCardComponent`, `BofaDatepickerComponent`, `BofaConfirmDialogComponent`, `BofaTableComponent`, and `BofaTextInputComponent` gains the trailing `never` generic slot. Generated input metadata for button (`variant`, `disabled`, `type`), card (`title`, `subtitle`), datepicker (`label`, `hint`), table (`columns`, `data`), and text-input (`label`, `placeholder`, `hint`, `type`) changes from string aliases to `{ alias, required: false }` objects. Every changed declaration is generated-only; no exported class, type, input, method, or selector changed.
+- `/home/ubuntu/green/18/pkg-meta.diff` contains 22 generated package-metadata lines versus the Angular 14 baseline. Five peer dependency lines change from `^14.2.0` to `^18.2.0`; five package export lines change from the Angular 14 `esm2020`/`es2020`/`es2015`/`node`/`default` entries to Angular 18 `esm2022`/`esm`/`default` entries targeting `esm2022`/`fesm2022`. These are generated package metadata, not public API changes.
+- Material Sass deprecation warnings: 0 lines matching `Deprecation` or `DEPRECATION` in `/home/ubuntu/green-18.out` and the Step 18 build evidence.
+
+### No-op fixes / deviations from plan
+
+- The Angular 18 core/CLI update completed without `--force`; the Material update used `--allow-dirty` because the core/CLI update had modified the working tree.
+- TypeScript 5.4.5 already satisfied Angular 18's minimum TypeScript requirement; no TypeScript pre-install was needed.
+- The Angular 18 Material schematic already rewrote the library's M2 Sass API calls. A repository-wide search found no remaining old `mat.define-*` or old Material palette references in `apps/` or `libs/`.
+- No tests were changed, deleted, skipped, or weakened.
+
+### Material-owned differences (if any)
+
+- The Step 18 comparison against Step 17 had these non-`SAME` files:
+  - `{"file":"retail-08-datepicker-open.png","status":"DIFF","pixels":102,"pct":"0.009%","size":"1280x900"}`
+  - `{"file":"wealth-07-after-confirm.png","status":"DIFF","pixels":1216,"pct":"3.402%","size":"966x37"}`
+  - `{"file":"wealth-08-after-confirm-full.png","status":"DIFF","pixels":1216,"pct":"0.106%","size":"1280x900"}`
+- The Step 17 → Step 18 metrics diff is empty: `/home/ubuntu/green/18/metrics-vs-17.diff`.
+- The retail datepicker difference is Material-owned rendering: the crop region `(790,240)-(1050,540)` is identical in calendar layout, selected-day ring, and month/navigation positions; the 102 differing pixels (`0.009%`) are limited to ≤1px sub-pixel shifts in day-number glyphs and the previous/next arrow icons. There is no geometry change. The wealth differences are in the expected timestamp captures.
+
+### Evidence
+
+- Schematic logs: `/home/ubuntu/green-18-ng-update-core.log` and `/home/ubuntu/green-18-ng-update-material.log`.
+- Gate: `/home/ubuntu/green-18.out` begins with `node v20.18.1 npm 10.8.2`; library, retail, and wealth builds returned `rc=0`; capture returned `rc=0`; `GREEN-GATE rc=0`.
+- Tests: ui-components `5/5`, retail-banking `3/3`, wealth-portal `2/2`, all `rc=0` with 0 `ERROR` lines.
+- Visual comparison against Step 17: `/home/ubuntu/green/18/compare-vs-17.log`; the three non-`SAME` files are listed above. Diff PNGs are in `/home/ubuntu/visual/18-vs-17/`.
+- Step 17 versus Step 18 metrics: `/home/ubuntu/green/18/metrics-vs-17.diff` is empty.
+- Angular 14 baseline comparison: `/home/ubuntu/green/18/compare.txt` contains:
+  - `{"file":"retail-01-full.png","status":"DIFF","pixels":25571,"pct":"2.220%","size":"1280x900"}`
+  - `{"file":"retail-02-cards.png","status":"SAME","pixels":0,"pct":"0.000%","size":"1100x127"}`
+  - `{"file":"retail-03-table.png","status":"SIZE","base":"614x297","cur":"614x317"}`
+  - `{"file":"retail-04-form.png","status":"SIZE","base":"398x298","cur":"398x283"}`
+  - `{"file":"retail-05-primary-button.png","status":"DIFF","pixels":585,"pct":"3.973%","size":"398x37"}`
+  - `{"file":"retail-06-form-focused.png","status":"SIZE","base":"398x298","cur":"398x283"}`
+  - `{"file":"retail-07-form-filled.png","status":"SIZE","base":"398x298","cur":"398x283"}`
+  - `{"file":"retail-08-datepicker-open.png","status":"DIFF","pixels":27947,"pct":"2.426%","size":"1280x900"}`
+  - `{"file":"retail-09-dialog-open.png","status":"DIFF","pixels":20294,"pct":"1.762%","size":"1280x900"}`
+  - `{"file":"retail-10-dialog.png","status":"DIFF","pixels":2480,"pct":"3.690%","size":"420x160"}`
+  - `{"file":"retail-11-after-confirm-table.png","status":"SIZE","base":"614x345","cur":"614x369"}`
+  - `{"file":"retail-12-after-confirm-full.png","status":"DIFF","pixels":29618,"pct":"2.571%","size":"1280x900"}`
+  - `{"file":"wealth-01-full.png","status":"DIFF","pixels":17926,"pct":"1.556%","size":"1280x900"}`
+  - `{"file":"wealth-02-cards.png","status":"SAME","pixels":0,"pct":"0.000%","size":"1000x127"}`
+  - `{"file":"wealth-03-table.png","status":"SIZE","base":"966x297","cur":"966x317"}`
+  - `{"file":"wealth-04-secondary-button.png","status":"SAME","pixels":0,"pct":"0.000%","size":"177x37"}`
+  - `{"file":"wealth-05-dialog-open.png","status":"DIFF","pixels":10800,"pct":"0.938%","size":"1280x900"}`
+  - `{"file":"wealth-06-dialog.png","status":"SIZE","base":"420x178","cur":"420x180"}`
+  - `{"file":"wealth-07-after-confirm.png","status":"DIFF","pixels":945,"pct":"2.644%","size":"966x37"}`
+  - `{"file":"wealth-08-after-confirm-full.png","status":"DIFF","pixels":25864,"pct":"2.245%","size":"1280x900"}`
+
+## Final public-API verdict (Angular 14 → 18)
+
+- `/home/ubuntu/green/18/dts.diff` — 59 lines, all generated-only. The one type-alias spelling change (`export declare type` → `export type`), six private Angular `ɵcmp` metadata trailing-`never` additions, and generated input metadata changes for button, card, datepicker, table, and text-input do not change the public exported classes, exported types, inputs, methods, or selectors.
+- `/home/ubuntu/green/18/pkg-meta.diff` — 22 lines, all generated package metadata. The five Angular peer ranges move from `^14.2.0` to `^18.2.0`, and the package export map moves from Angular 14's `esm2020`/`es2020`/`es2015`/`node` entries to Angular 18's `esm2022`/`esm`/`default` entries. No consumer-facing API symbol changed.
+
+## Summary of Material-owned differences for owner judgment
+
+- Step 15b density: table data rows changed from 48px to 52px; form fields changed from 83px to 78px; resulting button y shifts were recorded as wealth `711 → 731` and retail `659 → 645`. Row/column alignment and field widths remained intact.
+- Step 15b dialog: the rendered Angular 14 baseline was 4px radius and 24px padding, although the original 16px/28px theme rule was the intended design-system value but did not win the legacy component cascade. The 15b restoration follows the rendered 4px/24px baseline; activating 16px/28px remains an owner decision.
+- Step 17 font smoothing: Material 17 dropped `-webkit-font-smoothing: antialiased` from the Angular Material core MDC helper output, changing computed `webkitFontSmoothing` from `antialiased` to `auto` on MDC button labels/base elements without geometry or metrics changes.
+- Step 18: the Step 17 → Step 18 comparison added a Material-owned 102-pixel (`0.009%`) retail datepicker rendering difference in crop region `(790,240)-(1050,540)`: ≤1px sub-pixel shifts in day-number glyphs and previous/next arrow icons, with identical layout and geometry. The wealth-07/08 differences remain timestamp-region differences. No metric difference was observed.

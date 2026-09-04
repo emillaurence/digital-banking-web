@@ -4,12 +4,12 @@
 // headline→headline-5, title→headline-6, subheading-2→subtitle-1, body-1→body-2.
 $bofa-font-family: '"Public Sans", "Helvetica Neue", Arial, sans-serif';
 
-$bofa-typography: mat.define-typography-config(
+$bofa-typography: mat.m2-define-typography-config(
   $font-family: $bofa-font-family,
-  $headline-5: mat.define-typography-level(28px, 36px, 700),
-  $headline-6: mat.define-typography-level(20px, 28px, 600),
-  $subtitle-1: mat.define-typography-level(16px, 24px, 600),
-  $body-1: mat.define-typography-level(15px, 24px, 400),
-  $body-2: mat.define-typography-level(15px, 24px, 400),
-  $button: mat.define-typography-level(15px, 16px, 600),
+  $headline-5: mat.m2-define-typography-level(28px, 36px, 700),
+  $headline-6: mat.m2-define-typography-level(20px, 28px, 600),
+  $subtitle-1: mat.m2-define-typography-level(16px, 24px, 600),
+  $body-1: mat.m2-define-typography-level(15px, 24px, 400),
+  $body-2: mat.m2-define-typography-level(15px, 24px, 400),
+  $button: mat.m2-define-typography-level(15px, 16px, 600),
 );
