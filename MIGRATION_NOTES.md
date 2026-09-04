@@ -599,3 +599,107 @@ wealth-portal: screenshot + styles written; dialog=true; consoleErrors=0
 Evidence: `~/migration-evidence/step3-angular17/`, including
 `retail-banking-styles.json`, `wealth-portal-styles.json`,
 `versions.txt`, and the build/test logs.
+
+## Step 4 — Angular 18
+
+Landed versions:
+
+| Package | Version |
+|---|---:|
+| `@angular/animations`, `@angular/common`, `@angular/compiler`, `@angular/core`, `@angular/forms`, `@angular/platform-browser`, `@angular/platform-browser-dynamic`, `@angular/router` | `18.2.14` |
+| `@angular/cdk`, `@angular/material` | `18.2.14` |
+| `@angular-devkit/build-angular`, `@angular/cli` | `18.2.21` |
+| `@angular/compiler-cli` | `18.2.14` |
+| `ng-packagr` | `18.2.1` |
+| `typescript` | `5.4.5` |
+| `rxjs` | `7.5.7` |
+| `zone.js` | `0.14.10` |
+| Node/npm | `20.18.1` / `10.8.2` |
+
+Breakages: none.
+
+The core/CLI update offered the optional application-builder migration:
+
+```text
+❯ Migrate application projects to the new build system.
+  ng update @angular/cli --name use-application-builder
+```
+
+It was not run. The existing browser, karma, and ng-packagr builders remain
+in angular.json. The core migrations for invalid two-way bindings, deprecated
+HTTP modules, afterRender phases, and server BootstrapContext all completed
+with no changes.
+
+The first Material update invocation was rejected because the core/CLI update
+had already modified package files:
+
+```text
+Error: Repository is not clean. Please commit or stash any changes before updating.
+```
+
+It was rerun with `--allow-dirty` and completed successfully. CDK v18 made no
+source changes. The Material v18 migration renamed the M2 Sass APIs in exactly
+three files:
+
+| Before | After |
+|---|---|
+| `mat.define-light-theme` | `mat.m2-define-light-theme` |
+| `mat.define-palette` | `mat.m2-define-palette` |
+| `mat.$red-palette` | `mat.$m2-red-palette` |
+| `mat.define-typography-config` | `mat.m2-define-typography-config` |
+| `mat.define-typography-level` | `mat.m2-define-typography-level` |
+
+The affected files were `_theme.scss`, `_palettes.scss`, and
+`_typography.scss`. A search found no remaining deprecated unprefixed M2
+Material Sass API names, and the builds emitted no Material deprecation
+warnings.
+
+Silent changes:
+
+- Application bundles changed from Step 3 totals of `728.17 kB` /
+  `595.05 kB` to `734.07 kB` / `614.49 kB` for retail-banking /
+  wealth-portal.
+- The styles bundle is `91.02 kB` raw and `8.11 kB` estimated transfer for
+  both applications.
+- The retail visual JSON differs only in Angular-generated form-field scope
+  classes: `ng-tns-c3736059725-*` → `ng-tns-c508571215-*`. The wealth-portal
+  JSON has no differences.
+- No computed style, box, typography, spacing, color, or layout values
+  changed between Step 3 and Step 4. Therefore no density or
+  element-alignment regression was found.
+
+No-op or superseded fixes: the optional application-builder migration was
+declined to preserve the requested builders. No standalone, signals, or
+control-flow conversion was performed. The ui-components peerDependencies
+were updated from `^17.2.0` to `^18.2.0` for the five Angular packages. No
+budget change was made because both applications remained below the 1 MB
+maximum-error budget.
+
+What did not break: all five ui-components specs, all three retail-banking
+specs, all two wealth-portal specs, both application builds, the public
+declaration build, and the visual probe completed successfully. Node 20 was
+used by the gate, and no Karma `ERROR` lines were emitted.
+
+Final gate and artifacts:
+
+```text
+node v20.18.1 npm 10.8.2
+ui-components: 5 SUCCESS, 0 ERROR lines
+retail-banking build: exit=0, Initial Total 734.07 kB
+wealth-portal build: exit=0, Initial Total 614.49 kB
+retail-banking: 3 SUCCESS, 0 ERROR lines
+wealth-portal: 2 SUCCESS, 0 ERROR lines
+.d.ts diff vs baseline: 34 lines
+GATE step4-angular18: GREEN
+```
+
+Visual probe:
+
+```text
+retail-banking: screenshot + styles written; dialog=false; consoleErrors=0
+wealth-portal: screenshot + styles written; dialog=true; consoleErrors=0
+```
+
+Evidence: `~/migration-evidence/step4-angular18/`, including
+`retail-banking-styles.json`, `wealth-portal-styles.json`,
+`versions.txt`, the update logs, and the build/test logs.
