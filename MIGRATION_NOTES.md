@@ -378,12 +378,12 @@ For the user to accept or reject:
 |---|---|---|
 | Card padding / height | 16px / 126px | ~~0 (header+content 16px each) / 115px~~ → 16px / 126px (restored, see Post-review 1) |
 | Card title line box | 24px | ~~28px~~ → 24px (restored, see Post-review 1) |
-| Table cell padding | `0 0 0 24px` | `0 16px` |
-| Table row height | 48px | 52px |
+| Table cell padding | `0 0 0 24px` | ~~`0 16px`~~ → `0 0 0 24px` (restored, see Post-review 2) |
+| Table row height | 48px | ~~52px~~ → 48px (restored, see Post-review 2) |
 | Table cell background | transparent | white (invisible on white cards) |
 | Card / form-field text colour | `rgba(0,0,0,.87)` | inherits app body `#1c2540` |
 | Table text colour | `rgba(0,0,0,.87)` | `rgba(0,0,0,.87)` (navy at step 2 only; v16 tokens restored it) |
-| `<input>` box height / form-field height | 16.9px / 83px | 24px / 78px |
+| `<input>` box height / form-field height | 16.9px / 83px | 24px / ~~78px~~ → 83px footprint (restored, see Post-review 2; the MDC input box itself stays 56px) |
 | Dialog inset | 24px on container | 24px on title/content/actions |
 
 Everything else the design system specifies (pill buttons, navy primary / navy-on-transparent secondary
@@ -441,3 +441,52 @@ Tests 5/5, 3/3, 2/2; both apps build; no other computed-style line changed in th
 The plan said "report MDC density diffs, don't fight them"; this reverses one of them on explicit user
 instruction. Table density (52px rows, `0 16px` cell padding) and the other tabled diffs are still
 left as reported.
+
+## Post-review 2 — re-align the retail panel pair (table density + form-field footprint)
+
+After Post-review 1 the user asked for "Recent transactions" and "Make a payment" to be aligned. Their
+bottoms were 34px apart (411px vs 377px cards; baseline 391px / 391px): MDC rows are 52px instead of 48px
+(+20px over five rows) while MDC outline form-fields are 78px instead of 83px (−15px over three fields),
+so the two panels drifted in opposite directions. Restored both footprints in `_theme.scss`.
+
+### Breakage (user-judged visual regression, no test involved)
+
+- Symptom: panel cards 411px / 377px; table rows 52px with `0 16px` cell padding; form-fields 78px.
+- Root cause: MDC data-table token `--mat-table-row-item-container-height` defaults to 52px and cells to
+  `0 16px`; legacy rows were 48px with `0 0 0 24px`. MDC outline form-field = 56px box + 22px subscript,
+  no outer margin; legacy = ~55px box + 1.34375em subscript padding + `.25em 0` wrapper margin = 82.78px.
+- Fix:
+  ```scss
+  table.mat-mdc-table.bofa-table {
+    --mat-table-row-item-container-height: 48px;
+    th.mat-mdc-header-cell, td.mat-mdc-cell { padding: 0 0 0 24px; }
+  }
+  .bofa-field.mat-mdc-form-field {
+    margin: 0.25em 0;
+    .mat-mdc-form-field-subscript-wrapper { height: 19.25px; }  // 56 + 19.25 + 7.5 = 82.75px
+  }
+  ```
+- Evidence: panel geometry probe, retail (y / height):
+  ```
+  base14: cards [321,391] [321,391]  tr 48  td '0 0 0 24px'  form children y 399/486/572/659  form 296
+  fixed : cards [321,391] [321,391]  tr 48  td '0 0 0 24px'  form children y 399/486/572/659  form 296
+  ```
+  `compare.py base14-retail fix2-retail`: `table-row.height`, `table-cell.padding`, `table-header.padding`
+  lines dropped out of the diff. Header row stays 56px (legacy `th` was 54px inside a 56px row; same row).
+
+### No-ops / superseded
+
+- `--mat-form-field-subscript-text-line-height: 1.3em` — the subscript band is a 16px inline-block spacer
+  plus the hint line box, so line-height alone gave 21px (field 84.5px). Superseded by an explicit height.
+- `.mat-mdc-form-field-subscript-wrapper { height: 1.285em }` — `em` there resolves against the 12px
+  subscript font, giving 15px (field 79px). Superseded by `19.25px`.
+
+### Did not break
+
+Tests 5/5, 3/3, 2/2; both apps build; hint text still renders (it overflows the shorter band by ~3px into
+the 4px form gap, as the legacy absolutely-positioned hint did).
+
+### Deviation from plan
+
+Second reversal of a tabled MDC density diff, again on explicit user instruction. Remaining tabled diffs:
+table cell background (white), inherited text colour, 24px input line box, dialog padding DOM location.

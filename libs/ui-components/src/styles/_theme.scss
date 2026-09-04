@@ -46,6 +46,13 @@
 
   table.mat-mdc-table.bofa-table {
     width: 100%;
+    // Legacy (pre-MDC) table density: 48px rows, cells padded on the left only.
+    --mat-table-row-item-container-height: 48px;
+
+    th.mat-mdc-header-cell,
+    td.mat-mdc-cell {
+      padding: 0 0 0 24px;
+    }
 
     th.mat-mdc-header-cell {
       color: #012169;
@@ -58,6 +65,17 @@
 
     tr.mat-mdc-row:hover {
       background: #f2f5fb;
+    }
+  }
+
+  // Legacy (pre-MDC) form-field footprint: .25em outer margin and a subscript band
+  // sized so the field occupies ~82.8px like the legacy outline field
+  // (56px MDC box + 19.25px + 2 x 3.75px).
+  .bofa-field.mat-mdc-form-field {
+    margin: 0.25em 0;
+
+    .mat-mdc-form-field-subscript-wrapper {
+      height: 19.25px;
     }
   }
 
