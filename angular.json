@@ -24,7 +24,7 @@
             "outputPath": "dist/retail-banking",
             "index": "apps/retail-banking/src/index.html",
             "main": "apps/retail-banking/src/main.ts",
-            "polyfills": "apps/retail-banking/src/polyfills.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "apps/retail-banking/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -91,7 +91,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "apps/retail-banking/src/test.ts",
-            "polyfills": "apps/retail-banking/src/polyfills.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "apps/retail-banking/tsconfig.spec.json",
             "karmaConfig": "apps/retail-banking/karma.conf.js",
             "inlineStyleLanguage": "scss",
@@ -124,7 +124,7 @@
             "outputPath": "dist/wealth-portal",
             "index": "apps/wealth-portal/src/index.html",
             "main": "apps/wealth-portal/src/main.ts",
-            "polyfills": "apps/wealth-portal/src/polyfills.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "apps/wealth-portal/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -194,7 +194,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "apps/wealth-portal/src/test.ts",
-            "polyfills": "apps/wealth-portal/src/polyfills.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "apps/wealth-portal/tsconfig.spec.json",
             "karmaConfig": "apps/wealth-portal/karma.conf.js",
             "inlineStyleLanguage": "scss",
