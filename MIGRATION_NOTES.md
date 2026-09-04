@@ -53,3 +53,57 @@ Commands:
   - `/home/ubuntu/visual/15a/retail-12-after-confirm-full.png` — `DIFF`, 76 pixels
   - The timestamp-related allowed diffs were `/home/ubuntu/visual/15a/wealth-07-after-confirm.png` (227 pixels) and `/home/ubuntu/visual/15a/wealth-08-after-confirm-full.png` (227 pixels).
   - Diff PNGs: `/home/ubuntu/visual/15a-diff/`.
+
+## Step 15b — Angular Material 15 MDC components (design-system restoration)
+
+Toolchain: unchanged from 15a (Node 16.20.2, npm 8.19.4, TypeScript 4.9.5, Angular 15.2.10, Material 15.2.9).
+Command: `npx ng generate @angular/material:mdc-migration` (all components, whole workspace), followed by manual theme work described below.
+
+### Automatic migration changes (kept as-is)
+
+- `libs/ui-components/src/lib/ui-components.module.ts`, `dialog/confirm-dialog.component.ts`, `dialog/dialog.service.ts`, `dialog/dialog.service.spec.ts` — `@angular/material/legacy-*` imports rewritten back to the standard entry points (`MatButtonModule`, `MatCardModule`, `MatDialogModule`, `MatFormFieldModule`, `MatInputModule`, `MatTableModule`, `MatDialog`, `MAT_DIALOG_DATA`, `MatDialogRef`).
+- `libs/ui-components/src/styles/_theme.scss` — legacy mixins replaced by `mat.core` / `mat.all-component-themes`; `mat-*` selectors in `overrides()` rewritten to `mat-mdc-*` where a 1:1 class exists; a `TODO(mdc-migration)` was left on the form-field outline rule (resolved manually, see below).
+- `libs/ui-components/src/styles/_typography.scss` — `mat.define-legacy-typography-config` → `mat.define-typography-config` with 2018 level names (`headline`→`headline-5`, `title`→`headline-6`, `subheading-2`→`subtitle-1`, `body-1`→`body-2`, `button` unchanged).
+- `package.json` — trailing newline restored (schematic had dropped it).
+
+### Authorised assertion updates (framework changed the DOM class names; same selector shape, same counts)
+
+- `libs/ui-components/src/lib/button/button.component.spec.ts` — `mat-flat-button` → `mat-mdc-unelevated-button` (MDC renamed the flat-button host class).
+- `libs/ui-components/src/lib/table/table.component.spec.ts` — `th.mat-header-cell` → `th.mat-mdc-header-cell`, `tr.mat-row` → `tr.mat-mdc-row` (counts still 2 and 2).
+- `apps/retail-banking/src/app/app.component.spec.ts`, `apps/wealth-portal/src/app/app.component.spec.ts` — `bofa-table tr.mat-row` → `bofa-table tr.mat-mdc-row`.
+- No test was deleted, skipped, or weakened; `libs/ui-components/package.json` peer ranges bumped `^14.2.0` → `^15.2.0` (the library now emits MDC classes, so a v14 consumer would no longer get the theme).
+
+### Loud breakages
+
+- None. The schematic output compiled and all suites passed on the first run; every problem in this step was silent (visual only).
+
+### Silent changes — raw schematic output vs. baseline (symptom → cause → fix → evidence)
+
+Raw-schematic captures: `/home/ubuntu/visual/15b-raw/`, diffs `/home/ubuntu/visual/15b-raw-diff/` (retail full page 50,382 px differ; dialog-open 70,708 px). Diagnosis used a live Angular-14 oracle (git worktree of the tag at `/home/ubuntu/wt-baseline`, served on :4400/:4500) and computed-style inspection (`/home/ubuntu/visual/inspect.js`).
+
+1. Cards 126px → 115px tall; title/amount inset 33px/17px → 17px. Cause: MDC card has no outer padding (header/content carry `16px` padding instead) and the subtitle uses `subtitle-2` (14px/22px/500, 0.1px tracking) rather than legacy `body-1` at `line-height: normal`. Fix (`_theme.scss`, `.mat-mdc-card.bofa-card`): `padding: 16px`, header padding 0, header-text margin `0 16px`, title `margin-bottom: 12px; line-height: normal`, subtitle `margin: -8px 0 16px; font: 400 15px/normal`, content padding 0. Evidence: `retail-02-cards.png` and `wealth-02-cards.png` are `SAME` (0 px).
+2. Secondary/ghost buttons rendered white background / black text. Cause: MDC unelevated buttons paint via `--mdc-filled-button-container-color` / `--mdc-filled-button-label-text-color` on `.mdc-button` which beat the component's `background`/`color`. Fix (`button.component.scss`): set both tokens to `transparent` / `#012169` alongside the existing properties. Evidence: `wealth-04-secondary-button.png` `SAME`; dialog "Cancel" button matches.
+3. Table cells lost the 24px first/last gutter (columns shifted 8px). Cause: MDC gives every cell `padding: 0 16px`; legacy had `0` with 24px only on first/last. Fix: `th.mat-mdc-header-cell, td.mat-mdc-cell { padding: 0; &:first-of-type { padding-left: 24px } &:last-of-type { padding-right: 24px } }`. Evidence: column x-positions (107/264/578) identical to baseline in `metrics.json`.
+4. Form-field outline lost the design-system colour (`rgba(0,0,0,.38)` instead of `#aab6cf`) and input text grew 15px → 16px. Cause: `.mat-form-field-outline` no longer exists; MDC draws the outline with `.mdc-notched-outline__{leading,notch,trailing}` borders; input text uses `body-1` (16px default). Fix: outline rule rewritten against the notched-outline parts for the resting state only (hover/focus keep Material colours, exactly as in v14 where the legacy override also lost to the hover/focus rules); `$body-1: 15px/24px/400` added to the typography config. The `TODO(mdc-migration)` comment was removed with the rule it annotated. Evidence: `mdc-notched-outline__leading` border-color `rgb(170,182,207)`; input font 15px.
+5. Dialog 420×159 → 420×234, grey 16px/0.5px-tracked body text wrapping to two lines, 40px phantom spacer above the title. Cause: MDC title `::before` spacer, `padding: 20px 24px` on content, `--mdc-dialog-supporting-text-*` typography/colour, actions `box-sizing: border-box`. Fix: override title/content/actions using the doubled `.mat-mdc-dialog-title.mdc-dialog__title` (etc.) selectors — needed because MDC's structural dialog CSS is component-injected after the global theme and ties on specificity; content `font: inherit; letter-spacing: inherit; color: rgba(0,0,0,.87)`; actions `box-sizing: content-box; padding: 8px 0; margin-bottom: -24px`. Evidence: retail dialog 420×160 (baseline 159; rounding), wealth 420×179 (baseline 178).
+
+### No-op fixes / deviations from plan
+
+- Discovered while diagnosing (5): the v14 `.mat-dialog-container { border-radius: 16px; padding: 28px }` override never rendered — the legacy dialog's own component styles (4px radius, 24px padding) won the cascade, so the baseline actually shows 4px/24px. Only the `box-shadow` part of that rule ever applied. The 15b theme reproduces the *rendered* baseline (4px radius via MDC default, `padding: 24px`, BofA shadow) rather than the never-effective intent. **Decision for the owner:** keep as-is (pixel-faithful) or activate 16px/28px in a later commit.
+- `density: 0` is passed explicitly to `mat.define-light-theme` (MDC default) so any later density decision is a one-line change.
+- Dialog `--mdc-dialog-container-shape` was tried and dropped when the 4px baseline was established.
+- The `.mat-calendar-body-selected` ring override was unaffected (datepicker is not an MDC component in v15).
+
+### Material-owned density / rendering differences (reported, not fixed — owner judges)
+
+- Table data rows 48px → 52px (`--mdc-data-table` row height); header row unchanged at 56px. Consequence: on wealth-portal the "Request rebalance" button sits 20px lower (5 rows × 4px; `firstButton.y` 711 → 731). Row/column alignment is intact.
+- Outlined form field 83px → 78px per field (MDC 56px text field + 22px subscript vs. legacy 55.1px + 20.2px subscript + 3.75px margins); floating label geometry and hint size (11.25px → 12px) follow MDC. Consequence: on retail-banking the "Send payment" button sits 14px higher (`firstButton.y` 659 → 645). Field widths, outline colour, label text and vertical stacking are intact.
+- Button label: legacy `line-height: 36px` inline-block vs. MDC flex-centred label; rendered box is identical (146×36 / 177×36 / 96×36) and `retail-05-primary-button.png` differs only by 722 anti-aliasing pixels of the label glyphs.
+- Text anti-aliasing / sub-pixel differences on MDC-rendered labels (dialog title/body, button labels); no geometry change.
+
+### Evidence
+
+- Builds: library, retail-banking, wealth-portal all `rc=0` (`/home/ubuntu/green/15b/build-*.log`). Budget warnings only: retail initial 715.09 kB (was 663.32 kB at 15a), wealth initial 527.15 kB (new warning; was under 500 kB). Both below the 1 MB error threshold.
+- Tests: ui-components `5/5`, retail-banking `3/3`, wealth-portal `2/2`, all `rc=0`, 0 `ERROR` lines (`/home/ubuntu/green/15b/test-*.log`).
+- Public API: `/home/ubuntu/green/15b/dts.diff` is 59 lines, all generated-only (`export declare type` → `export type`; trailing `never` generic slot in private `ɵcmp`). The 15a transient `legacy-*` imports in generated declarations are gone. No exported class, interface, input, output, method or selector changed. `pkg-meta.diff`: only the peer-dependency range bump.
+- Visual: `/home/ubuntu/visual/15b/` vs baseline (`/home/ubuntu/green/15b/compare.txt`, diffs in `/home/ubuntu/visual/15b-diff/`). Cards and secondary button `SAME`; all remaining diffs are explained by the two density items above (table row height, form-field height) plus text anti-aliasing and the wealth timestamp. `metrics.diff` (24 lines) contains only `tableRowHeights`, `firstFormField.h`, `firstButton.y`, `buttonFont` (line-height), and ±1px dialog height. No horizontal overflow (`scrollWidth == clientWidth == 1280`), no card/table/button width change.

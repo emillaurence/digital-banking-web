@@ -2,25 +2,65 @@
 @use 'palettes';
 @use 'typography';
 
-// Design-system restyling of Material internals. These target v14 (pre-MDC,
-// "legacy") class names and must live in global styles, not component styles.
+// Design-system restyling of Material internals. These target the MDC-based
+// (v15+) class names / design tokens and must live in global styles, not
+// component styles.
 @mixin overrides() {
-  .mat-button-base.bofa-button {
+  .mat-mdc-button-base.bofa-button {
     border-radius: 9999px;
     padding: 0 22px;
     min-width: 96px;
   }
 
-  .mat-card.bofa-card {
+  .mat-mdc-card.bofa-card {
     border-radius: 12px;
     border: 1px solid #e2e7f0;
     box-shadow: 0 2px 10px rgba(1, 33, 105, 0.07) !important;
+    padding: 16px;
+
+    .mat-mdc-card-header {
+      padding: 0;
+    }
+
+    .mat-mdc-card-header-text {
+      margin: 0 16px;
+    }
+
+    .mat-mdc-card-title {
+      margin-bottom: 12px;
+      line-height: normal;
+    }
+
+    .mat-mdc-card-subtitle {
+      margin-top: -8px;
+      margin-bottom: 16px;
+      font: 400 15px / normal #{typography.$bofa-font-family};
+      letter-spacing: normal;
+    }
+
+    .mat-mdc-card-content,
+    .mat-mdc-card-content:last-child {
+      padding: 0;
+    }
   }
 
-  table.mat-table.bofa-table {
+  table.mat-mdc-table.bofa-table {
     width: 100%;
 
-    th.mat-header-cell {
+    th.mat-mdc-header-cell,
+    td.mat-mdc-cell {
+      padding: 0;
+
+      &:first-of-type {
+        padding-left: 24px;
+      }
+
+      &:last-of-type {
+        padding-right: 24px;
+      }
+    }
+
+    th.mat-mdc-header-cell {
       color: #012169;
       font-weight: 600;
       font-size: 13px;
@@ -29,19 +69,50 @@
       border-bottom: 2px solid #012169;
     }
 
-    tr.mat-row:hover {
+    tr.mat-mdc-row:hover {
       background: #f2f5fb;
     }
   }
 
-  .mat-form-field-appearance-outline .mat-form-field-outline {
-    color: #aab6cf;
+  // Resting outline colour only; hover/focus keep Material's colours, as in v14.
+  .mat-mdc-form-field.mat-form-field-appearance-outline
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):not(:hover) {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: #aab6cf;
+    }
   }
 
-  .mat-dialog-container {
-    border-radius: 16px;
-    padding: 28px;
-    box-shadow: 0 12px 40px rgba(1, 33, 105, 0.25);
+  // MDC's structural dialog styles are component styles injected after the
+  // global theme, so these need the extra mdc-* class to win the cascade.
+  .mat-mdc-dialog-container {
+    .mat-mdc-dialog-surface.mdc-dialog__surface {
+      padding: 24px;
+      box-shadow: 0 12px 40px rgba(1, 33, 105, 0.25);
+    }
+
+    .mat-mdc-dialog-title.mdc-dialog__title {
+      padding: 0;
+      margin: 0 0 20px;
+
+      &::before {
+        display: none;
+      }
+    }
+
+    .mat-mdc-dialog-content.mdc-dialog__content {
+      padding: 0;
+      font: inherit;
+      letter-spacing: inherit;
+      color: rgba(0, 0, 0, 0.87);
+    }
+
+    .mat-mdc-dialog-actions.mdc-dialog__actions {
+      box-sizing: content-box;
+      padding: 8px 0;
+      margin-bottom: -24px;
+    }
   }
 
   .mat-calendar-body-selected {
@@ -51,16 +122,7 @@
 
 // Single entry point every app includes exactly once.
 @mixin bofa-theme() {
-  // TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
-//  The following line adds:
-//    1. Default typography styles for all components
-//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
-//  If you specify typography styles for the components you use elsewhere, you should delete this line.
-//  If you don't need the default component typographies but still want the hierarchy styles,
-//  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy(typography.$bofa-typography);`
-@include mat.all-legacy-component-typographies(typography.$bofa-typography);
-@include mat.legacy-core();
+  @include mat.core();
 
   $theme: mat.define-light-theme((
     color: (
@@ -68,8 +130,10 @@
       accent: palettes.$bofa-accent,
       warn: palettes.$bofa-warn,
     ),
+    typography: typography.$bofa-typography,
+    density: 0,
   ));
 
-  @include mat.all-legacy-component-themes($theme);
+  @include mat.all-component-themes($theme);
   @include overrides();
 }
