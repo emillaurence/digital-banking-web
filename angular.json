@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "retail-banking:build:production"
+              "buildTarget": "retail-banking:build:production"
             },
             "development": {
-              "browserTarget": "retail-banking:build:development"
+              "buildTarget": "retail-banking:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "retail-banking:build"
+            "buildTarget": "retail-banking:build"
           }
         },
         "test": {
@@ -176,10 +176,10 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "wealth-portal:build:production"
+              "buildTarget": "wealth-portal:build:production"
             },
             "development": {
-              "browserTarget": "wealth-portal:build:development"
+              "buildTarget": "wealth-portal:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -187,7 +187,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "wealth-portal:build"
+            "buildTarget": "wealth-portal:build"
           }
         },
         "test": {

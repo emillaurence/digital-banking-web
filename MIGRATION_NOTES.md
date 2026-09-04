@@ -498,3 +498,104 @@ Evidence: `~/migration-evidence/step2-angular16/`, including
 
 Deviation: `@angular/material@16` required `--allow-dirty` because the
 preceding required core/CLI update had already modified the dependency files.
+
+## Step 3 — Node 20.18.1 + Angular 17
+
+Landed versions:
+
+| Package | Version |
+|---|---:|
+| `@angular/animations`, `@angular/common`, `@angular/compiler`, `@angular/core`, `@angular/forms`, `@angular/platform-browser`, `@angular/platform-browser-dynamic`, `@angular/router` | `17.3.12` |
+| `@angular/cdk`, `@angular/material` | `17.3.10` |
+| `@angular-devkit/build-angular`, `@angular/cli` | `17.3.17` |
+| `@angular/compiler-cli` | `17.3.12` |
+| `ng-packagr` | `17.3.0` |
+| `typescript` | `5.4.5` |
+| `rxjs` | `7.5.7` |
+| `zone.js` | `0.14.10` |
+| Node/npm | `20.18.1` / `10.8.2` |
+
+Breakages: none.
+
+Node `20.18.1` was not initially installed in nvm, so it was installed from
+the official Node distribution and selected successfully. `.nvmrc` was changed
+from `16.20.2` to `20.18.1`, and the README toolchain requirement was updated.
+The required normal `npm install` under Node 20 completed successfully:
+
+```text
+up to date in 7m
+139 packages are looking for funding
+```
+
+No lockfile regeneration was needed. The Angular update commands used
+`--allow-dirty` because `.nvmrc` and README had intentionally been updated
+before the dependency migration.
+
+Migration names and results:
+
+- Replace usages of `@nguniversal/builders` with
+  `@angular-devkit/build-angular`: no changes made.
+- Replace usages of `@nguniversal/` packages with `@angular/ssr`: no changes
+  made.
+- Replace deprecated `browserTarget` options with `buildTarget`: updated the
+  dev-server and extract-i18n configurations in `angular.json`.
+- Add `browser-sync` for SSR dev server: no changes made.
+- Angular v17 control-flow character entity migration: no changes made.
+- Move `TransferState`, `makeStateKey`, and `StateKey` imports: no changes
+  made.
+- Remove unused Ivy `CompilerOption` settings: no changes made.
+- Update invalid two-way binding expressions: no changes made.
+- Angular CDK v17 migration: no changes made.
+- Angular Material v17 migration: no changes made.
+
+No application-builder, standalone, or control-flow source conversion was
+accepted. The existing `@angular-devkit/build-angular:browser`,
+`@angular-devkit/build-angular:karma`, and library ng-packagr builders remain.
+
+Silent changes:
+
+- Application bundles changed from Step 2 totals of `705.17 kB` /
+  `495.24 kB` to `728.17 kB` / `595.05 kB` for retail-banking /
+  wealth-portal.
+- The styles bundle is `86.16 kB` raw and `7.90 kB` estimated transfer for
+  both applications.
+- The retail visual JSON differs only in Angular-generated form-field scope
+  classes: `ng-tns-c1205077789-*` → `ng-tns-c3736059725-*`.
+- The wealth visual JSON has one class-only difference: the dialog container
+  gains `mat-mdc-dialog-container-with-actions`. No computed style, box,
+  typography, spacing, color, or layout values changed.
+
+No-op or superseded fixes: no component, template, Sass, public API, or test
+assertion changes were needed. The ui-components peerDependencies were updated
+from `^16.2.0` to `^17.2.0` for the five Angular packages. No budget change
+was made because both applications remained below the 1 MB maximum-error
+budget.
+
+What did not break: all five ui-components specs, all three retail-banking
+specs, all two wealth-portal specs, both application builds, the public
+declaration build, and the visual probe completed successfully. Node 20 was
+used by the gate, and no Karma `ERROR` lines were emitted.
+
+Final gate and artifacts:
+
+```text
+node v20.18.1 npm 10.8.2
+ui-components: 5 SUCCESS, 0 ERROR lines
+retail-banking build: exit=0, Initial Total 728.17 kB
+wealth-portal build: exit=0, Initial Total 595.05 kB
+retail-banking: 3 SUCCESS, 0 ERROR lines
+wealth-portal: 2 SUCCESS, 0 ERROR lines
+.d.ts diff vs baseline: 34 lines
+GATE step3-angular17: GREEN
+```
+
+Visual probe:
+
+```text
+retail-banking: screenshot + styles written; dialog=false; consoleErrors=0
+wealth-portal: screenshot + styles written; dialog=true; consoleErrors=0
+```
+
+Evidence: `~/migration-evidence/step3-angular17/`, including
+`retail-banking-styles.json`, `wealth-portal-styles.json`,
+`versions.txt`, and the build/test logs.
