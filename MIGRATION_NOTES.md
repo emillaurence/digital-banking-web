@@ -403,3 +403,98 @@ The final build logs report styles at `106.39 kB` raw and `9.53 kB`
 estimated transfer for both applications. The 500 kB warning budget remains
 exceeded, but the 1 MB maximum-error budget does not, so no separate budget
 commit is required.
+
+## Step 2 — Angular 16
+
+Landed versions:
+
+| Package | Version |
+|---|---:|
+| `@angular/animations`, `@angular/common`, `@angular/compiler`, `@angular/core`, `@angular/forms`, `@angular/platform-browser`, `@angular/platform-browser-dynamic`, `@angular/router` | `16.2.12` |
+| `@angular/cdk`, `@angular/material` | `16.2.14` |
+| `@angular-devkit/build-angular`, `@angular/cli` | `16.2.16` |
+| `@angular/compiler-cli` | `16.2.12` |
+| `ng-packagr` | `16.2.3` |
+| `typescript` | `4.9.5` |
+| `rxjs` | `7.5.7` |
+| `zone.js` | `0.13.3` |
+| Node/npm | `16.20.2` / `8.19.4` |
+
+Breakages: none.
+
+The first Material update invocation was rejected because the preceding core/
+CLI update left package.json and package-lock.json dirty:
+
+```text
+Error: Repository is not clean. Please commit or stash any changes before updating.
+```
+
+The Material update was then run with `--allow-dirty`; it completed successfully
+and ran the v16 CDK and Material migrations without source changes:
+
+```text
+** Executing migrations of package '@angular/cdk' **
+Migration completed (No changes made).
+** Executing migrations of package '@angular/material' **
+Migration completed (No changes made).
+```
+
+The core/CLI migration names and results were:
+
+- Remove `defaultProject` option: no changes made.
+- Replace `defaultCollection` with `schematicCollections`: no changes made.
+- Disable `buildOptimizer` for non-optimized server builds: no changes made.
+- Remove deprecated guard/resolver interface imports and `implements` clauses:
+  no changes made.
+- Remove deprecated `moduleId` component metadata: no changes made.
+
+Silent changes:
+
+- The Angular 16 dependency set changed the application bundles from the Step
+  1c totals of `713.34 kB` / `525.40 kB` to `705.17 kB` /
+  `495.24 kB` for retail-banking / wealth-portal.
+- The styles bundle is `81.50 kB` raw and `7.92 kB` estimated transfer for
+  both applications.
+- The visual probe found no style, box, typography, spacing, color, or layout
+  changes. Retail-only computed-style differences were Angular-generated
+  `ng-tns-c6-*` scope suffixes changing to `ng-tns-c1205077789-*`; the
+  wealth-portal JSON had no differences. These are framework scope-class
+  renames, not rendered-style changes.
+
+No-op or superseded fixes: no Angular source, template, Sass, test assertion,
+standalone, signals, control-flow, or application-builder migration was
+needed. The existing `browser` and `karma` builders remain in angular.json.
+The ui-components peerDependencies were updated from `^15.2.0` to `^16.2.0`
+for the five Angular packages.
+
+What did not break: all five ui-components specs, all three retail-banking
+specs, all two wealth-portal specs, both application builds, the public
+declaration build, and the visual probe completed successfully. No Karma
+`ERROR` lines were emitted. The 1 MB maximum-error bundle budget remained
+unexceeded, so no separate budget commit was required.
+
+Final gate and artifacts:
+
+```text
+ui-components: 5 SUCCESS, 0 ERROR lines
+retail-banking build: exit=0, Initial Total 705.17 kB
+wealth-portal build: exit=0, Initial Total 495.24 kB
+retail-banking: 3 SUCCESS, 0 ERROR lines
+wealth-portal: 2 SUCCESS, 0 ERROR lines
+.d.ts diff vs baseline: 34 lines
+GATE step2-angular16: GREEN
+```
+
+Visual probe:
+
+```text
+retail-banking: screenshot + styles written; dialog=false; consoleErrors=0
+wealth-portal: screenshot + styles written; dialog=true; consoleErrors=0
+```
+
+Evidence: `~/migration-evidence/step2-angular16/`, including
+`retail-banking-styles.json`, `wealth-portal-styles.json`,
+`versions.txt`, and the build/test logs.
+
+Deviation: `@angular/material@16` required `--allow-dirty` because the
+preceding required core/CLI update had already modified the dependency files.
