@@ -703,3 +703,102 @@ wealth-portal: screenshot + styles written; dialog=true; consoleErrors=0
 Evidence: `~/migration-evidence/step4-angular18/`, including
 `retail-banking-styles.json`, `wealth-portal-styles.json`,
 `versions.txt`, the update logs, and the build/test logs.
+
+## Final state
+
+The final toolchain is Angular 18 with exact root package pins. The baseline
+and final direct dependency versions are:
+
+| Dependency | Baseline | Final |
+|---|---:|---:|
+| `@angular/animations` | `14.2.12` | `18.2.14` |
+| `@angular/cdk` | `14.2.7` | `18.2.14` |
+| `@angular/common` | `14.2.12` | `18.2.14` |
+| `@angular/compiler` | `14.2.12` | `18.2.14` |
+| `@angular/core` | `14.2.12` | `18.2.14` |
+| `@angular/forms` | `14.2.12` | `18.2.14` |
+| `@angular/material` | `14.2.7` | `18.2.14` |
+| `@angular/platform-browser` | `14.2.12` | `18.2.14` |
+| `@angular/platform-browser-dynamic` | `14.2.12` | `18.2.14` |
+| `@angular/router` | `14.2.12` | `18.2.14` |
+| `@angular-devkit/build-angular` | `14.2.13` | `18.2.21` |
+| `@angular/cli` | `14.2.13` | `18.2.21` |
+| `@angular/compiler-cli` | `14.2.12` | `18.2.14` |
+| `ng-packagr` | `14.2.2` | `18.2.1` |
+| `typescript` | `4.7.4` | `5.4.5` |
+| `zone.js` | `0.11.8` | `0.14.10` |
+| `@types/node` | `16.18.126` | `20.17.58` |
+| `rxjs` | `7.5.7` | `7.5.7` |
+| `tslib` | `2.4.1` | `2.4.1` |
+| `@types/jasmine` | `~4.0.0` | `~4.0.0` |
+| `jasmine-core` | `~4.3.0` | `~4.3.0` |
+| `karma` | `~6.4.0` | `~6.4.0` |
+| `karma-chrome-launcher` | `~3.1.0` | `~3.1.0` |
+| `karma-coverage` | `~2.2.0` | `~2.2.0` |
+| `karma-jasmine` | `~5.1.0` | `~5.1.0` |
+| `karma-jasmine-html-reporter` | `~2.0.0` | `~2.0.0` |
+
+The ui-components peerDependencies are `^18.2.0` for
+`@angular/common`, `@angular/core`, `@angular/forms`, `@angular/cdk`, and
+`@angular/material`; `rxjs` remains `^7.5.0`.
+
+Per-step application bundle totals:
+
+| Step | retail-banking initial | wealth-portal initial |
+|---|---:|---:|
+| Step 0 — Angular 14 baseline | 602.93 kB | 449.93 kB |
+| Step 1 — Angular 15 legacy | 663.13 kB | 480.42 kB |
+| Step 1c — Material 15 MDC | 713.34 kB | 525.40 kB |
+| Step 2 — Angular 16 | 705.17 kB | 495.24 kB |
+| Step 3 — Angular 17 | 728.17 kB | 595.05 kB |
+| Step 4 — Angular 18 | 734.07 kB | 614.49 kB |
+
+Public API verdict: the only `.d.ts` differences are Angular's internal
+`ɵcmp` metadata shape and `export declare type` → `export type`. All exported
+symbols, inputs, and `confirm(data): Observable<boolean>` are unchanged.
+
+Four spec files had assertion changes, all in Step 1c, and all preserved the
+same test counts and intent:
+
+- `libs/ui-components/src/lib/button/button.component.spec.ts`:
+  `mat-flat-button` → `mat-mdc-unelevated-button`.
+- `libs/ui-components/src/lib/table/table.component.spec.ts`:
+  `th.mat-header-cell` / `tr.mat-row` → their `mat-mdc-*` equivalents.
+- `apps/retail-banking/src/app/app.component.spec.ts`:
+  `bofa-table tr.mat-row` → `bofa-table tr.mat-mdc-row`.
+- `apps/wealth-portal/src/app/app.component.spec.ts`:
+  `bofa-table tr.mat-row` → `bofa-table tr.mat-mdc-row`.
+
+Deliberately not modernised: the workspace remains NgModule-based; standalone
+components, signals, the v17 control-flow syntax, the Angular application
+builder, and unrelated public API changes were not introduced. Legacy
+pixel-matching geometry overrides were not restored after the MDC migration;
+MDC density differences remain documented for review. Tests were not deleted
+or weakened.
+
+How to run:
+
+```text
+nvm use && npm ci && npm run test:all
+```
+
+Final pinning verification: all root dependency and devDependency entries are
+exact pins except the pre-existing `~` ranges on Jasmine, Karma, and related
+test packages. `@types/node` was updated from `16.18.126` to the exact
+compatible `20.17.58`. `npm install` updated the lockfile, and
+`npm ls --depth=0` exited 0 with no peer errors.
+
+Final gate:
+
+```text
+ui-components: 5 SUCCESS, 0 ERROR lines
+retail-banking: 3 SUCCESS, 0 ERROR lines
+wealth-portal: 2 SUCCESS, 0 ERROR lines
+.d.ts diff vs baseline: 34 lines
+GATE step5-final: GREEN
+```
+
+The exact `npm run build:all` and `npm run test:all` scripts also exited 0;
+their complete logs are `~/migration-evidence/step5-final/build-all.log` and
+`~/migration-evidence/step5-final/test-all.log`. The final visual probe had
+zero console errors and its Step 5 JSON is identical to Step 4 for both apps.

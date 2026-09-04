@@ -11,7 +11,7 @@ shared **BofA Design System** component library (`@bofa/ui-components`).
 
 | Project | Path | What it is |
 |---|---|---|
-| `ui-components` | `libs/ui-components` | `@bofa/ui-components` — the BofA Design System: shared components (button, card, text input, table, confirm dialog, datepicker) wrapping Angular Material 14 with our theme |
+| `ui-components` | `libs/ui-components` | `@bofa/ui-components` — the BofA Design System: shared components (button, card, text input, table, confirm dialog, datepicker) wrapping Angular Material 18 with our theme |
 | `retail-banking` | `apps/retail-banking` | Online Banking accounts dashboard (port 4200) |
 | `wealth-portal` | `apps/wealth-portal` | Merrill portfolio page (port 4300) |
 
@@ -21,9 +21,9 @@ from library source.
 
 ## Toolchain
 
-- **Node 20.18.1** (`.nvmrc` — run `nvm use`) for the current Angular 17/18 migration steps.
+- **Node 20.18.1** (`.nvmrc` — run `nvm use`) is required. Angular 18 does not support Node 16.
 - npm only (lockfile is `package-lock.json`); no yarn/pnpm.
-- Angular 14.2.x, Angular Material 14.2.x, TypeScript 4.7.x — versions are pinned exactly
+- Angular 18.2.x, Angular Material 18.2.x, TypeScript 5.4.x — versions are pinned exactly
   in `package.json`; do not upgrade ad hoc.
 
 ## Build order constraint
