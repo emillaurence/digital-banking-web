@@ -210,3 +210,196 @@ needed to keep the local Angular CLI 15 binary instead of attempting a newer
 CLI incompatible with Node 16. The library module import rewrite was manually
 completed after verifying the schematic's tsconfig target selection, as
 authorized for this step.
+
+## Step 1c — Material 15 MDC migration
+
+The official schematic was run against the Angular 15 workspace with Node
+16.20.2 and npm 8.19.4. The exact requested command was attempted first:
+
+```text
+npx ng generate @angular/material:mdc-migration --components all --directory .
+Schematic input does not validate against the Schema:
+{"components":["all"],"directory":"."}
+Errors:
+  Data path "/directory" must match format "path".
+```
+
+An absolute directory was accepted but matched no workspace-relative source
+paths:
+
+```text
+Limiting migration to: /home/ubuntu/repos/digital-banking-web
+Successfully migrated the project.
+Nothing to be done.
+```
+
+The official schematic was then run without the directory filter, which
+processed the reachable application and test tsconfigs:
+
+```text
+npx ng generate @angular/material:mdc-migration --components all --interactive=false
+```
+
+The schematic touched exactly these seven files:
+
+```text
+libs/ui-components/src/styles/_theme.scss
+libs/ui-components/src/styles/_typography.scss
+libs/ui-components/src/lib/dialog/confirm-dialog.component.ts
+libs/ui-components/src/lib/button/button.component.spec.ts
+libs/ui-components/src/lib/table/table.component.spec.ts
+libs/ui-components/src/lib/dialog/dialog.service.ts
+libs/ui-components/src/lib/dialog/dialog.service.spec.ts
+```
+
+It left exactly one migration TODO:
+
+```text
+libs/ui-components/src/styles/_theme.scss:36:
+/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
+```
+
+The TODO was removed after replacing the legacy form-field-outline selector
+with resting MDC notched-outline selectors. The schematic did not rewrite
+`libs/ui-components/src/lib/ui-components.module.ts`, because this library's
+build target points to `ng-package.json` rather than a top-level `tsConfig`.
+The migration rule walks build/test target tsconfigs, so it does not reach the
+library module through that target. The module was completed manually with the
+matching `Mat*Module` imports; datepicker and native-date imports remained
+unchanged because they have no legacy variants.
+
+Breakages (symptom → root cause → fix → evidence):
+
+- Before assertion updates, the first gate intentionally failed only at the
+  four authorized old DOM selectors. ui-components was `2 FAILED, 3 SUCCESS`
+  (`mat-flat-button`, `th.mat-header-cell`, and `tr.mat-row` selectors);
+  retail-banking was `1 FAILED, 2 SUCCESS`; wealth-portal was `1 FAILED,
+  1 SUCCESS`; all had zero Karma `ERROR` lines. The captured logs are
+  `~/migration-evidence/step1c-mdc/test-ui-components.log`,
+  `test-retail-banking.log`, and `test-wealth-portal.log`. The selectors were
+  changed only as follows: `mat-flat-button` →
+  `mat-mdc-unelevated-button`, `th.mat-header-cell` →
+  `th.mat-mdc-header-cell`, `tr.mat-row` → `tr.mat-mdc-row`, and
+  `bofa-table tr.mat-row` → `bofa-table tr.mat-mdc-row`. Counts and test
+  intent were unchanged; these are framework-rendered class renames.
+
+- The first visual probe showed the MDC secondary and dialog ghost buttons
+  rendered with Material's default light background/color rather than the
+  design-system transparent/navy treatment. The component selectors were
+  raised to `.mat-mdc-unelevated-button.bofa-button--secondary` and the
+  equivalent ghost selector. The final probe reports transparent backgrounds
+  and `rgb(1, 33, 105)` text for both.
+
+- The first visual probe showed MDC density shifts: summary cards were
+  `115px` rather than `126px`, panels began at `310px` rather than `321px`,
+  MDC table rows were `52px` rather than `48px`, and outline fields were
+  `78px` rather than approximately `82.8px`. These differences are reported
+  below rather than hidden with pixel-matching overrides. The final probe
+  confirms that the summary cards remain equal-height and lined up, both
+  panel-grid columns start at the same top, form fields remain the same width
+  as their containing card, and no element-to-element alignment regression
+  requires a compatibility fix.
+
+- MDC dialogs move padding into title/content/actions and the surface no
+  longer inherits the legacy container styling. The retained surface override
+  targets `.mat-mdc-dialog-container.mdc-dialog .mdc-dialog__surface` and
+  preserves the requested 16px radius and navy shadow. MDC's default internal
+  padding is reported below; no title/content/action padding compatibility
+  fix was retained. The final dialog remains 420 × 178px, and its buttons are
+  aligned with each other without an element-alignment regression.
+
+Silent changes:
+
+- Typography was ported exactly to the requested MDC names and values:
+  `headline-5` 28/36/700, `headline-6` 20/28/600, `subtitle-1` 16/24/600,
+  `body-1` 15/24/400, and `button` 15/16/600, with the existing Public Sans
+  family. The theme now uses `mat.core()`, `density: 0`, and
+  `mat.all-component-themes($theme)`.
+- MDC density differences, compared with the Angular 14 baseline, are:
+  - summary cards: `126px` high → `115px`; all three remain equal-height and
+    aligned with one another;
+  - card surface computed `padding-top`: `16px` → `0px`; MDC places internal
+    spacing in its header/content structure;
+  - card titles: `24px` line box → `28px`, with MDC theme color
+    `rgba(0, 0, 0, 0.87)` → `rgb(28, 37, 64)`;
+  - card subtitles: `15px × 17px` → `14px × 22px`;
+  - table header cells: `54px` → `56px`, default horizontal inset `24px` on
+    the first column/`0px` elsewhere → `16px`;
+  - table body cells: `47px` → `52px`, `15px` → `14px`, and default horizontal
+    inset `24px` on the first column/`0px` elsewhere → `16px`;
+  - retail table column boxes change from `157/310/147px` to
+    `152/319/143px`; wealth columns change from `503/182/130/150px` to
+    `443/213/164/146px`. These are MDC table-layout/font-density effects,
+    not hard-coded app column widths;
+  - outline fields: `398 × 82.7812px` → `398 × 78px`; input elements
+    `16.875px` high → `24px` high, with MDC's floating-label implementation;
+  - dialog surface: baseline measured radius/shadow `16px` /
+    `0 12px 40px rgba(1,33,105,.25)` → the visual probe's outer MDC container
+    reports `0px`/`none` because the probe selects the container rather than
+    the styled surface. The actual surface retains the requested 16px radius
+    and shadow; container padding reports `28px` → `0px` because MDC moves
+    spacing into internal title/content/actions.
+  These are density, typography, padding, and internal-rendering changes that
+  are intentionally exposed for review. The final JSON diffs are:
+  `~/migration-evidence/step1c-mdc/retail-banking-styles.diff.txt` and
+  `wealth-portal-styles.diff.txt`.
+- Preserved values include summary/panel grid widths and gaps, equal card
+  alignment, panel top alignment, form-field/card width relationship, button
+  dimensions (MDC default height remains `36px`), table header color/weight/
+  uppercase/letter-spacing/border, resting outline color
+  `rgb(170, 182, 207)`, transparent/navy secondary and ghost buttons, and
+  dialog button alignment.
+- The final visual probe completed with zero console errors:
+
+  ```text
+  retail-banking: screenshot + styles written; dialog=false; consoleErrors=0
+  wealth-portal: screenshot + styles written; dialog=true; consoleErrors=0
+  ```
+
+  Final screenshots:
+  `~/migration-evidence/step1c-mdc/retail-banking.png`,
+  `wealth-portal.png`, and `wealth-portal-dialog.png`. Baseline screenshots
+  are `~/migration-evidence/step0-baseline/retail-banking.png`,
+  `wealth-portal.png`, and `wealth-portal-dialog.png`. Baseline/current PNGs
+  were inspected at 1280px. The expected MDC density changes are visible,
+  but summary cards remain equal-height, panel tops align, form fields fit
+  their cards, and dialog buttons remain aligned. No minimal alignment fix was
+  necessary.
+
+No-op or superseded fixes: the rejected `--directory .` invocation and the
+absolute-directory no-op were superseded by the official whole-workspace
+invocation without `--directory`. The schematic-generated `$body-2` was
+corrected to the explicitly required `$body-1`. The initial lower-specificity
+button override was superseded by selectors specific enough to win against
+MDC defaults. The prior pixel-matching geometry experiment was superseded and
+removed: it added app-specific `.mat-column-*` widths to the shared library
+theme and hard-coded card, table, form-field, and dialog spacing. Those rules
+masked the MDC density changes the user requested to review, so they were
+removed. Only the requested selector ports, design-system colors/borders/
+shadows, resting outline color, button treatment, and dialog surface treatment
+remain. No budget change was made: retail-banking remained below the 1 MB
+`maximumError`.
+
+What did not break: all five ui-components specs, all three retail-banking
+specs, all two wealth-portal specs, both application builds, the public
+declaration build, and the visual probe completed successfully. No component
+template or public API behavior changed. The only spec changes were the
+authorized framework-rendered DOM class assertions. No `ERROR` lines appeared
+in any final Karma log.
+
+Final gate and artifacts:
+
+```text
+ui-components: 5 SUCCESS, 0 ERROR lines
+retail-banking build: exit=0, Initial Total 713.34 kB
+wealth-portal build: exit=0, Initial Total 525.40 kB
+retail-banking: 3 SUCCESS, 0 ERROR lines
+wealth-portal: 2 SUCCESS, 0 ERROR lines
+.d.ts diff vs baseline: 34 lines
+GATE step1c-mdc: GREEN
+```
+
+The final build logs report styles at `106.39 kB` raw and `9.53 kB`
+estimated transfer for both applications. The 500 kB warning budget remains
+exceeded, but the 1 MB maximum-error budget does not, so no separate budget
+commit is required.

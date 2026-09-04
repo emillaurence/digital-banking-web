@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
+import { MatTableModule } from '@angular/material/table';
 import { BofaTableComponent } from './table.component';
 
 describe('BofaTableComponent', () => {
@@ -22,7 +22,7 @@ describe('BofaTableComponent', () => {
     ];
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelectorAll('th.mat-header-cell').length).toBe(2);
-    expect(fixture.nativeElement.querySelectorAll('tr.mat-row').length).toBe(2);
+    expect(fixture.nativeElement.querySelectorAll('th.mat-mdc-header-cell').length).toBe(2);
+    expect(fixture.nativeElement.querySelectorAll('tr.mat-mdc-row').length).toBe(2);
   });
 });
