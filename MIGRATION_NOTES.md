@@ -325,3 +325,39 @@ Commands:
 - Step 15b dialog: the rendered Angular 14 baseline was 4px radius and 24px padding, although the original 16px/28px theme rule was the intended design-system value but did not win the legacy component cascade. The 15b restoration follows the rendered 4px/24px baseline; activating 16px/28px remains an owner decision.
 - Step 17 font smoothing: Material 17 dropped `-webkit-font-smoothing: antialiased` from the Angular Material core MDC helper output, changing computed `webkitFontSmoothing` from `antialiased` to `auto` on MDC button labels/base elements without geometry or metrics changes.
 - Step 18: the Step 17 → Step 18 comparison added a Material-owned 102-pixel (`0.009%`) retail datepicker rendering difference in crop region `(790,240)-(1050,540)`: ≤1px sub-pixel shifts in day-number glyphs and previous/next arrow icons, with identical layout and geometry. The wealth-07/08 differences remain timestamp-region differences. No metric difference was observed.
+
+## Post-18 fix — form-field hint spacing (found in e2e testing)
+
+Symptom: in the retail payment form, the Amount hint `Daily limit $25,000` was too large and dark and sat flush against the next field's floated `Payment date` label, with approximately 3px of apparent overlap in the e2e state. Angular 14 rendered a smaller, lighter hint with a clear vertical gap.
+
+Cause: the MDC subscript defaults used a 12px hint with 20px line height, `rgb(28, 37, 64)` text, and `0.4px` tracking. The subscript wrapper had `0px` margin and the 22px subscript region sat inside the 78px MDC field box. The legacy field used an 11.25px hint with 12.6562px line height, `rgba(0, 0, 0, 0.6)` text, normal tracking, and wrapper spacing.
+
+Fix: the global theme restoration in `libs/ui-components/src/styles/_theme.scss` adds:
+
+```scss
+  .mat-mdc-form-field {
+    .mat-mdc-form-field-subscript-wrapper {
+      margin-bottom: 6px;
+    }
+
+    .mat-mdc-form-field-hint-wrapper {
+      padding: 0 11.25px;
+    }
+
+    .mat-mdc-form-field-hint {
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 11.25px;
+      line-height: 12.6562px;
+      letter-spacing: normal;
+    }
+  }
+```
+
+Evidence:
+
+- Before-fix Angular 14 measurements: `.mat-hint` box `[786,552,99,13]`, font `11.25px / 12.6562px`, color `rgba(0, 0, 0, 0.6)`, normal tracking; the Amount subscript wrapper had `0px 11.25px` padding and `7.5px 0px 0px` margin. The filled-state hint box was `[786.25,552.03125,99.171875,12.65625]`, ending at `564.6875`; the next `Payment date` label began at `595.6875`.
+- Before-fix Angular 18 measurements: `.mat-mdc-form-field-hint` box `[791,537,113,22]`, font `12px / 20px`, color `rgb(28, 37, 64)`, `0.4px` tracking; the hint wrapper had `0px 16px` padding and no margin. The Amount and Payment date fields were 78px high at y `481` and `563`.
+- After-fix Angular 18 measurements: the hint computed as `11.25px / 12.6562px`, color `rgba(0, 0, 0, 0.6)`, normal tracking, with hint-wrapper padding `0px 11.25px`; the subscript wrapper retained 22px height and has `0px 0px 6px` margin. The MDC text-field body remains 56px high. The outer fields are 84px high at y `399`, `487`, and `575`; the 6px increase is the intentional subscript margin needed for the stacked-field gap.
+- After-fix filled-state measurement on `http://localhost:4200/`: the Amount hint box was `[786.25,542.875,99.171875,18.65625]`, ending at `561.53125`; the next `Payment date` floating-label box began at y `595.375`, leaving `33.84375px` of separation. Evidence: `/home/ubuntu/green/18-fix/filled-positions.json`, `/home/ubuntu/green/18-fix/styles-18-fix-hint.json`, `/home/ubuntu/green/18-fix/styles-18-fix-floating-label.json`, and `/home/ubuntu/green/18-fix/styles-18-fix-body-infix.json`.
+- The explicit library build returned `rc=0`; the full fix gate used Node 20.18.1 and returned `GREEN-GATE rc=0`, with library/retail/wealth builds `rc=0`, tests `5/5`, `3/3`, and `2/2`, all with 0 `ERROR` lines, and retail/wealth serves at HTTP 200. Evidence: `/home/ubuntu/green-18-fix-build-lib.log` and `/home/ubuntu/green-18-fix.out`.
+- Comparison against Step 18: `/home/ubuntu/green/18-fix/compare-vs-18.log`; the intentional retail form-size and downstream-position changes are listed there. Wealth captures `wealth-01` through `wealth-06` are `SAME`; `wealth-07` and `wealth-08` differ only in their expected timestamp region. Metrics are in `/home/ubuntu/green/18-fix/metrics-vs-18.diff`.

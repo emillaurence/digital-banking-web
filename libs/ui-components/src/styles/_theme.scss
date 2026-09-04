@@ -84,6 +84,23 @@
     }
   }
 
+  .mat-mdc-form-field {
+    .mat-mdc-form-field-subscript-wrapper {
+      margin-bottom: 6px;
+    }
+
+    .mat-mdc-form-field-hint-wrapper {
+      padding: 0 11.25px;
+    }
+
+    .mat-mdc-form-field-hint {
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 11.25px;
+      line-height: 12.6562px;
+      letter-spacing: normal;
+    }
+  }
+
   // MDC's structural dialog styles are component styles injected after the
   // global theme, so these need the extra mdc-* class to win the cascade.
   .mat-mdc-dialog-container {
