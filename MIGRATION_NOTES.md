@@ -154,3 +154,84 @@ Commands:
   - `{"file":"wealth-07-after-confirm.png","status":"DIFF","pixels":49,"pct":"0.137%","size":"966x37"}`
   - `{"file":"wealth-08-after-confirm-full.png","status":"DIFF","pixels":49,"pct":"0.004%","size":"1280x900"}`
 - Step 15b versus Step 16 metrics were identical; `/home/ubuntu/green/16/metrics-vs-15b.diff` is empty. Diff PNGs are in `/home/ubuntu/visual/16-vs-15b/`.
+
+## Step 17 — Angular 17 + Material 17 (Node 20.18.1)
+
+Toolchain: Node 20.18.1, npm 10.8.2, Angular core 17.3.12, Angular CLI 17.3.17, Angular Material/CDK 17.3.10, TypeScript 5.4.5, zone.js 0.14.10, ng-packagr 17.3.0, rxjs 7.5.7.
+Commands:
+
+- `nvm install 20.18.1`
+- `npx ng update @angular/core@17 @angular/cli@17`
+- `npx ng update @angular/material@17 --allow-dirty`
+- `npx ng build ui-components`
+- `/home/ubuntu/visual/green.sh 17 20.18.1`
+- `cd /home/ubuntu/visual && node compare.js 16 17 17-vs-16`
+
+### Automatic migration changes (kept as-is, per plan)
+
+- `package.json` — Angular core, CLI, compiler, build-angular, CDK, Material, ng-packagr, TypeScript, and zone.js updated to Angular 17-compatible versions. TypeScript was upgraded automatically to 5.4.5; no pre-install was required.
+- `package-lock.json` — lockfile entries updated for the Angular 17 dependency graph.
+- `angular.json` — Angular CLI migration renamed the dev-server and extract-i18n target option from `browserTarget` to `buildTarget` for both applications. The application builders remain `@angular-devkit/build-angular:browser`; no application/esbuild builder switch occurred.
+- No `*.spec.ts`, application source, template, style, NgModule, or Karma files were changed by either schematic.
+
+### Repo/toolchain changes
+
+- `.nvmrc` — changed to `20.18.1`.
+- `README.md` line 24 — changed to `- **Node 20.18.1** (\`.nvmrc\` — run \`nvm use\`). Angular 17+ requires Node 18.13+/20.9+.`.
+- `libs/ui-components/package.json` — the five Angular peer ranges were manually bumped from `^16.2.0` to `^17.3.0`; `rxjs` was unchanged.
+- `package.json` — the Angular 17 schematic left the file without a trailing newline.
+
+### Loud breakages (symptom → cause → fix → evidence)
+
+- None. `npx ng build ui-components` compiled successfully without Sass or TypeScript errors. No Material 17 Sass fixes were needed. Evidence: `/home/ubuntu/green/17/build-lib-pre-gate.log`.
+
+### Silent changes
+
+- `/home/ubuntu/green/17/dts.diff` contains 59 generated declaration-diff lines versus the Angular 14 baseline. Every changed declaration is generated-only: `BofaButtonVariant` uses TypeScript's `export type` spelling instead of `export declare type`; generated `ɵcmp` metadata for `BofaButtonComponent`, `BofaCardComponent`, `BofaDatepickerComponent`, `BofaConfirmDialogComponent`, `BofaTableComponent`, and `BofaTextInputComponent` gains the trailing `never` generic slot; and generated input metadata for button, card, datepicker, table, and text-input changes from string aliases to `{ alias, required: false }` objects. No exported class, type, input, method, or selector changed.
+- `/home/ubuntu/green/17/pkg-meta.diff` contains 22 generated package-metadata lines versus the Angular 14 baseline: the five generated Angular peer ranges are `^17.3.0` instead of `^14.2.0`, and package exports move from the Angular 14 `esm2020`/`es2020`/`es2015`/`node` entries to Angular 17 `esm2022`/`esm`/`default` entries targeting `esm2022`/`fesm2022`.
+- Material/Sass deprecation warnings: 0 observed in the Step 17 build and gate logs. The two distinct build warnings were bundle budget warnings; the first occurrence was `Warning: bundle initial exceeded maximum budget. Budget 500.00 kB was not met by 229.91 kB with a total of 729.91 kB.` The second was `Warning: bundle initial exceeded maximum budget. Budget 500.00 kB was not met by 96.79 kB with a total of 596.79 kB.` Both were warnings, not maximum-error failures.
+
+### No-op fixes / deviations from plan
+
+- The requested Node 20.18.1 runtime was not initially installed in nvm; `nvm install 20.18.1` installed it before running the migrations and gate.
+- Angular core/CLI update completed without `--force`; the Material update used the requested `--allow-dirty` because the core/CLI update had modified the working tree.
+- No TypeScript pre-install was needed because the Angular 17 update automatically selected TypeScript 5.4.5.
+- No tests were changed, deleted, skipped, or weakened.
+
+### Material-owned differences (if any)
+
+- The Step 17 comparison against Step 16 produced these 10 non-`SAME` files:
+  - `{"file":"retail-01-full.png","status":"DIFF","pixels":550,"pct":"0.048%","size":"1280x900"}`
+  - `{"file":"retail-04-form.png","status":"DIFF","pixels":550,"pct":"0.488%","size":"398x283"}`
+  - `{"file":"retail-05-primary-button.png","status":"DIFF","pixels":196,"pct":"1.331%","size":"398x37"}`
+  - `{"file":"retail-06-form-focused.png","status":"DIFF","pixels":361,"pct":"0.321%","size":"398x283"}`
+  - `{"file":"retail-07-form-filled.png","status":"DIFF","pixels":816,"pct":"0.724%","size":"398x283"}`
+  - `{"file":"retail-08-datepicker-open.png","status":"DIFF","pixels":345,"pct":"0.030%","size":"1280x900"}`
+  - `{"file":"retail-09-dialog-open.png","status":"DIFF","pixels":307,"pct":"0.027%","size":"1280x900"}`
+  - `{"file":"retail-12-after-confirm-full.png","status":"DIFF","pixels":535,"pct":"0.046%","size":"1280x900"}`
+  - `{"file":"wealth-07-after-confirm.png","status":"DIFF","pixels":1229,"pct":"3.439%","size":"966x37"}`
+  - `{"file":"wealth-08-after-confirm-full.png","status":"DIFF","pixels":1229,"pct":"0.107%","size":"1280x900"}`
+- Cause: Material 17 dropped `-webkit-font-smoothing: antialiased` from `core/mdc-helpers/_mdc-helpers.scss`. It is present at line 48 in v16 and emitted for `.mdc-button` in Step 16's `styles.css`, but absent from Step 17's `styles.css`; MDC text therefore uses the browser's default subpixel anti-aliasing.
+- Computed-style evidence: `/home/ubuntu/green/17/computed-style-diffs.txt`. The only differing property is `webkitFontSmoothing`, `antialiased → auto`, on `.mdc-button__label` and `.mat-mdc-button-base`; `font`, `letterSpacing`, `lineHeight`, `fontFeatureSettings`, and `textRendering` are identical across the 14 requested selectors, including inputs, labels, hints, cells, and dialog elements.
+- Geometry/metrics are unchanged; `/home/ubuntu/green/17/metrics-vs-16.diff` is empty. The Step 16 oracle worktree is `/home/ubuntu/wt-16`, served on `:4600`/`:4700`.
+- Decision: reported for owner judgment, not overridden. Adding `-webkit-font-smoothing: antialiased` globally would be a one-line design-system choice, not a migration fix.
+
+### Evidence
+
+- Schematic logs: `/home/ubuntu/green-17-ng-update-core.log` and `/home/ubuntu/green-17-ng-update-material.log`.
+- Library build: `npx ng build ui-components` returned `rc=0`; the full gate also reported library, retail, and wealth builds `rc=0`. Evidence: `/home/ubuntu/green/17/build-lib-pre-gate.log` and `/home/ubuntu/green-17.out`.
+- Gate runtime: `/home/ubuntu/green-17.out` begins with `node v20.18.1 npm 10.8.2`.
+- Tests: ui-components `5/5`, retail-banking `3/3`, wealth-portal `2/2`, all `rc=0` with 0 `ERROR` lines.
+- Public API: `/home/ubuntu/green/17/dts.diff` contains 59 generated-only lines, classified above; `/home/ubuntu/green/17/pkg-meta.diff` contains 22 generated package-metadata lines, classified above.
+- Visual comparison against Step 16: `/home/ubuntu/green/17/compare-vs-16.log`; non-`SAME` files were:
+  - `{"file":"retail-01-full.png","status":"DIFF","pixels":550,"pct":"0.048%","size":"1280x900"}`
+  - `{"file":"retail-04-form.png","status":"DIFF","pixels":550,"pct":"0.488%","size":"398x283"}`
+  - `{"file":"retail-05-primary-button.png","status":"DIFF","pixels":196,"pct":"1.331%","size":"398x37"}`
+  - `{"file":"retail-06-form-focused.png","status":"DIFF","pixels":361,"pct":"0.321%","size":"398x283"}`
+  - `{"file":"retail-07-form-filled.png","status":"DIFF","pixels":816,"pct":"0.724%","size":"398x283"}`
+  - `{"file":"retail-08-datepicker-open.png","status":"DIFF","pixels":345,"pct":"0.030%","size":"1280x900"}`
+  - `{"file":"retail-09-dialog-open.png","status":"DIFF","pixels":307,"pct":"0.027%","size":"1280x900"}`
+  - `{"file":"retail-12-after-confirm-full.png","status":"DIFF","pixels":535,"pct":"0.046%","size":"1280x900"}`
+  - `{"file":"wealth-07-after-confirm.png","status":"DIFF","pixels":1229,"pct":"3.439%","size":"966x37"}`
+  - `{"file":"wealth-08-after-confirm-full.png","status":"DIFF","pixels":1229,"pct":"0.107%","size":"1280x900"}`
+- The Step 16 versus Step 17 metrics diff was empty (`/home/ubuntu/green/17/metrics-vs-16.diff`), so there were no metric differences to report. Diff PNGs are in `/home/ubuntu/visual/17-vs-16/`.
