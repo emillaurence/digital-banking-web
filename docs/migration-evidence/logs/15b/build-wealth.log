@@ -1,0 +1,21 @@
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files           | Names         |  Raw Size | Estimated Transfer Size
+main.fbc5b4de81e8a03f.js      | main          | 385.19 kB |                89.96 kB
+styles.da21792f3cef2ad5.css   | styles        | 107.82 kB |                 9.70 kB
+polyfills.744468d7cbcb3544.js | polyfills     |  33.09 kB |                10.66 kB
+runtime.0c87a39f2d0c54e4.js   | runtime       |   1.05 kB |               600 bytes
+
+| Initial Total | 527.15 kB |               110.91 kB
+
+Build at: 2026-09-04T12:59:36.777Z - Hash: a8b15bed3c4c25b9 - Time: 13156ms
+
+Warning: bundle initial exceeded maximum budget. Budget 500.00 kB was not met by 27.15 kB with a total of 527.15 kB.
+
+

@@ -1,0 +1,18 @@
+[
+ {
+  "tag": "mat-dialog-content",
+  "cls": "mat-mdc-dialog-content mdc-dialog__content",
+  "box": [
+   454,
+   442,
+   372,
+   19
+  ],
+  "font": "16px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "auto"
+ }
+]

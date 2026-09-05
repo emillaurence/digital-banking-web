@@ -1,0 +1,99 @@
+--- baseline/lib/button/button.component.d.ts	2026-09-04 12:04:48.236293319 +0000
++++ current/./lib/button/button.component.d.ts	2026-09-04 12:36:31.880384092 +0000
+@@ -1,9 +1,9 @@
+ import * as i0 from "@angular/core";
+-export declare type BofaButtonVariant = 'primary' | 'secondary' | 'ghost';
++export type BofaButtonVariant = 'primary' | 'secondary' | 'ghost';
+ export declare class BofaButtonComponent {
+     variant: BofaButtonVariant;
+     disabled: boolean;
+     type: 'button' | 'submit';
+     static ɵfac: i0.ɵɵFactoryDeclaration<BofaButtonComponent, never>;
+-    static ɵcmp: i0.ɵɵComponentDeclaration<BofaButtonComponent, "bofa-button", never, { "variant": "variant"; "disabled": "disabled"; "type": "type"; }, {}, never, ["*"], false>;
++    static ɵcmp: i0.ɵɵComponentDeclaration<BofaButtonComponent, "bofa-button", never, { "variant": "variant"; "disabled": "disabled"; "type": "type"; }, {}, never, ["*"], false, never>;
+ }
+--- baseline/lib/card/card.component.d.ts	2026-09-04 12:04:48.240293320 +0000
++++ current/./lib/card/card.component.d.ts	2026-09-04 12:36:31.884384092 +0000
+@@ -3,5 +3,5 @@
+     title: string;
+     subtitle: string;
+     static ɵfac: i0.ɵɵFactoryDeclaration<BofaCardComponent, never>;
+-    static ɵcmp: i0.ɵɵComponentDeclaration<BofaCardComponent, "bofa-card", never, { "title": "title"; "subtitle": "subtitle"; }, {}, never, ["*"], false>;
++    static ɵcmp: i0.ɵɵComponentDeclaration<BofaCardComponent, "bofa-card", never, { "title": "title"; "subtitle": "subtitle"; }, {}, never, ["*"], false, never>;
+ }
+--- baseline/lib/datepicker/datepicker.component.d.ts	2026-09-04 12:04:48.248293320 +0000
++++ current/./lib/datepicker/datepicker.component.d.ts	2026-09-04 12:36:31.892384093 +0000
+@@ -14,5 +14,5 @@
+     setDisabledState(isDisabled: boolean): void;
+     handleDateChange(event: MatDatepickerInputEvent<Date>): void;
+     static ɵfac: i0.ɵɵFactoryDeclaration<BofaDatepickerComponent, never>;
+-    static ɵcmp: i0.ɵɵComponentDeclaration<BofaDatepickerComponent, "bofa-datepicker", never, { "label": "label"; "hint": "hint"; }, {}, never, never, false>;
++    static ɵcmp: i0.ɵɵComponentDeclaration<BofaDatepickerComponent, "bofa-datepicker", never, { "label": "label"; "hint": "hint"; }, {}, never, never, false, never>;
+ }
+--- baseline/lib/dialog/confirm-dialog.component.d.ts	2026-09-04 12:04:48.252293320 +0000
++++ current/./lib/dialog/confirm-dialog.component.d.ts	2026-09-04 12:36:31.896384093 +0000
+@@ -1,4 +1,4 @@
+-import { MatDialogRef } from '@angular/material/dialog';
++import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+ import * as i0 from "@angular/core";
+ export interface BofaConfirmDialogData {
+     title: string;
+@@ -12,5 +12,5 @@
+     constructor(data: BofaConfirmDialogData, dialogRef: MatDialogRef<BofaConfirmDialogComponent>);
+     close(confirmed: boolean): void;
+     static ɵfac: i0.ɵɵFactoryDeclaration<BofaConfirmDialogComponent, never>;
+-    static ɵcmp: i0.ɵɵComponentDeclaration<BofaConfirmDialogComponent, "bofa-confirm-dialog", never, {}, {}, never, never, false>;
++    static ɵcmp: i0.ɵɵComponentDeclaration<BofaConfirmDialogComponent, "bofa-confirm-dialog", never, {}, {}, never, never, false, never>;
+ }
+--- baseline/lib/dialog/dialog.service.d.ts	2026-09-04 12:04:48.288293322 +0000
++++ current/./lib/dialog/dialog.service.d.ts	2026-09-04 12:36:31.928384095 +0000
+@@ -1,4 +1,4 @@
+-import { MatDialog } from '@angular/material/dialog';
++import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+ import { Observable } from 'rxjs';
+ import { BofaConfirmDialogData } from './confirm-dialog.component';
+ import * as i0 from "@angular/core";
+--- baseline/lib/table/table.component.d.ts	2026-09-04 12:04:48.256293320 +0000
++++ current/./lib/table/table.component.d.ts	2026-09-04 12:36:31.904384093 +0000
+@@ -9,5 +9,5 @@
+     data: Record<string, unknown>[];
+     get columnKeys(): string[];
+     static ɵfac: i0.ɵɵFactoryDeclaration<BofaTableComponent, never>;
+-    static ɵcmp: i0.ɵɵComponentDeclaration<BofaTableComponent, "bofa-table", never, { "columns": "columns"; "data": "data"; }, {}, never, never, false>;
++    static ɵcmp: i0.ɵɵComponentDeclaration<BofaTableComponent, "bofa-table", never, { "columns": "columns"; "data": "data"; }, {}, never, never, false, never>;
+ }
+--- baseline/lib/text-input/text-input.component.d.ts	2026-09-04 12:04:48.272293321 +0000
++++ current/./lib/text-input/text-input.component.d.ts	2026-09-04 12:36:31.912384094 +0000
+@@ -15,5 +15,5 @@
+     setDisabledState(isDisabled: boolean): void;
+     handleInput(event: Event): void;
+     static ɵfac: i0.ɵɵFactoryDeclaration<BofaTextInputComponent, never>;
+-    static ɵcmp: i0.ɵɵComponentDeclaration<BofaTextInputComponent, "bofa-text-input", never, { "label": "label"; "placeholder": "placeholder"; "hint": "hint"; "type": "type"; }, {}, never, never, false>;
++    static ɵcmp: i0.ɵɵComponentDeclaration<BofaTextInputComponent, "bofa-text-input", never, { "label": "label"; "placeholder": "placeholder"; "hint": "hint"; "type": "type"; }, {}, never, never, false, never>;
+ }
+--- baseline/lib/ui-components.module.d.ts	2026-09-04 12:04:48.280293322 +0000
++++ current/./lib/ui-components.module.d.ts	2026-09-04 12:36:31.924384094 +0000
+@@ -6,16 +6,16 @@
+ import * as i5 from "./table/table.component";
+ import * as i6 from "./text-input/text-input.component";
+ import * as i7 from "@angular/common";
+-import * as i8 from "@angular/material/button";
+-import * as i9 from "@angular/material/card";
++import * as i8 from "@angular/material/legacy-button";
++import * as i9 from "@angular/material/legacy-card";
+ import * as i10 from "@angular/material/datepicker";
+-import * as i11 from "@angular/material/dialog";
+-import * as i12 from "@angular/material/form-field";
+-import * as i13 from "@angular/material/input";
++import * as i11 from "@angular/material/legacy-dialog";
++import * as i12 from "@angular/material/legacy-form-field";
++import * as i13 from "@angular/material/legacy-input";
+ import * as i14 from "@angular/material/core";
+-import * as i15 from "@angular/material/table";
++import * as i15 from "@angular/material/legacy-table";
+ export declare class UiComponentsModule {
+     static ɵfac: i0.ɵɵFactoryDeclaration<UiComponentsModule, never>;
+-    static ɵmod: i0.ɵɵNgModuleDeclaration<UiComponentsModule, [typeof i1.BofaButtonComponent, typeof i2.BofaCardComponent, typeof i3.BofaConfirmDialogComponent, typeof i4.BofaDatepickerComponent, typeof i5.BofaTableComponent, typeof i6.BofaTextInputComponent], [typeof i7.CommonModule, typeof i8.MatButtonModule, typeof i9.MatCardModule, typeof i10.MatDatepickerModule, typeof i11.MatDialogModule, typeof i12.MatFormFieldModule, typeof i13.MatInputModule, typeof i14.MatNativeDateModule, typeof i15.MatTableModule], [typeof i1.BofaButtonComponent, typeof i2.BofaCardComponent, typeof i3.BofaConfirmDialogComponent, typeof i4.BofaDatepickerComponent, typeof i5.BofaTableComponent, typeof i6.BofaTextInputComponent]>;
++    static ɵmod: i0.ɵɵNgModuleDeclaration<UiComponentsModule, [typeof i1.BofaButtonComponent, typeof i2.BofaCardComponent, typeof i3.BofaConfirmDialogComponent, typeof i4.BofaDatepickerComponent, typeof i5.BofaTableComponent, typeof i6.BofaTextInputComponent], [typeof i7.CommonModule, typeof i8.MatLegacyButtonModule, typeof i9.MatLegacyCardModule, typeof i10.MatDatepickerModule, typeof i11.MatLegacyDialogModule, typeof i12.MatLegacyFormFieldModule, typeof i13.MatLegacyInputModule, typeof i14.MatNativeDateModule, typeof i15.MatLegacyTableModule], [typeof i1.BofaButtonComponent, typeof i2.BofaCardComponent, typeof i3.BofaConfirmDialogComponent, typeof i4.BofaDatepickerComponent, typeof i5.BofaTableComponent, typeof i6.BofaTextInputComponent]>;
+     static ɵinj: i0.ɵɵInjectorDeclaration<UiComponentsModule>;
+ }

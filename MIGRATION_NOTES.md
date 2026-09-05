@@ -1,6 +1,6 @@
 # Migration notes: @bofa/ui-components Angular 14 → 18
 
-Visual baselines (outside the repo): /home/ubuntu/visual/baseline-14/ (21 PNGs + metrics.json, captured from tag baseline-angular-14 at 1280x900 via /home/ubuntu/visual/capture.js). Per-step captures live in /home/ubuntu/visual/<step>/, pixel diffs in /home/ubuntu/visual/<step>-diff/, build/test logs in /home/ubuntu/green/<step>/.
+Visual baselines and gate evidence (committed under `docs/migration-evidence/`, see its README): docs/migration-evidence/screenshots/baseline-14/ (21 PNGs + metrics.json, captured from tag baseline-angular-14 at 1280x900 via docs/migration-evidence/tools/capture.js). Per-step captures live in docs/migration-evidence/screenshots/<step>/, pixel diffs in docs/migration-evidence/screenshots/<step>-diff/, build/test logs in docs/migration-evidence/logs/<step>/.
 
 ## Step 15a — Angular 15 + Material 15 (legacy components)
 
@@ -24,12 +24,12 @@ Commands:
 
 ### Loud breakages (symptom → cause → fix → evidence)
 
-- `ng build ui-components` initially failed with `TS2307: Cannot find module '@angular/material/legacy-datepicker'`, followed by template errors because the library module could not compile. The Material schematic left non-legacy module imports in `libs/ui-components/src/lib/ui-components.module.ts`; those were switched manually to `MatLegacy*Module` imports for button, card, dialog, form-field, input, and table so the legacy Sass and component modules remain consistent. Material 15 has no legacy datepicker package, so `MatDatepickerModule` was retained from `@angular/material/datepicker`. The corrected library build, both app builds, and all three test suites passed. Evidence: `/home/ubuntu/green/15a/build-lib.log`, `/home/ubuntu/green/15a/build-retail.log`, `/home/ubuntu/green/15a/build-wealth.log`.
+- `ng build ui-components` initially failed with `TS2307: Cannot find module '@angular/material/legacy-datepicker'`, followed by template errors because the library module could not compile. The Material schematic left non-legacy module imports in `libs/ui-components/src/lib/ui-components.module.ts`; those were switched manually to `MatLegacy*Module` imports for button, card, dialog, form-field, input, and table so the legacy Sass and component modules remain consistent. Material 15 has no legacy datepicker package, so `MatDatepickerModule` was retained from `@angular/material/datepicker`. The corrected library build, both app builds, and all three test suites passed. Evidence: `docs/migration-evidence/logs/15a/build-lib.log`, `docs/migration-evidence/logs/15a/build-retail.log`, `docs/migration-evidence/logs/15a/build-wealth.log`.
 
 ### Silent changes
 
-- Generated declarations differ by 99 diff lines in `/home/ubuntu/green/15a/dts.diff`, but the difference is non-API: TypeScript 4.9 emits `export type` instead of `export declare type` for the same declaration; the Angular 15 compiler adds a trailing `never` (the isSignal/standalone-related generic slot) to generated private `ɵcmp`/`ɵmod` metadata; and generated `ui-components.module.d.ts` and dialog declarations import `@angular/material/legacy-*` (`MatLegacyDialog as MatDialog`) as a transient consequence of this 15a legacy checkpoint, expected to revert at 15b. The public surface (`exported classes`, inputs, methods, `BofaButtonVariant`, `BofaTableColumn`, `BofaConfirmDialogData`, and `BofaDialogService.confirm`) is unchanged.
-- `/home/ubuntu/green/15a/pkg-meta.diff` is empty; generated package metadata did not change.
+- Generated declarations differ by 99 diff lines in `docs/migration-evidence/logs/15a/dts.diff`, but the difference is non-API: TypeScript 4.9 emits `export type` instead of `export declare type` for the same declaration; the Angular 15 compiler adds a trailing `never` (the isSignal/standalone-related generic slot) to generated private `ɵcmp`/`ɵmod` metadata; and generated `ui-components.module.d.ts` and dialog declarations import `@angular/material/legacy-*` (`MatLegacyDialog as MatDialog`) as a transient consequence of this 15a legacy checkpoint, expected to revert at 15b. The public surface (`exported classes`, inputs, methods, `BofaButtonVariant`, `BofaTableColumn`, `BofaConfirmDialogData`, and `BofaDialogService.confirm`) is unchanged.
+- `docs/migration-evidence/logs/15a/pkg-meta.diff` is empty; generated package metadata did not change.
 - The initial Angular 14 build's retail bundle was 602.93 kB. The Angular 15 build's retail bundle was 663.32 kB, producing a budget warning but remaining below the 1 MB maximum-error threshold.
 
 ### No-op fixes / deviations from plan
@@ -44,15 +44,15 @@ Commands:
 - Tests: ui-components `5/5`, retail-banking `3/3`, wealth-portal `2/2`; all returned `rc=0` with 0 `ERROR` lines.
 - Public API: `.d.ts` diff versus baseline was 99 generated-only lines, as described above; no consumer-facing API changes. Package metadata diff: 0 lines.
 - Visual: 11 of the 21 PNG screenshot comparisons were `SAME`. The seven retail diffs all localize to two datepicker-owned pixel regions: the Material 15 calendar toggle SVG glyph and antialiasing/weight of the `SEP 2026` period-button label. This is a framework-owned MDC-type density/rendering difference, not a theme regression. Box metrics are identical (`metrics.diff: identical`), there is no alignment or overflow change, and the `.mat-calendar-body-selected` override still applies.
-  - `/home/ubuntu/visual/15a/retail-01-full.png` — `DIFF`, 76 pixels
-  - `/home/ubuntu/visual/15a/retail-04-form.png` — `DIFF`, 76 pixels
-  - `/home/ubuntu/visual/15a/retail-06-form-focused.png` — `DIFF`, 76 pixels
-  - `/home/ubuntu/visual/15a/retail-07-form-filled.png` — `DIFF`, 76 pixels
-  - `/home/ubuntu/visual/15a/retail-08-datepicker-open.png` — `DIFF`, 414 pixels
-  - `/home/ubuntu/visual/15a/retail-09-dialog-open.png` — `DIFF`, 79 pixels
-  - `/home/ubuntu/visual/15a/retail-12-after-confirm-full.png` — `DIFF`, 76 pixels
-  - The timestamp-related allowed diffs were `/home/ubuntu/visual/15a/wealth-07-after-confirm.png` (227 pixels) and `/home/ubuntu/visual/15a/wealth-08-after-confirm-full.png` (227 pixels).
-  - Diff PNGs: `/home/ubuntu/visual/15a-diff/`.
+  - `docs/migration-evidence/screenshots/15a/retail-01-full.png` — `DIFF`, 76 pixels
+  - `docs/migration-evidence/screenshots/15a/retail-04-form.png` — `DIFF`, 76 pixels
+  - `docs/migration-evidence/screenshots/15a/retail-06-form-focused.png` — `DIFF`, 76 pixels
+  - `docs/migration-evidence/screenshots/15a/retail-07-form-filled.png` — `DIFF`, 76 pixels
+  - `docs/migration-evidence/screenshots/15a/retail-08-datepicker-open.png` — `DIFF`, 414 pixels
+  - `docs/migration-evidence/screenshots/15a/retail-09-dialog-open.png` — `DIFF`, 79 pixels
+  - `docs/migration-evidence/screenshots/15a/retail-12-after-confirm-full.png` — `DIFF`, 76 pixels
+  - The timestamp-related allowed diffs were `docs/migration-evidence/screenshots/15a/wealth-07-after-confirm.png` (227 pixels) and `docs/migration-evidence/screenshots/15a/wealth-08-after-confirm-full.png` (227 pixels).
+  - Diff PNGs: `docs/migration-evidence/screenshots/15a-diff/`.
 
 ## Step 15b — Angular Material 15 MDC components (design-system restoration)
 
@@ -79,7 +79,7 @@ Command: `npx ng generate @angular/material:mdc-migration` (all components, whol
 
 ### Silent changes — raw schematic output vs. baseline (symptom → cause → fix → evidence)
 
-Raw-schematic captures: `/home/ubuntu/visual/15b-raw/`, diffs `/home/ubuntu/visual/15b-raw-diff/` (retail full page 50,382 px differ; dialog-open 70,708 px). Diagnosis used a live Angular-14 oracle (git worktree of the tag at `/home/ubuntu/wt-baseline`, served on :4400/:4500) and computed-style inspection (`/home/ubuntu/visual/inspect.js`).
+Raw-schematic captures: `docs/migration-evidence/screenshots/15b-raw/`, diffs `docs/migration-evidence/screenshots/15b-raw-diff/` (retail full page 50,382 px differ; dialog-open 70,708 px). Diagnosis used a live Angular-14 oracle (git worktree of the tag (transient, not archived), served on :4400/:4500) and computed-style inspection (`docs/migration-evidence/tools/inspect.js`).
 
 1. Cards 126px → 115px tall; title/amount inset 33px/17px → 17px. Cause: MDC card has no outer padding (header/content carry `16px` padding instead) and the subtitle uses `subtitle-2` (14px/22px/500, 0.1px tracking) rather than legacy `body-1` at `line-height: normal`. Fix (`_theme.scss`, `.mat-mdc-card.bofa-card`): `padding: 16px`, header padding 0, header-text margin `0 16px`, title `margin-bottom: 12px; line-height: normal`, subtitle `margin: -8px 0 16px; font: 400 15px/normal`, content padding 0. Evidence: `retail-02-cards.png` and `wealth-02-cards.png` are `SAME` (0 px).
 2. Secondary/ghost buttons rendered white background / black text. Cause: MDC unelevated buttons paint via `--mdc-filled-button-container-color` / `--mdc-filled-button-label-text-color` on `.mdc-button` which beat the component's `background`/`color`. Fix (`button.component.scss`): set both tokens to `transparent` / `#012169` alongside the existing properties. Evidence: `wealth-04-secondary-button.png` `SAME`; dialog "Cancel" button matches.
@@ -103,10 +103,10 @@ Raw-schematic captures: `/home/ubuntu/visual/15b-raw/`, diffs `/home/ubuntu/visu
 
 ### Evidence
 
-- Builds: library, retail-banking, wealth-portal all `rc=0` (`/home/ubuntu/green/15b/build-*.log`). Budget warnings only: retail initial 715.09 kB (was 663.32 kB at 15a), wealth initial 527.15 kB (new warning; was under 500 kB). Both below the 1 MB error threshold.
-- Tests: ui-components `5/5`, retail-banking `3/3`, wealth-portal `2/2`, all `rc=0`, 0 `ERROR` lines (`/home/ubuntu/green/15b/test-*.log`).
-- Public API: `/home/ubuntu/green/15b/dts.diff` is 59 lines, all generated-only (`export declare type` → `export type`; trailing `never` generic slot in private `ɵcmp`). The 15a transient `legacy-*` imports in generated declarations are gone. No exported class, interface, input, output, method or selector changed. `pkg-meta.diff`: only the peer-dependency range bump.
-- Visual: `/home/ubuntu/visual/15b/` vs baseline (`/home/ubuntu/green/15b/compare.txt`, diffs in `/home/ubuntu/visual/15b-diff/`). Cards and secondary button `SAME`; all remaining diffs are explained by the two density items above (table row height, form-field height) plus text anti-aliasing and the wealth timestamp. `metrics.diff` (24 lines) contains only `tableRowHeights`, `firstFormField.h`, `firstButton.y`, `buttonFont` (line-height), and ±1px dialog height. No horizontal overflow (`scrollWidth == clientWidth == 1280`), no card/table/button width change.
+- Builds: library, retail-banking, wealth-portal all `rc=0` (`docs/migration-evidence/logs/15b/build-*.log`). Budget warnings only: retail initial 715.09 kB (was 663.32 kB at 15a), wealth initial 527.15 kB (new warning; was under 500 kB). Both below the 1 MB error threshold.
+- Tests: ui-components `5/5`, retail-banking `3/3`, wealth-portal `2/2`, all `rc=0`, 0 `ERROR` lines (`docs/migration-evidence/logs/15b/test-*.log`).
+- Public API: `docs/migration-evidence/logs/15b/dts.diff` is 59 lines, all generated-only (`export declare type` → `export type`; trailing `never` generic slot in private `ɵcmp`). The 15a transient `legacy-*` imports in generated declarations are gone. No exported class, interface, input, output, method or selector changed. `pkg-meta.diff`: only the peer-dependency range bump.
+- Visual: `docs/migration-evidence/screenshots/15b/` vs baseline (`docs/migration-evidence/logs/15b/compare.txt`, diffs in `docs/migration-evidence/screenshots/15b-diff/`). Cards and secondary button `SAME`; all remaining diffs are explained by the two density items above (table row height, form-field height) plus text anti-aliasing and the wealth timestamp. `metrics.diff` (24 lines) contains only `tableRowHeights`, `firstFormField.h`, `firstButton.y`, `buttonFont` (line-height), and ±1px dialog height. No horizontal overflow (`scrollWidth == clientWidth == 1280`), no card/table/button width change.
 
 ## Step 16 — Angular 16 + Material 16
 
@@ -115,8 +115,8 @@ Commands:
 
 - `npx ng update @angular/core@16 @angular/cli@16`
 - `npx ng update @angular/material@16 --allow-dirty`
-- `/home/ubuntu/visual/green.sh 16 16.20.2`
-- `cd /home/ubuntu/visual && node compare.js 15b 16 16-vs-15b`
+- `docs/migration-evidence/tools/green.sh 16 16.20.2`
+- `cd docs/migration-evidence/screenshots && node compare.js 15b 16 16-vs-15b`
 
 ### Automatic migration changes (kept as-is, per plan)
 
@@ -126,13 +126,13 @@ Commands:
 
 ### Loud breakages (symptom → cause → fix → evidence)
 
-- None. `npx ng build ui-components` compiled successfully without Sass or TypeScript errors. Evidence: `/home/ubuntu/green/16/build-lib-pre-gate.log`.
+- None. `npx ng build ui-components` compiled successfully without Sass or TypeScript errors. Evidence: `docs/migration-evidence/logs/16/build-lib-pre-gate.log`.
 
 ### Silent changes
 
 - `libs/ui-components/package.json` — the five Angular peer ranges were manually bumped from `^15.2.0` to `^16.2.0` (`@angular/common`, `@angular/core`, `@angular/forms`, `@angular/cdk`, and `@angular/material`); `rxjs` was unchanged.
-- `/home/ubuntu/green/16/dts.diff` contains 59 generated declaration-diff lines versus the Angular 14 baseline. Every changed declaration is generated-only: `BofaButtonVariant` uses TypeScript's `export type` spelling instead of `export declare type`; the generated `ɵcmp` declarations for `BofaButtonComponent`, `BofaCardComponent`, `BofaDatepickerComponent`, `BofaConfirmDialogComponent`, `BofaTableComponent`, and `BofaTextInputComponent` gain Angular compiler metadata's trailing `never` generic slot; and the input metadata for button, card, datepicker, table, and text-input changes from string aliases to `{ alias, required: false }` objects. No exported class, type, input, method, or selector changed.
-- `/home/ubuntu/green/16/pkg-meta.diff` contains 22 lines versus the Angular 14 generated package metadata: the five generated Angular peer ranges are `^16.2.0` instead of `^14.2.0`, and the generated package exports move from the Angular 14 `esm2020`/`es2020`/`es2015`/`node` entries to Angular 16 `esm2022`/`esm`/`default` entries targeting `esm2022`/`fesm2022`.
+- `docs/migration-evidence/logs/16/dts.diff` contains 59 generated declaration-diff lines versus the Angular 14 baseline. Every changed declaration is generated-only: `BofaButtonVariant` uses TypeScript's `export type` spelling instead of `export declare type`; the generated `ɵcmp` declarations for `BofaButtonComponent`, `BofaCardComponent`, `BofaDatepickerComponent`, `BofaConfirmDialogComponent`, `BofaTableComponent`, and `BofaTextInputComponent` gain Angular compiler metadata's trailing `never` generic slot; and the input metadata for button, card, datepicker, table, and text-input changes from string aliases to `{ alias, required: false }` objects. No exported class, type, input, method, or selector changed.
+- `docs/migration-evidence/logs/16/pkg-meta.diff` contains 22 lines versus the Angular 14 generated package metadata: the five generated Angular peer ranges are `^16.2.0` instead of `^14.2.0`, and the generated package exports move from the Angular 14 `esm2020`/`es2020`/`es2015`/`node` entries to Angular 16 `esm2022`/`esm`/`default` entries targeting `esm2022`/`fesm2022`.
 - The root `package.json` trailing newline was removed again by the Angular 16 schematic; this was retained as schematic output.
 
 ### No-op fixes / deviations from plan
@@ -146,14 +146,14 @@ Commands:
 
 ### Evidence
 
-- Schematic logs: `/home/ubuntu/green-16-ng-update-core.log` and `/home/ubuntu/green-16-ng-update-material.log`.
-- Library build: `npx ng build ui-components` returned `rc=0`; the full gate also reported library, retail, and wealth builds `rc=0`. The build warning was verbatim: `Warning: bundle initial exceeded maximum budget. Budget 500.00 kB was not met by 206.90 kB with a total of 706.90 kB.` This remained below the 1 MB maximum-error threshold. Evidence: `/home/ubuntu/green/16/build-lib-pre-gate.log` and `/home/ubuntu/green-16.out`.
-- Tests: ui-components `5/5`, retail-banking `3/3`, wealth-portal `2/2`, all `rc=0` with 0 `ERROR` lines. Evidence: `/home/ubuntu/green/16/test-*.log`.
-- Public API: `/home/ubuntu/green/16/dts.diff` contains 59 generated-only lines, classified above; `/home/ubuntu/green/16/pkg-meta.diff` contains 22 generated package-metadata lines, classified above.
-- Visual comparison against Step 15b: `/home/ubuntu/green/16/compare-vs-15b.log`; all files were `SAME` except:
+- Schematic logs: `docs/migration-evidence/logs/green-16-ng-update-core.log` and `docs/migration-evidence/logs/green-16-ng-update-material.log`.
+- Library build: `npx ng build ui-components` returned `rc=0`; the full gate also reported library, retail, and wealth builds `rc=0`. The build warning was verbatim: `Warning: bundle initial exceeded maximum budget. Budget 500.00 kB was not met by 206.90 kB with a total of 706.90 kB.` This remained below the 1 MB maximum-error threshold. Evidence: `docs/migration-evidence/logs/16/build-lib-pre-gate.log` and `docs/migration-evidence/logs/green-16.out`.
+- Tests: ui-components `5/5`, retail-banking `3/3`, wealth-portal `2/2`, all `rc=0` with 0 `ERROR` lines. Evidence: `docs/migration-evidence/logs/16/test-*.log`.
+- Public API: `docs/migration-evidence/logs/16/dts.diff` contains 59 generated-only lines, classified above; `docs/migration-evidence/logs/16/pkg-meta.diff` contains 22 generated package-metadata lines, classified above.
+- Visual comparison against Step 15b: `docs/migration-evidence/logs/16/compare-vs-15b.log`; all files were `SAME` except:
   - `{"file":"wealth-07-after-confirm.png","status":"DIFF","pixels":49,"pct":"0.137%","size":"966x37"}`
   - `{"file":"wealth-08-after-confirm-full.png","status":"DIFF","pixels":49,"pct":"0.004%","size":"1280x900"}`
-- Step 15b versus Step 16 metrics were identical; `/home/ubuntu/green/16/metrics-vs-15b.diff` is empty. Diff PNGs are in `/home/ubuntu/visual/16-vs-15b/`.
+- Step 15b versus Step 16 metrics were identical; `docs/migration-evidence/logs/16/metrics-vs-15b.diff` is empty. Diff PNGs are in `docs/migration-evidence/screenshots/16-vs-15b/`.
 
 ## Step 17 — Angular 17 + Material 17 (Node 20.18.1)
 
@@ -164,8 +164,8 @@ Commands:
 - `npx ng update @angular/core@17 @angular/cli@17`
 - `npx ng update @angular/material@17 --allow-dirty`
 - `npx ng build ui-components`
-- `/home/ubuntu/visual/green.sh 17 20.18.1`
-- `cd /home/ubuntu/visual && node compare.js 16 17 17-vs-16`
+- `docs/migration-evidence/tools/green.sh 17 20.18.1`
+- `cd docs/migration-evidence/screenshots && node compare.js 16 17 17-vs-16`
 
 ### Automatic migration changes (kept as-is, per plan)
 
@@ -183,12 +183,12 @@ Commands:
 
 ### Loud breakages (symptom → cause → fix → evidence)
 
-- None. `npx ng build ui-components` compiled successfully without Sass or TypeScript errors. No Material 17 Sass fixes were needed. Evidence: `/home/ubuntu/green/17/build-lib-pre-gate.log`.
+- None. `npx ng build ui-components` compiled successfully without Sass or TypeScript errors. No Material 17 Sass fixes were needed. Evidence: `docs/migration-evidence/logs/17/build-lib-pre-gate.log`.
 
 ### Silent changes
 
-- `/home/ubuntu/green/17/dts.diff` contains 59 generated declaration-diff lines versus the Angular 14 baseline. Every changed declaration is generated-only: `BofaButtonVariant` uses TypeScript's `export type` spelling instead of `export declare type`; generated `ɵcmp` metadata for `BofaButtonComponent`, `BofaCardComponent`, `BofaDatepickerComponent`, `BofaConfirmDialogComponent`, `BofaTableComponent`, and `BofaTextInputComponent` gains the trailing `never` generic slot; and generated input metadata for button, card, datepicker, table, and text-input changes from string aliases to `{ alias, required: false }` objects. No exported class, type, input, method, or selector changed.
-- `/home/ubuntu/green/17/pkg-meta.diff` contains 22 generated package-metadata lines versus the Angular 14 baseline: the five generated Angular peer ranges are `^17.3.0` instead of `^14.2.0`, and package exports move from the Angular 14 `esm2020`/`es2020`/`es2015`/`node` entries to Angular 17 `esm2022`/`esm`/`default` entries targeting `esm2022`/`fesm2022`.
+- `docs/migration-evidence/logs/17/dts.diff` contains 59 generated declaration-diff lines versus the Angular 14 baseline. Every changed declaration is generated-only: `BofaButtonVariant` uses TypeScript's `export type` spelling instead of `export declare type`; generated `ɵcmp` metadata for `BofaButtonComponent`, `BofaCardComponent`, `BofaDatepickerComponent`, `BofaConfirmDialogComponent`, `BofaTableComponent`, and `BofaTextInputComponent` gains the trailing `never` generic slot; and generated input metadata for button, card, datepicker, table, and text-input changes from string aliases to `{ alias, required: false }` objects. No exported class, type, input, method, or selector changed.
+- `docs/migration-evidence/logs/17/pkg-meta.diff` contains 22 generated package-metadata lines versus the Angular 14 baseline: the five generated Angular peer ranges are `^17.3.0` instead of `^14.2.0`, and package exports move from the Angular 14 `esm2020`/`es2020`/`es2015`/`node` entries to Angular 17 `esm2022`/`esm`/`default` entries targeting `esm2022`/`fesm2022`.
 - Material/Sass deprecation warnings: 0 observed in the Step 17 build and gate logs. The two distinct build warnings were bundle budget warnings; the first occurrence was `Warning: bundle initial exceeded maximum budget. Budget 500.00 kB was not met by 229.91 kB with a total of 729.91 kB.` The second was `Warning: bundle initial exceeded maximum budget. Budget 500.00 kB was not met by 96.79 kB with a total of 596.79 kB.` Both were warnings, not maximum-error failures.
 
 ### No-op fixes / deviations from plan
@@ -212,18 +212,18 @@ Commands:
   - `{"file":"wealth-07-after-confirm.png","status":"DIFF","pixels":1229,"pct":"3.439%","size":"966x37"}`
   - `{"file":"wealth-08-after-confirm-full.png","status":"DIFF","pixels":1229,"pct":"0.107%","size":"1280x900"}`
 - Cause: Material 17 dropped `-webkit-font-smoothing: antialiased` from `core/mdc-helpers/_mdc-helpers.scss`. It is present at line 48 in v16 and emitted for `.mdc-button` in Step 16's `styles.css`, but absent from Step 17's `styles.css`; MDC text therefore uses the browser's default subpixel anti-aliasing.
-- Computed-style evidence: `/home/ubuntu/green/17/computed-style-diffs.txt`. The only differing property is `webkitFontSmoothing`, `antialiased → auto`, on `.mdc-button__label` and `.mat-mdc-button-base`; `font`, `letterSpacing`, `lineHeight`, `fontFeatureSettings`, and `textRendering` are identical across the 14 requested selectors, including inputs, labels, hints, cells, and dialog elements.
-- Geometry/metrics are unchanged; `/home/ubuntu/green/17/metrics-vs-16.diff` is empty. The Step 16 oracle worktree is `/home/ubuntu/wt-16`, served on `:4600`/`:4700`.
+- Computed-style evidence: `docs/migration-evidence/logs/17/computed-style-diffs.txt`. The only differing property is `webkitFontSmoothing`, `antialiased → auto`, on `.mdc-button__label` and `.mat-mdc-button-base`; `font`, `letterSpacing`, `lineHeight`, `fontFeatureSettings`, and `textRendering` are identical across the 14 requested selectors, including inputs, labels, hints, cells, and dialog elements.
+- Geometry/metrics are unchanged; `docs/migration-evidence/logs/17/metrics-vs-16.diff` is empty. The Step 16 oracle was a transient git worktree served on `:4600`/`:4700`.
 - Decision: reported for owner judgment, not overridden. Adding `-webkit-font-smoothing: antialiased` globally would be a one-line design-system choice, not a migration fix.
 
 ### Evidence
 
-- Schematic logs: `/home/ubuntu/green-17-ng-update-core.log` and `/home/ubuntu/green-17-ng-update-material.log`.
-- Library build: `npx ng build ui-components` returned `rc=0`; the full gate also reported library, retail, and wealth builds `rc=0`. Evidence: `/home/ubuntu/green/17/build-lib-pre-gate.log` and `/home/ubuntu/green-17.out`.
-- Gate runtime: `/home/ubuntu/green-17.out` begins with `node v20.18.1 npm 10.8.2`.
+- Schematic logs: `docs/migration-evidence/logs/green-17-ng-update-core.log` and `docs/migration-evidence/logs/green-17-ng-update-material.log`.
+- Library build: `npx ng build ui-components` returned `rc=0`; the full gate also reported library, retail, and wealth builds `rc=0`. Evidence: `docs/migration-evidence/logs/17/build-lib-pre-gate.log` and `docs/migration-evidence/logs/green-17.out`.
+- Gate runtime: `docs/migration-evidence/logs/green-17.out` begins with `node v20.18.1 npm 10.8.2`.
 - Tests: ui-components `5/5`, retail-banking `3/3`, wealth-portal `2/2`, all `rc=0` with 0 `ERROR` lines.
-- Public API: `/home/ubuntu/green/17/dts.diff` contains 59 generated-only lines, classified above; `/home/ubuntu/green/17/pkg-meta.diff` contains 22 generated package-metadata lines, classified above.
-- Visual comparison against Step 16: `/home/ubuntu/green/17/compare-vs-16.log`; non-`SAME` files were:
+- Public API: `docs/migration-evidence/logs/17/dts.diff` contains 59 generated-only lines, classified above; `docs/migration-evidence/logs/17/pkg-meta.diff` contains 22 generated package-metadata lines, classified above.
+- Visual comparison against Step 16: `docs/migration-evidence/logs/17/compare-vs-16.log`; non-`SAME` files were:
   - `{"file":"retail-01-full.png","status":"DIFF","pixels":550,"pct":"0.048%","size":"1280x900"}`
   - `{"file":"retail-04-form.png","status":"DIFF","pixels":550,"pct":"0.488%","size":"398x283"}`
   - `{"file":"retail-05-primary-button.png","status":"DIFF","pixels":196,"pct":"1.331%","size":"398x37"}`
@@ -234,7 +234,7 @@ Commands:
   - `{"file":"retail-12-after-confirm-full.png","status":"DIFF","pixels":535,"pct":"0.046%","size":"1280x900"}`
   - `{"file":"wealth-07-after-confirm.png","status":"DIFF","pixels":1229,"pct":"3.439%","size":"966x37"}`
   - `{"file":"wealth-08-after-confirm-full.png","status":"DIFF","pixels":1229,"pct":"0.107%","size":"1280x900"}`
-- The Step 16 versus Step 17 metrics diff was empty (`/home/ubuntu/green/17/metrics-vs-16.diff`), so there were no metric differences to report. Diff PNGs are in `/home/ubuntu/visual/17-vs-16/`.
+- The Step 16 versus Step 17 metrics diff was empty (`docs/migration-evidence/logs/17/metrics-vs-16.diff`), so there were no metric differences to report. Diff PNGs are in `docs/migration-evidence/screenshots/17-vs-16/`.
 
 ## Step 18 — Angular 18 + Material 18 (M2 Sass API rename)
 
@@ -243,8 +243,8 @@ Commands:
 
 - `npx ng update @angular/core@18 @angular/cli@18`
 - `npx ng update @angular/material@18 --allow-dirty`
-- `/home/ubuntu/visual/green.sh 18 20.18.1`
-- `cd /home/ubuntu/visual && node compare.js 17 18 18-vs-17`
+- `docs/migration-evidence/tools/green.sh 18 20.18.1`
+- `cd docs/migration-evidence/screenshots && node compare.js 17 18 18-vs-17`
 
 ### Automatic migration changes (kept as-is, per plan)
 
@@ -261,13 +261,13 @@ Commands:
 
 ### Loud breakages (symptom → cause → fix → evidence)
 
-- None. `npx ng build ui-components` and the full gate compiled successfully without Sass or TypeScript errors. No additional Sass fixes were required beyond the M2 API names retained in the schematic output. Evidence: `/home/ubuntu/green/18/build-lib-pre-gate.log`.
+- None. `npx ng build ui-components` and the full gate compiled successfully without Sass or TypeScript errors. No additional Sass fixes were required beyond the M2 API names retained in the schematic output. Evidence: `docs/migration-evidence/logs/18/build-lib.log`.
 
 ### Silent changes
 
-- `/home/ubuntu/green/18/dts.diff` contains 59 generated declaration-diff lines versus the Angular 14 baseline. The `BofaButtonVariant` line changes only TypeScript declaration spelling from `export declare type` to `export type`. The generated private Angular `ɵcmp` metadata for `BofaButtonComponent`, `BofaCardComponent`, `BofaDatepickerComponent`, `BofaConfirmDialogComponent`, `BofaTableComponent`, and `BofaTextInputComponent` gains the trailing `never` generic slot. Generated input metadata for button (`variant`, `disabled`, `type`), card (`title`, `subtitle`), datepicker (`label`, `hint`), table (`columns`, `data`), and text-input (`label`, `placeholder`, `hint`, `type`) changes from string aliases to `{ alias, required: false }` objects. Every changed declaration is generated-only; no exported class, type, input, method, or selector changed.
-- `/home/ubuntu/green/18/pkg-meta.diff` contains 22 generated package-metadata lines versus the Angular 14 baseline. Five peer dependency lines change from `^14.2.0` to `^18.2.0`; five package export lines change from the Angular 14 `esm2020`/`es2020`/`es2015`/`node`/`default` entries to Angular 18 `esm2022`/`esm`/`default` entries targeting `esm2022`/`fesm2022`. These are generated package metadata, not public API changes.
-- Material Sass deprecation warnings: 0 lines matching `Deprecation` or `DEPRECATION` in `/home/ubuntu/green-18.out` and the Step 18 build evidence.
+- `docs/migration-evidence/logs/18/dts.diff` contains 59 generated declaration-diff lines versus the Angular 14 baseline. The `BofaButtonVariant` line changes only TypeScript declaration spelling from `export declare type` to `export type`. The generated private Angular `ɵcmp` metadata for `BofaButtonComponent`, `BofaCardComponent`, `BofaDatepickerComponent`, `BofaConfirmDialogComponent`, `BofaTableComponent`, and `BofaTextInputComponent` gains the trailing `never` generic slot. Generated input metadata for button (`variant`, `disabled`, `type`), card (`title`, `subtitle`), datepicker (`label`, `hint`), table (`columns`, `data`), and text-input (`label`, `placeholder`, `hint`, `type`) changes from string aliases to `{ alias, required: false }` objects. Every changed declaration is generated-only; no exported class, type, input, method, or selector changed.
+- `docs/migration-evidence/logs/18/pkg-meta.diff` contains 22 generated package-metadata lines versus the Angular 14 baseline. Five peer dependency lines change from `^14.2.0` to `^18.2.0`; five package export lines change from the Angular 14 `esm2020`/`es2020`/`es2015`/`node`/`default` entries to Angular 18 `esm2022`/`esm`/`default` entries targeting `esm2022`/`fesm2022`. These are generated package metadata, not public API changes.
+- Material Sass deprecation warnings: 0 lines matching `Deprecation` or `DEPRECATION` in `docs/migration-evidence/logs/green-18.out` and the Step 18 build evidence.
 
 ### No-op fixes / deviations from plan
 
@@ -282,17 +282,17 @@ Commands:
   - `{"file":"retail-08-datepicker-open.png","status":"DIFF","pixels":102,"pct":"0.009%","size":"1280x900"}`
   - `{"file":"wealth-07-after-confirm.png","status":"DIFF","pixels":1216,"pct":"3.402%","size":"966x37"}`
   - `{"file":"wealth-08-after-confirm-full.png","status":"DIFF","pixels":1216,"pct":"0.106%","size":"1280x900"}`
-- The Step 17 → Step 18 metrics diff is empty: `/home/ubuntu/green/18/metrics-vs-17.diff`.
+- The Step 17 → Step 18 metrics diff is empty: `docs/migration-evidence/logs/18/metrics-vs-17.diff`.
 - The retail datepicker difference is Material-owned rendering: the crop region `(790,240)-(1050,540)` is identical in calendar layout, selected-day ring, and month/navigation positions; the 102 differing pixels (`0.009%`) are limited to ≤1px sub-pixel shifts in day-number glyphs and the previous/next arrow icons. There is no geometry change. The wealth differences are in the expected timestamp captures.
 
 ### Evidence
 
-- Schematic logs: `/home/ubuntu/green-18-ng-update-core.log` and `/home/ubuntu/green-18-ng-update-material.log`.
-- Gate: `/home/ubuntu/green-18.out` begins with `node v20.18.1 npm 10.8.2`; library, retail, and wealth builds returned `rc=0`; capture returned `rc=0`; `GREEN-GATE rc=0`.
+- Schematic logs: `docs/migration-evidence/logs/green-18-ng-update-core.log` and `docs/migration-evidence/logs/green-18-ng-update-material.log`.
+- Gate: `docs/migration-evidence/logs/green-18.out` begins with `node v20.18.1 npm 10.8.2`; library, retail, and wealth builds returned `rc=0`; capture returned `rc=0`; `GREEN-GATE rc=0`.
 - Tests: ui-components `5/5`, retail-banking `3/3`, wealth-portal `2/2`, all `rc=0` with 0 `ERROR` lines.
-- Visual comparison against Step 17: `/home/ubuntu/green/18/compare-vs-17.log`; the three non-`SAME` files are listed above. Diff PNGs are in `/home/ubuntu/visual/18-vs-17/`.
-- Step 17 versus Step 18 metrics: `/home/ubuntu/green/18/metrics-vs-17.diff` is empty.
-- Angular 14 baseline comparison: `/home/ubuntu/green/18/compare.txt` contains:
+- Visual comparison against Step 17: `docs/migration-evidence/logs/18/compare-vs-17.log`; the three non-`SAME` files are listed above. Diff PNGs are in `docs/migration-evidence/screenshots/18-vs-17/`.
+- Step 17 versus Step 18 metrics: `docs/migration-evidence/logs/18/metrics-vs-17.diff` is empty.
+- Angular 14 baseline comparison: `docs/migration-evidence/logs/18/compare.txt` contains:
   - `{"file":"retail-01-full.png","status":"DIFF","pixels":25571,"pct":"2.220%","size":"1280x900"}`
   - `{"file":"retail-02-cards.png","status":"SAME","pixels":0,"pct":"0.000%","size":"1100x127"}`
   - `{"file":"retail-03-table.png","status":"SIZE","base":"614x297","cur":"614x317"}`
@@ -316,8 +316,8 @@ Commands:
 
 ## Final public-API verdict (Angular 14 → 18)
 
-- `/home/ubuntu/green/18/dts.diff` — 59 lines, all generated-only. The one type-alias spelling change (`export declare type` → `export type`), six private Angular `ɵcmp` metadata trailing-`never` additions, and generated input metadata changes for button, card, datepicker, table, and text-input do not change the public exported classes, exported types, inputs, methods, or selectors.
-- `/home/ubuntu/green/18/pkg-meta.diff` — 22 lines, all generated package metadata. The five Angular peer ranges move from `^14.2.0` to `^18.2.0`, and the package export map moves from Angular 14's `esm2020`/`es2020`/`es2015`/`node` entries to Angular 18's `esm2022`/`esm`/`default` entries. No consumer-facing API symbol changed.
+- `docs/migration-evidence/logs/18/dts.diff` — 59 lines, all generated-only. The one type-alias spelling change (`export declare type` → `export type`), six private Angular `ɵcmp` metadata trailing-`never` additions, and generated input metadata changes for button, card, datepicker, table, and text-input do not change the public exported classes, exported types, inputs, methods, or selectors.
+- `docs/migration-evidence/logs/18/pkg-meta.diff` — 22 lines, all generated package metadata. The five Angular peer ranges move from `^14.2.0` to `^18.2.0`, and the package export map moves from Angular 14's `esm2020`/`es2020`/`es2015`/`node` entries to Angular 18's `esm2022`/`esm`/`default` entries. No consumer-facing API symbol changed.
 
 ## Summary of Material-owned differences for owner judgment
 
@@ -358,6 +358,6 @@ Evidence:
 - Before-fix Angular 14 measurements: `.mat-hint` box `[786,552,99,13]`, font `11.25px / 12.6562px`, color `rgba(0, 0, 0, 0.6)`, normal tracking; the Amount subscript wrapper had `0px 11.25px` padding and `7.5px 0px 0px` margin. The filled-state hint box was `[786.25,552.03125,99.171875,12.65625]`, ending at `564.6875`; the next `Payment date` label began at `595.6875`.
 - Before-fix Angular 18 measurements: `.mat-mdc-form-field-hint` box `[791,537,113,22]`, font `12px / 20px`, color `rgb(28, 37, 64)`, `0.4px` tracking; the hint wrapper had `0px 16px` padding and no margin. The Amount and Payment date fields were 78px high at y `481` and `563`.
 - After-fix Angular 18 measurements: the hint computed as `11.25px / 12.6562px`, color `rgba(0, 0, 0, 0.6)`, normal tracking, with hint-wrapper padding `0px 11.25px`; the subscript wrapper retained 22px height and has `0px 0px 6px` margin. The MDC text-field body remains 56px high. The outer fields are 84px high at y `399`, `487`, and `575`; the 6px increase is the intentional subscript margin needed for the stacked-field gap.
-- After-fix filled-state measurement on `http://localhost:4200/`: the Amount hint box was `[786.25,542.875,99.171875,18.65625]`, ending at `561.53125`; the next `Payment date` floating-label box began at y `595.375`, leaving `33.84375px` of separation. Evidence: `/home/ubuntu/green/18-fix/filled-positions.json`, `/home/ubuntu/green/18-fix/styles-18-fix-hint.json`, `/home/ubuntu/green/18-fix/styles-18-fix-floating-label.json`, and `/home/ubuntu/green/18-fix/styles-18-fix-body-infix.json`.
-- The explicit library build returned `rc=0`; the full fix gate used Node 20.18.1 and returned `GREEN-GATE rc=0`, with library/retail/wealth builds `rc=0`, tests `5/5`, `3/3`, and `2/2`, all with 0 `ERROR` lines, and retail/wealth serves at HTTP 200. Evidence: `/home/ubuntu/green-18-fix-build-lib.log` and `/home/ubuntu/green-18-fix.out`.
-- Comparison against Step 18: `/home/ubuntu/green/18-fix/compare-vs-18.log`; the intentional retail form-size and downstream-position changes are listed there. Wealth captures `wealth-01` through `wealth-06` are `SAME`; `wealth-07` and `wealth-08` differ only in their expected timestamp region. Metrics are in `/home/ubuntu/green/18-fix/metrics-vs-18.diff`.
+- After-fix filled-state measurement on `http://localhost:4200/`: the Amount hint box was `[786.25,542.875,99.171875,18.65625]`, ending at `561.53125`; the next `Payment date` floating-label box began at y `595.375`, leaving `33.84375px` of separation. Evidence: `docs/migration-evidence/logs/18-fix/filled-positions.json`, `docs/migration-evidence/logs/18-fix/styles-18-fix-hint.json`, `docs/migration-evidence/logs/18-fix/styles-18-fix-floating-label.json`, and `docs/migration-evidence/logs/18-fix/styles-18-fix-body-infix.json`.
+- The explicit library build returned `rc=0`; the full fix gate used Node 20.18.1 and returned `GREEN-GATE rc=0`, with library/retail/wealth builds `rc=0`, tests `5/5`, `3/3`, and `2/2`, all with 0 `ERROR` lines, and retail/wealth serves at HTTP 200. Evidence: `docs/migration-evidence/logs/green-18-fix-build-lib.log` and `docs/migration-evidence/logs/green-18-fix.out`.
+- Comparison against Step 18: `docs/migration-evidence/logs/18-fix/compare-vs-18.log`; the intentional retail form-size and downstream-position changes are listed there. Wealth captures `wealth-01` through `wealth-06` are `SAME`; `wealth-07` and `wealth-08` differ only in their expected timestamp region. Metrics are in `docs/migration-evidence/logs/18-fix/metrics-vs-18.diff`.

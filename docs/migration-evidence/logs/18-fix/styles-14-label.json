@@ -1,0 +1,56 @@
+[
+ {
+  "tag": "label",
+  "cls": "mat-form-field-label ng-tns-c92-0 mat-empty mat-form-field-empty ng-star-inserted",
+  "box": [
+   786,
+   422,
+   376,
+   17
+  ],
+  "font": "15px / 16.875px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgba(0, 0, 0, 0.6)",
+  "lineHeight": "16.875px",
+  "letterSpacing": "normal",
+  "padding": "0px",
+  "margin": "-3.75px 0px 0px",
+  "height": "16.875px",
+  "top": "27.6562px"
+ },
+ {
+  "tag": "label",
+  "cls": "mat-form-field-label ng-tns-c92-1 mat-empty mat-form-field-empty ng-star-inserted",
+  "box": [
+   786,
+   509,
+   376,
+   17
+  ],
+  "font": "15px / 16.875px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgba(0, 0, 0, 0.6)",
+  "lineHeight": "16.875px",
+  "letterSpacing": "normal",
+  "padding": "0px",
+  "margin": "-3.75px 0px 0px",
+  "height": "16.875px",
+  "top": "27.6562px"
+ },
+ {
+  "tag": "label",
+  "cls": "mat-form-field-label ng-tns-c92-2 mat-empty mat-form-field-empty ng-star-inserted",
+  "box": [
+   786,
+   596,
+   338,
+   17
+  ],
+  "font": "15px / 16.875px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgba(0, 0, 0, 0.6)",
+  "lineHeight": "16.875px",
+  "letterSpacing": "normal",
+  "padding": "0px",
+  "margin": "-3.75px 0px 0px",
+  "height": "16.875px",
+  "top": "27.6562px"
+ }
+]

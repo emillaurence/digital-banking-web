@@ -1,0 +1,73 @@
+retail.afterConfirm.buttonFont 
+  base: "600 15px / 36px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif" 
+  cur:  "600 15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif"
+retail.afterConfirm.firstButton.y 
+  base: 659 
+  cur:  645
+retail.afterConfirm.firstFormField.h 
+  base: 83 
+  cur:  78
+retail.afterConfirm.tableRowHeights 
+  base: [48,48,48,48,48,48] 
+  cur:  [52,52,52,52,52,52]
+retail.dialogOpen.buttonFont 
+  base: "600 15px / 36px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif" 
+  cur:  "600 15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif"
+retail.dialogOpen.dialog.h 
+  base: 159 
+  cur:  160
+retail.dialogOpen.dialog.y 
+  base: 371 
+  cur:  370
+retail.dialogOpen.firstButton.y 
+  base: 659 
+  cur:  645
+retail.dialogOpen.firstFormField.h 
+  base: 83 
+  cur:  78
+retail.dialogOpen.tableRowHeights 
+  base: [48,48,48,48,48] 
+  cur:  [52,52,52,52,52]
+retail.initial.buttonFont 
+  base: "600 15px / 36px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif" 
+  cur:  "600 15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif"
+retail.initial.firstButton.y 
+  base: 659 
+  cur:  645
+retail.initial.firstFormField.h 
+  base: 83 
+  cur:  78
+retail.initial.tableRowHeights 
+  base: [48,48,48,48,48] 
+  cur:  [52,52,52,52,52]
+wealth.afterConfirm.buttonFont 
+  base: "600 15px / 36px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif" 
+  cur:  "600 15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif"
+wealth.afterConfirm.firstButton.y 
+  base: 711 
+  cur:  731
+wealth.afterConfirm.tableRowHeights 
+  base: [48,48,48,48,48] 
+  cur:  [52,52,52,52,52]
+wealth.dialogOpen.buttonFont 
+  base: "600 15px / 36px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif" 
+  cur:  "600 15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif"
+wealth.dialogOpen.dialog.h 
+  base: 178 
+  cur:  179
+wealth.dialogOpen.firstButton.y 
+  base: 711 
+  cur:  731
+wealth.dialogOpen.tableRowHeights 
+  base: [48,48,48,48,48] 
+  cur:  [52,52,52,52,52]
+wealth.initial.buttonFont 
+  base: "600 15px / 36px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif" 
+  cur:  "600 15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif"
+wealth.initial.firstButton.y 
+  base: 711 
+  cur:  731
+wealth.initial.tableRowHeights 
+  base: [48,48,48,48,48] 
+  cur:  [52,52,52,52,52]
+metrics differences: 24

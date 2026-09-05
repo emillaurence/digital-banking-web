@@ -1,0 +1,41 @@
+node v16.20.2 npm 8.19.4
+build lib rc=1
+diff: /home/ubuntu/repos/digital-banking-web/dist/ui-components/./index.d.ts: No such file or directory
+diff: /home/ubuntu/repos/digital-banking-web/dist/ui-components/./lib/button/button.component.d.ts: No such file or directory
+diff: /home/ubuntu/repos/digital-banking-web/dist/ui-components/./lib/card/card.component.d.ts: No such file or directory
+diff: /home/ubuntu/repos/digital-banking-web/dist/ui-components/./lib/datepicker/datepicker.component.d.ts: No such file or directory
+diff: /home/ubuntu/repos/digital-banking-web/dist/ui-components/./lib/dialog/confirm-dialog.component.d.ts: No such file or directory
+diff: /home/ubuntu/repos/digital-banking-web/dist/ui-components/./lib/dialog/dialog.service.d.ts: No such file or directory
+diff: /home/ubuntu/repos/digital-banking-web/dist/ui-components/./lib/table/table.component.d.ts: No such file or directory
+diff: /home/ubuntu/repos/digital-banking-web/dist/ui-components/./lib/text-input/text-input.component.d.ts: No such file or directory
+diff: /home/ubuntu/repos/digital-banking-web/dist/ui-components/./lib/ui-components.module.d.ts: No such file or directory
+diff: /home/ubuntu/repos/digital-banking-web/dist/ui-components/./public-api.d.ts: No such file or directory
+/home/ubuntu/visual/green.sh: line 16: cd: /home/ubuntu/repos/digital-banking-web/dist/ui-components: No such file or directory
+dts diff lines=0
+node:internal/modules/cjs/loader:1031
+  throw err;
+  ^
+
+Error: Cannot find module './dist/ui-components/package.json'
+Require stack:
+- /home/ubuntu/repos/digital-banking-web/[eval]
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:1028:15)
+    at Function.Module._load (node:internal/modules/cjs/loader:873:27)
+    at Module.require (node:internal/modules/cjs/loader:1100:19)
+    at require (node:internal/modules/cjs/helpers:119:18)
+    at [eval]:1:9
+    at Script.runInThisContext (node:vm:129:12)
+    at Object.runInThisContext (node:vm:313:38)
+    at node:internal/process/execution:79:19
+    at [eval]-wrapper:6:22
+    at evalScript (node:internal/process/execution:78:60) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [ '/home/ubuntu/repos/digital-banking-web/[eval]' ]
+}
+pkg meta diff lines=25
+build retail rc=1
+build wealth rc=1
+build warnings/errors: 45 distinct
+test ui-components rc=0 ERROR-lines=0 :: [1A[2KChrome Headless 133.0.0.0 (Linux 0.0.0): Executed 5 of 5 SUCCESS (0.084 secs / 0.074 secs)
+test retail-banking rc=1 ERROR-lines=1 :: 
+test wealth-portal rc=1 ERROR-lines=1 :: 

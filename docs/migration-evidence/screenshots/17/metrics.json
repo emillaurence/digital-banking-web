@@ -1,0 +1,284 @@
+{
+  "retail": {
+    "initial": {
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "horizontalOverflow": false,
+      "tableWidth": 614,
+      "tableRowHeights": [
+        52,
+        52,
+        52,
+        52,
+        52
+      ],
+      "firstCard": {
+        "x": 90,
+        "y": 171,
+        "w": 353,
+        "h": 126
+      },
+      "firstButton": {
+        "x": 775,
+        "y": 645,
+        "w": 146,
+        "h": 36
+      },
+      "firstFormField": {
+        "x": 775,
+        "y": 399,
+        "w": 398,
+        "h": 78
+      },
+      "dialog": null,
+      "h1Font": "700 32px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "buttonFont": "600 15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "buttonRadius": "9999px",
+      "buttonBg": "rgb(1, 33, 105)",
+      "buttonColor": "rgb(255, 255, 255)",
+      "cardRadius": "12px",
+      "cardShadow": "rgba(1, 33, 105, 0.07) 0px 2px 10px 0px",
+      "headerCell": {
+        "color": "rgb(1, 33, 105)",
+        "fontWeight": "600",
+        "fontSize": "13px",
+        "textTransform": "uppercase",
+        "letterSpacing": "0.52px",
+        "borderBottom": "2px solid rgb(1, 33, 105)"
+      }
+    },
+    "dialogOpen": {
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "horizontalOverflow": false,
+      "tableWidth": 614,
+      "tableRowHeights": [
+        52,
+        52,
+        52,
+        52,
+        52
+      ],
+      "firstCard": {
+        "x": 90,
+        "y": 171,
+        "w": 353,
+        "h": 126
+      },
+      "firstButton": {
+        "x": 775,
+        "y": 645,
+        "w": 146,
+        "h": 36
+      },
+      "firstFormField": {
+        "x": 775,
+        "y": 399,
+        "w": 398,
+        "h": 78
+      },
+      "dialog": {
+        "x": 430,
+        "y": 370,
+        "w": 420,
+        "h": 160
+      },
+      "h1Font": "700 32px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "buttonFont": "600 15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "buttonRadius": "9999px",
+      "buttonBg": "rgb(1, 33, 105)",
+      "buttonColor": "rgb(255, 255, 255)",
+      "cardRadius": "12px",
+      "cardShadow": "rgba(1, 33, 105, 0.07) 0px 2px 10px 0px",
+      "headerCell": {
+        "color": "rgb(1, 33, 105)",
+        "fontWeight": "600",
+        "fontSize": "13px",
+        "textTransform": "uppercase",
+        "letterSpacing": "0.52px",
+        "borderBottom": "2px solid rgb(1, 33, 105)"
+      }
+    },
+    "afterConfirm": {
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "horizontalOverflow": false,
+      "tableWidth": 614,
+      "tableRowHeights": [
+        52,
+        52,
+        52,
+        52,
+        52,
+        52
+      ],
+      "firstCard": {
+        "x": 90,
+        "y": 171,
+        "w": 353,
+        "h": 126
+      },
+      "firstButton": {
+        "x": 775,
+        "y": 645,
+        "w": 146,
+        "h": 36
+      },
+      "firstFormField": {
+        "x": 775,
+        "y": 399,
+        "w": 398,
+        "h": 78
+      },
+      "dialog": null,
+      "h1Font": "700 32px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "buttonFont": "600 15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "buttonRadius": "9999px",
+      "buttonBg": "rgb(1, 33, 105)",
+      "buttonColor": "rgb(255, 255, 255)",
+      "cardRadius": "12px",
+      "cardShadow": "rgba(1, 33, 105, 0.07) 0px 2px 10px 0px",
+      "headerCell": {
+        "color": "rgb(1, 33, 105)",
+        "fontWeight": "600",
+        "fontSize": "13px",
+        "textTransform": "uppercase",
+        "letterSpacing": "0.52px",
+        "borderBottom": "2px solid rgb(1, 33, 105)"
+      }
+    }
+  },
+  "wealth": {
+    "initial": {
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "horizontalOverflow": false,
+      "tableWidth": 966,
+      "tableRowHeights": [
+        52,
+        52,
+        52,
+        52,
+        52
+      ],
+      "firstCard": {
+        "x": 140,
+        "y": 171,
+        "w": 320,
+        "h": 126
+      },
+      "firstButton": {
+        "x": 946,
+        "y": 731,
+        "w": 177,
+        "h": 36
+      },
+      "firstFormField": null,
+      "dialog": null,
+      "h1Font": "700 32px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "buttonFont": "600 15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "buttonRadius": "9999px",
+      "buttonBg": "rgba(0, 0, 0, 0)",
+      "buttonColor": "rgb(1, 33, 105)",
+      "cardRadius": "12px",
+      "cardShadow": "rgba(1, 33, 105, 0.07) 0px 2px 10px 0px",
+      "headerCell": {
+        "color": "rgb(1, 33, 105)",
+        "fontWeight": "600",
+        "fontSize": "13px",
+        "textTransform": "uppercase",
+        "letterSpacing": "0.52px",
+        "borderBottom": "2px solid rgb(1, 33, 105)"
+      }
+    },
+    "dialogOpen": {
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "horizontalOverflow": false,
+      "tableWidth": 966,
+      "tableRowHeights": [
+        52,
+        52,
+        52,
+        52,
+        52
+      ],
+      "firstCard": {
+        "x": 140,
+        "y": 171,
+        "w": 320,
+        "h": 126
+      },
+      "firstButton": {
+        "x": 946,
+        "y": 731,
+        "w": 177,
+        "h": 36
+      },
+      "firstFormField": null,
+      "dialog": {
+        "x": 430,
+        "y": 361,
+        "w": 420,
+        "h": 179
+      },
+      "h1Font": "700 32px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "buttonFont": "600 15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "buttonRadius": "9999px",
+      "buttonBg": "rgba(0, 0, 0, 0)",
+      "buttonColor": "rgb(1, 33, 105)",
+      "cardRadius": "12px",
+      "cardShadow": "rgba(1, 33, 105, 0.07) 0px 2px 10px 0px",
+      "headerCell": {
+        "color": "rgb(1, 33, 105)",
+        "fontWeight": "600",
+        "fontSize": "13px",
+        "textTransform": "uppercase",
+        "letterSpacing": "0.52px",
+        "borderBottom": "2px solid rgb(1, 33, 105)"
+      }
+    },
+    "afterConfirm": {
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "horizontalOverflow": false,
+      "tableWidth": 966,
+      "tableRowHeights": [
+        52,
+        52,
+        52,
+        52,
+        52
+      ],
+      "firstCard": {
+        "x": 140,
+        "y": 171,
+        "w": 320,
+        "h": 126
+      },
+      "firstButton": {
+        "x": 946,
+        "y": 731,
+        "w": 177,
+        "h": 36
+      },
+      "firstFormField": null,
+      "dialog": null,
+      "h1Font": "700 32px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "buttonFont": "600 15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "buttonRadius": "9999px",
+      "buttonBg": "rgba(0, 0, 0, 0)",
+      "buttonColor": "rgb(1, 33, 105)",
+      "cardRadius": "12px",
+      "cardShadow": "rgba(1, 33, 105, 0.07) 0px 2px 10px 0px",
+      "headerCell": {
+        "color": "rgb(1, 33, 105)",
+        "fontWeight": "600",
+        "fontSize": "13px",
+        "textTransform": "uppercase",
+        "letterSpacing": "0.52px",
+        "borderBottom": "2px solid rgb(1, 33, 105)"
+      }
+    }
+  }
+}

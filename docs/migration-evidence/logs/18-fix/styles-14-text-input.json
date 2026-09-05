@@ -1,0 +1,38 @@
+[
+ {
+  "tag": "bofa-text-input",
+  "cls": "ng-untouched ng-pristine ng-invalid",
+  "box": [
+   775,
+   399,
+   398,
+   83
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgba(0, 0, 0, 0.87)",
+  "lineHeight": "normal",
+  "letterSpacing": "normal",
+  "padding": "0px",
+  "margin": "0px",
+  "height": "82.7812px",
+  "top": "auto"
+ },
+ {
+  "tag": "bofa-text-input",
+  "cls": "ng-untouched ng-pristine ng-invalid",
+  "box": [
+   775,
+   486,
+   398,
+   83
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgba(0, 0, 0, 0.87)",
+  "lineHeight": "normal",
+  "letterSpacing": "normal",
+  "padding": "0px",
+  "margin": "0px",
+  "height": "82.7812px",
+  "top": "auto"
+ }
+]

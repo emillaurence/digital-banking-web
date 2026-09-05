@@ -1,0 +1,38 @@
+Error: Repository is not clean. Please commit or stash any changes before updating.
+
+===== RETRY WITH --allow-dirty (required because core/CLI update modified tracked files) =====
+Repository is not clean. Update changes will be mixed with pre-existing changes.
+Using package manager: npm
+Collecting installed dependencies...
+Found 26 dependencies.
+Fetching dependency metadata from registry...
+    Updating package.json with dependency @angular/cdk @ "15.2.9" (was "14.2.7")...
+    Updating package.json with dependency @angular/material @ "15.2.9" (was "14.2.7")...
+UPDATE package.json (1578 bytes)
+- Installing packages...
+✔ Packages successfully installed.
+** Executing migrations of package '@angular/cdk' **
+
+▸ Updates the Angular CDK to v15.
+    
+      ✓  Updated Angular CDK to version 15
+    
+  Migration completed (No changes made).
+
+** Executing migrations of package '@angular/material' **
+
+▸ Updates the Angular Material to v15.
+    
+      ✓  Updated Angular Material to version 15
+    
+UPDATE libs/ui-components/src/styles/_theme.scss (2102 bytes)
+UPDATE libs/ui-components/src/styles/_typography.scss (529 bytes)
+UPDATE libs/ui-components/src/lib/dialog/confirm-dialog.component.ts (684 bytes)
+UPDATE libs/ui-components/src/lib/button/button.component.spec.ts (1179 bytes)
+UPDATE libs/ui-components/src/lib/table/table.component.spec.ts (1051 bytes)
+UPDATE libs/ui-components/src/lib/dialog/dialog.service.ts (600 bytes)
+UPDATE libs/ui-components/src/lib/dialog/dialog.service.spec.ts (974 bytes)
+  Migration completed (7 files modified).
+
+
+NG_UPDATE_MATERIAL_ALLOW_DIRTY_EXIT_CODE=0
