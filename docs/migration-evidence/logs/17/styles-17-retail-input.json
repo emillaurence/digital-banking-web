@@ -1,0 +1,50 @@
+[
+ {
+  "tag": "input",
+  "cls": "mat-mdc-input-element ng-tns-c3736059725-0 mat-mdc-form-field-input-control mdc-text-field__input cdk-text-field-autofill-monitored",
+  "box": [
+   791,
+   415,
+   366,
+   24
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "input",
+  "cls": "mat-mdc-input-element ng-tns-c3736059725-1 mat-mdc-form-field-input-control mdc-text-field__input cdk-text-field-autofill-monitored",
+  "box": [
+   791,
+   497,
+   366,
+   24
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "input",
+  "cls": "mat-datepicker-input mat-mdc-input-element ng-tns-c3736059725-2 mat-mdc-form-field-input-control mdc-text-field__input cdk-text-field-autofill-monitored",
+  "box": [
+   791,
+   579,
+   330,
+   24
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ }
+]

@@ -1,0 +1,37 @@
+    Migrating components:
+    autocomplete
+    form-field
+    input
+    option
+    optgroup
+    select
+    button
+    card
+    checkbox
+    chips
+    dialog
+    list
+    menu
+    paginator
+    progress-bar
+    progress-spinner
+    radio
+    slide-toggle
+    slider
+    snack-bar
+    table
+    tabs
+    tooltip
+    Migrating project: retail-banking
+    Migrating project: wealth-portal
+    Migrating project: ui-components
+    Successfully migrated the project.
+UPDATE libs/ui-components/src/styles/_theme.scss (2236 bytes)
+UPDATE libs/ui-components/src/styles/_typography.scss (527 bytes)
+UPDATE libs/ui-components/src/lib/dialog/confirm-dialog.component.ts (629 bytes)
+UPDATE libs/ui-components/src/lib/button/button.component.spec.ts (1147 bytes)
+UPDATE libs/ui-components/src/lib/table/table.component.spec.ts (1020 bytes)
+UPDATE libs/ui-components/src/lib/dialog/dialog.service.ts (574 bytes)
+UPDATE libs/ui-components/src/lib/dialog/dialog.service.spec.ts (948 bytes)
+
+MDC_MIGRATION_EXIT_CODE=0

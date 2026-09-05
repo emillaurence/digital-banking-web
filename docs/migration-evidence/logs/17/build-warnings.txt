@@ -1,0 +1,2 @@
+      1 Warning: bundle initial exceeded maximum budget. Budget 500.00 kB was not met by 229.91 kB with a total of 729.91 kB.
+      1 Warning: bundle initial exceeded maximum budget. Budget 500.00 kB was not met by 96.79 kB with a total of 596.79 kB.

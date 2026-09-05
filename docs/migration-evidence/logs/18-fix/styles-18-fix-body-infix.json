@@ -1,0 +1,110 @@
+[
+ {
+  "tag": "div",
+  "cls": "mat-mdc-text-field-wrapper mdc-text-field ng-tns-c508571215-0 mdc-text-field--outlined",
+  "box": [
+   775,
+   399,
+   398,
+   56
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgb(28, 37, 64)",
+  "lineHeight": "24px",
+  "letterSpacing": "normal",
+  "padding": "0px 16px",
+  "margin": "0px",
+  "height": "56px",
+  "top": "0px"
+ },
+ {
+  "tag": "div",
+  "cls": "mat-mdc-form-field-infix ng-tns-c508571215-0",
+  "box": [
+   791,
+   399,
+   366,
+   56
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgb(28, 37, 64)",
+  "lineHeight": "24px",
+  "letterSpacing": "normal",
+  "padding": "16px 0px",
+  "margin": "0px",
+  "height": "56px",
+  "top": "0px"
+ },
+ {
+  "tag": "div",
+  "cls": "mat-mdc-text-field-wrapper mdc-text-field ng-tns-c508571215-1 mdc-text-field--outlined",
+  "box": [
+   775,
+   487,
+   398,
+   56
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgb(28, 37, 64)",
+  "lineHeight": "24px",
+  "letterSpacing": "normal",
+  "padding": "0px 16px",
+  "margin": "0px",
+  "height": "56px",
+  "top": "0px"
+ },
+ {
+  "tag": "div",
+  "cls": "mat-mdc-form-field-infix ng-tns-c508571215-1",
+  "box": [
+   791,
+   487,
+   366,
+   56
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgb(28, 37, 64)",
+  "lineHeight": "24px",
+  "letterSpacing": "normal",
+  "padding": "16px 0px",
+  "margin": "0px",
+  "height": "56px",
+  "top": "0px"
+ },
+ {
+  "tag": "div",
+  "cls": "mat-mdc-text-field-wrapper mdc-text-field ng-tns-c508571215-2 mdc-text-field--outlined",
+  "box": [
+   775,
+   575,
+   398,
+   56
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgb(28, 37, 64)",
+  "lineHeight": "24px",
+  "letterSpacing": "normal",
+  "padding": "0px 0px 0px 16px",
+  "margin": "0px",
+  "height": "56px",
+  "top": "0px"
+ },
+ {
+  "tag": "div",
+  "cls": "mat-mdc-form-field-infix ng-tns-c508571215-2",
+  "box": [
+   791,
+   575,
+   330,
+   56
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgb(28, 37, 64)",
+  "lineHeight": "24px",
+  "letterSpacing": "normal",
+  "padding": "16px 0px",
+  "margin": "0px",
+  "height": "56px",
+  "top": "0px"
+ }
+]

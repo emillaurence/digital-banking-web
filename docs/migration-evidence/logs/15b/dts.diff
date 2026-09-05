@@ -1,0 +1,59 @@
+--- baseline/lib/button/button.component.d.ts	2026-09-04 12:04:48.236293319 +0000
++++ current/./lib/button/button.component.d.ts	2026-09-04 12:59:05.664448646 +0000
+@@ -1,9 +1,9 @@
+ import * as i0 from "@angular/core";
+-export declare type BofaButtonVariant = 'primary' | 'secondary' | 'ghost';
++export type BofaButtonVariant = 'primary' | 'secondary' | 'ghost';
+ export declare class BofaButtonComponent {
+     variant: BofaButtonVariant;
+     disabled: boolean;
+     type: 'button' | 'submit';
+     static ɵfac: i0.ɵɵFactoryDeclaration<BofaButtonComponent, never>;
+-    static ɵcmp: i0.ɵɵComponentDeclaration<BofaButtonComponent, "bofa-button", never, { "variant": "variant"; "disabled": "disabled"; "type": "type"; }, {}, never, ["*"], false>;
++    static ɵcmp: i0.ɵɵComponentDeclaration<BofaButtonComponent, "bofa-button", never, { "variant": "variant"; "disabled": "disabled"; "type": "type"; }, {}, never, ["*"], false, never>;
+ }
+--- baseline/lib/card/card.component.d.ts	2026-09-04 12:04:48.240293320 +0000
++++ current/./lib/card/card.component.d.ts	2026-09-04 12:59:05.672448646 +0000
+@@ -3,5 +3,5 @@
+     title: string;
+     subtitle: string;
+     static ɵfac: i0.ɵɵFactoryDeclaration<BofaCardComponent, never>;
+-    static ɵcmp: i0.ɵɵComponentDeclaration<BofaCardComponent, "bofa-card", never, { "title": "title"; "subtitle": "subtitle"; }, {}, never, ["*"], false>;
++    static ɵcmp: i0.ɵɵComponentDeclaration<BofaCardComponent, "bofa-card", never, { "title": "title"; "subtitle": "subtitle"; }, {}, never, ["*"], false, never>;
+ }
+--- baseline/lib/datepicker/datepicker.component.d.ts	2026-09-04 12:04:48.248293320 +0000
++++ current/./lib/datepicker/datepicker.component.d.ts	2026-09-04 12:59:05.680448646 +0000
+@@ -14,5 +14,5 @@
+     setDisabledState(isDisabled: boolean): void;
+     handleDateChange(event: MatDatepickerInputEvent<Date>): void;
+     static ɵfac: i0.ɵɵFactoryDeclaration<BofaDatepickerComponent, never>;
+-    static ɵcmp: i0.ɵɵComponentDeclaration<BofaDatepickerComponent, "bofa-datepicker", never, { "label": "label"; "hint": "hint"; }, {}, never, never, false>;
++    static ɵcmp: i0.ɵɵComponentDeclaration<BofaDatepickerComponent, "bofa-datepicker", never, { "label": "label"; "hint": "hint"; }, {}, never, never, false, never>;
+ }
+--- baseline/lib/dialog/confirm-dialog.component.d.ts	2026-09-04 12:04:48.252293320 +0000
++++ current/./lib/dialog/confirm-dialog.component.d.ts	2026-09-04 12:59:05.684448647 +0000
+@@ -12,5 +12,5 @@
+     constructor(data: BofaConfirmDialogData, dialogRef: MatDialogRef<BofaConfirmDialogComponent>);
+     close(confirmed: boolean): void;
+     static ɵfac: i0.ɵɵFactoryDeclaration<BofaConfirmDialogComponent, never>;
+-    static ɵcmp: i0.ɵɵComponentDeclaration<BofaConfirmDialogComponent, "bofa-confirm-dialog", never, {}, {}, never, never, false>;
++    static ɵcmp: i0.ɵɵComponentDeclaration<BofaConfirmDialogComponent, "bofa-confirm-dialog", never, {}, {}, never, never, false, never>;
+ }
+--- baseline/lib/table/table.component.d.ts	2026-09-04 12:04:48.256293320 +0000
++++ current/./lib/table/table.component.d.ts	2026-09-04 12:59:05.692448647 +0000
+@@ -9,5 +9,5 @@
+     data: Record<string, unknown>[];
+     get columnKeys(): string[];
+     static ɵfac: i0.ɵɵFactoryDeclaration<BofaTableComponent, never>;
+-    static ɵcmp: i0.ɵɵComponentDeclaration<BofaTableComponent, "bofa-table", never, { "columns": "columns"; "data": "data"; }, {}, never, never, false>;
++    static ɵcmp: i0.ɵɵComponentDeclaration<BofaTableComponent, "bofa-table", never, { "columns": "columns"; "data": "data"; }, {}, never, never, false, never>;
+ }
+--- baseline/lib/text-input/text-input.component.d.ts	2026-09-04 12:04:48.272293321 +0000
++++ current/./lib/text-input/text-input.component.d.ts	2026-09-04 12:59:05.704448648 +0000
+@@ -15,5 +15,5 @@
+     setDisabledState(isDisabled: boolean): void;
+     handleInput(event: Event): void;
+     static ɵfac: i0.ɵɵFactoryDeclaration<BofaTextInputComponent, never>;
+-    static ɵcmp: i0.ɵɵComponentDeclaration<BofaTextInputComponent, "bofa-text-input", never, { "label": "label"; "placeholder": "placeholder"; "hint": "hint"; "type": "type"; }, {}, never, never, false>;
++    static ɵcmp: i0.ɵɵComponentDeclaration<BofaTextInputComponent, "bofa-text-input", never, { "label": "label"; "placeholder": "placeholder"; "hint": "hint"; "type": "type"; }, {}, never, never, false, never>;
+ }

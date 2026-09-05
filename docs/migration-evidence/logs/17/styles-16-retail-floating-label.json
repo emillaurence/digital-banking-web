@@ -1,0 +1,50 @@
+[
+ {
+  "tag": "label",
+  "cls": "mdc-floating-label mat-mdc-floating-label ng-tns-c1205077789-0 ng-star-inserted",
+  "box": [
+   791,
+   419,
+   42,
+   17
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "label",
+  "cls": "mdc-floating-label mat-mdc-floating-label ng-tns-c1205077789-1 ng-star-inserted",
+  "box": [
+   791,
+   501,
+   99,
+   17
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "label",
+  "cls": "mdc-floating-label mat-mdc-floating-label ng-tns-c1205077789-2 ng-star-inserted",
+  "box": [
+   791,
+   583,
+   96,
+   17
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ }
+]

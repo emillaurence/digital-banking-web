@@ -1,0 +1,50 @@
+[
+ {
+  "tag": "th",
+  "cls": "mat-mdc-header-cell mdc-data-table__header-cell cdk-header-cell cdk-column-date mat-column-date ng-star-inserted",
+  "box": [
+   107,
+   399,
+   157,
+   56
+  ],
+  "font": "600 13px / 22px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "0.52px",
+  "lineHeight": "22px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "th",
+  "cls": "mat-mdc-header-cell mdc-data-table__header-cell cdk-header-cell cdk-column-description mat-column-description ng-star-inserted",
+  "box": [
+   264,
+   399,
+   310,
+   56
+  ],
+  "font": "600 13px / 22px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "0.52px",
+  "lineHeight": "22px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "th",
+  "cls": "mat-mdc-header-cell mdc-data-table__header-cell cdk-header-cell cdk-column-amount mat-column-amount bofa-table__cell--right ng-star-inserted",
+  "box": [
+   574,
+   399,
+   147,
+   56
+  ],
+  "font": "600 13px / 22px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "0.52px",
+  "lineHeight": "22px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ }
+]

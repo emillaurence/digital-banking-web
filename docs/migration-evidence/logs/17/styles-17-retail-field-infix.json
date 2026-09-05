@@ -1,0 +1,50 @@
+[
+ {
+  "tag": "div",
+  "cls": "mat-mdc-form-field-infix ng-tns-c3736059725-0",
+  "box": [
+   791,
+   399,
+   366,
+   56
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "div",
+  "cls": "mat-mdc-form-field-infix ng-tns-c3736059725-1",
+  "box": [
+   791,
+   481,
+   366,
+   56
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "div",
+  "cls": "mat-mdc-form-field-infix ng-tns-c3736059725-2",
+  "box": [
+   791,
+   563,
+   330,
+   56
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ }
+]

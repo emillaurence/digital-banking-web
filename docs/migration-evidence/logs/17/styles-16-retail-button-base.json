@@ -1,0 +1,34 @@
+[
+ {
+  "tag": "button",
+  "cls": "mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base",
+  "box": [
+   1125,
+   567,
+   48,
+   48
+  ],
+  "font": "24px Arial",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "button",
+  "cls": "mdc-button mdc-button--unelevated mat-mdc-unelevated-button bofa-button bofa-button--primary mat-primary mat-mdc-button-base",
+  "box": [
+   775,
+   645,
+   146,
+   36
+  ],
+  "font": "600 15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ }
+]

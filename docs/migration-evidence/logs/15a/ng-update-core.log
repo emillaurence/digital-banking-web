@@ -1,0 +1,60 @@
+The installed Angular CLI version is outdated.
+Installing a temporary Angular CLI versioned 15.2.11 to perform the update.
+- Installing packages...
+✔ Packages successfully installed.
+Using package manager: npm
+Collecting installed dependencies...
+Found 26 dependencies.
+Fetching dependency metadata from registry...
+    Updating package.json with dependency @angular-devkit/build-angular @ "15.2.11" (was "14.2.13")...
+    Updating package.json with dependency @angular/cli @ "15.2.11" (was "14.2.13")...
+    Updating package.json with dependency @angular/compiler-cli @ "15.2.10" (was "14.2.12")...
+    Updating package.json with dependency ng-packagr @ "15.2.2" (was "14.2.2")...
+    Updating package.json with dependency typescript @ "4.9.5" (was "4.7.4")...
+    Updating package.json with dependency @angular/animations @ "15.2.10" (was "14.2.12")...
+    Updating package.json with dependency @angular/common @ "15.2.10" (was "14.2.12")...
+    Updating package.json with dependency @angular/compiler @ "15.2.10" (was "14.2.12")...
+    Updating package.json with dependency @angular/core @ "15.2.10" (was "14.2.12")...
+    Updating package.json with dependency @angular/forms @ "15.2.10" (was "14.2.12")...
+    Updating package.json with dependency @angular/platform-browser @ "15.2.10" (was "14.2.12")...
+    Updating package.json with dependency @angular/platform-browser-dynamic @ "15.2.10" (was "14.2.12")...
+    Updating package.json with dependency @angular/router @ "15.2.10" (was "14.2.12")...
+UPDATE package.json (1578 bytes)
+- Installing packages...
+✔ Packages successfully installed.
+** Executing migrations of package '@angular/cli' **
+
+▸ Remove Browserslist configuration files that matches the Angular CLI default configuration.
+DELETE apps/retail-banking/.browserslistrc
+DELETE apps/wealth-portal/.browserslistrc
+  Migration completed (2 files modified).
+
+▸ Remove exported `@angular/platform-server` `renderModule` method.
+  The `renderModule` method is now exported by the Angular CLI.
+  Migration completed (No changes made).
+
+▸ Remove no longer needed require calls in Karma builder main file.
+UPDATE apps/retail-banking/src/test.ts (459 bytes)
+UPDATE apps/wealth-portal/src/test.ts (459 bytes)
+UPDATE libs/ui-components/src/test.ts (477 bytes)
+  Migration completed (3 files modified).
+
+▸ Update TypeScript compiler `target` and set `useDefineForClassFields`.
+  These changes are for IDE purposes as TypeScript compiler options `target` and `useDefineForClassFields` are set to `ES2022` and `false` respectively by the Angular CLI.
+  To control ECMA version and features use the Browerslist configuration.
+UPDATE tsconfig.json (991 bytes)
+  Migration completed (1 file modified).
+
+▸ Remove options from 'angular.json' that are no longer supported by the official builders.
+  Migration completed (No changes made).
+
+** Executing migrations of package '@angular/core' **
+
+▸ In Angular version 15, the deprecated `relativeLinkResolution` config parameter of the Router is removed.
+  This migration removes all `relativeLinkResolution` fields from the Router config objects.
+  Migration completed (No changes made).
+
+▸ Since Angular v15, the `RouterLink` contains the logic of the `RouterLinkWithHref` directive.
+  This migration replaces all `RouterLinkWithHref` references with `RouterLink`.
+  Migration completed (No changes made).
+

@@ -1,0 +1,18 @@
+[
+ {
+  "tag": "button",
+  "cls": "mdc-button mdc-button--unelevated mat-mdc-unelevated-button bofa-button bofa-button--secondary mat-unthemed mat-mdc-button-base",
+  "box": [
+   946,
+   731,
+   177,
+   36
+  ],
+  "font": "600 15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ }
+]

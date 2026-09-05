@@ -1,0 +1,242 @@
+[
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-date mat-column-date ng-star-inserted",
+  "box": [
+   107,
+   455,
+   157,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-description mat-column-description ng-star-inserted",
+  "box": [
+   264,
+   455,
+   310,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-amount mat-column-amount bofa-table__cell--right ng-star-inserted",
+  "box": [
+   574,
+   455,
+   147,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-date mat-column-date ng-star-inserted",
+  "box": [
+   107,
+   507,
+   157,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-description mat-column-description ng-star-inserted",
+  "box": [
+   264,
+   507,
+   310,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-amount mat-column-amount bofa-table__cell--right ng-star-inserted",
+  "box": [
+   574,
+   507,
+   147,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-date mat-column-date ng-star-inserted",
+  "box": [
+   107,
+   559,
+   157,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-description mat-column-description ng-star-inserted",
+  "box": [
+   264,
+   559,
+   310,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-amount mat-column-amount bofa-table__cell--right ng-star-inserted",
+  "box": [
+   574,
+   559,
+   147,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-date mat-column-date ng-star-inserted",
+  "box": [
+   107,
+   611,
+   157,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-description mat-column-description ng-star-inserted",
+  "box": [
+   264,
+   611,
+   310,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-amount mat-column-amount bofa-table__cell--right ng-star-inserted",
+  "box": [
+   574,
+   611,
+   147,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-date mat-column-date ng-star-inserted",
+  "box": [
+   107,
+   663,
+   157,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-description mat-column-description ng-star-inserted",
+  "box": [
+   264,
+   663,
+   310,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-amount mat-column-amount bofa-table__cell--right ng-star-inserted",
+  "box": [
+   574,
+   663,
+   147,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ }
+]

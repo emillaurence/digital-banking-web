@@ -1,0 +1,82 @@
+[
+ {
+  "tag": "mat-card-subtitle",
+  "cls": "mat-mdc-card-subtitle ng-star-inserted",
+  "box": [
+   123,
+   216,
+   241,
+   17
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "auto"
+ },
+ {
+  "tag": "mat-card-subtitle",
+  "cls": "mat-mdc-card-subtitle ng-star-inserted",
+  "box": [
+   496,
+   216,
+   180,
+   17
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "auto"
+ },
+ {
+  "tag": "mat-card-subtitle",
+  "cls": "mat-mdc-card-subtitle ng-star-inserted",
+  "box": [
+   870,
+   216,
+   260,
+   17
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "auto"
+ },
+ {
+  "tag": "mat-card-subtitle",
+  "cls": "mat-mdc-card-subtitle ng-star-inserted",
+  "box": [
+   123,
+   366,
+   189,
+   17
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "auto"
+ },
+ {
+  "tag": "mat-card-subtitle",
+  "cls": "mat-mdc-card-subtitle ng-star-inserted",
+  "box": [
+   791,
+   366,
+   154,
+   17
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "auto"
+ }
+]

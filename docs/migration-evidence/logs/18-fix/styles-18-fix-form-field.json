@@ -1,0 +1,56 @@
+[
+ {
+  "tag": "mat-form-field",
+  "cls": "mat-mdc-form-field bofa-field ng-tns-c508571215-0 mat-mdc-form-field-type-mat-input mat-form-field-appearance-outline mat-form-field-hide-placeholder mat-primary",
+  "box": [
+   775,
+   399,
+   398,
+   84
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgb(28, 37, 64)",
+  "lineHeight": "24px",
+  "letterSpacing": "normal",
+  "padding": "0px",
+  "margin": "0px",
+  "height": "84px",
+  "top": "auto"
+ },
+ {
+  "tag": "mat-form-field",
+  "cls": "mat-mdc-form-field bofa-field ng-tns-c508571215-1 mat-mdc-form-field-type-mat-input mat-form-field-appearance-outline mat-form-field-hide-placeholder mat-primary",
+  "box": [
+   775,
+   487,
+   398,
+   84
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgb(28, 37, 64)",
+  "lineHeight": "24px",
+  "letterSpacing": "normal",
+  "padding": "0px",
+  "margin": "0px",
+  "height": "84px",
+  "top": "auto"
+ },
+ {
+  "tag": "mat-form-field",
+  "cls": "mat-mdc-form-field bofa-field ng-tns-c508571215-2 mat-mdc-form-field-type-mat-input mat-mdc-form-field-has-icon-suffix mat-form-field-appearance-outline mat-form-field-hide-placeholder mat-primary",
+  "box": [
+   775,
+   575,
+   398,
+   84
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgb(28, 37, 64)",
+  "lineHeight": "24px",
+  "letterSpacing": "normal",
+  "padding": "0px",
+  "margin": "0px",
+  "height": "84px",
+  "top": "auto"
+ }
+]

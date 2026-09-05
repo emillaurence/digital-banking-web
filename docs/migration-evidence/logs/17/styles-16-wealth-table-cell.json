@@ -1,0 +1,322 @@
+[
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-name mat-column-name",
+  "box": [
+   157,
+   455,
+   503,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-assetClass mat-column-assetClass",
+  "box": [
+   660,
+   455,
+   182,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-value mat-column-value bofa-table__cell--right",
+  "box": [
+   842,
+   455,
+   130,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-weight mat-column-weight bofa-table__cell--right",
+  "box": [
+   973,
+   455,
+   150,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-name mat-column-name",
+  "box": [
+   157,
+   507,
+   503,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-assetClass mat-column-assetClass",
+  "box": [
+   660,
+   507,
+   182,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-value mat-column-value bofa-table__cell--right",
+  "box": [
+   842,
+   507,
+   130,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-weight mat-column-weight bofa-table__cell--right",
+  "box": [
+   973,
+   507,
+   150,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-name mat-column-name",
+  "box": [
+   157,
+   559,
+   503,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-assetClass mat-column-assetClass",
+  "box": [
+   660,
+   559,
+   182,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-value mat-column-value bofa-table__cell--right",
+  "box": [
+   842,
+   559,
+   130,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-weight mat-column-weight bofa-table__cell--right",
+  "box": [
+   973,
+   559,
+   150,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-name mat-column-name",
+  "box": [
+   157,
+   611,
+   503,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-assetClass mat-column-assetClass",
+  "box": [
+   660,
+   611,
+   182,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-value mat-column-value bofa-table__cell--right",
+  "box": [
+   842,
+   611,
+   130,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-weight mat-column-weight bofa-table__cell--right",
+  "box": [
+   973,
+   611,
+   150,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-name mat-column-name",
+  "box": [
+   157,
+   663,
+   503,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-assetClass mat-column-assetClass",
+  "box": [
+   660,
+   663,
+   182,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-value mat-column-value bofa-table__cell--right",
+  "box": [
+   842,
+   663,
+   130,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "td",
+  "cls": "mat-mdc-cell mdc-data-table__cell cdk-cell cdk-column-weight mat-column-weight bofa-table__cell--right",
+  "box": [
+   973,
+   663,
+   150,
+   52
+  ],
+  "font": "15px / 24px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "24px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ }
+]

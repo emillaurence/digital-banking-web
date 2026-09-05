@@ -1,0 +1,26 @@
+Repository is not clean. Update changes will be mixed with pre-existing changes.
+Using package manager: npm
+Collecting installed dependencies...
+Found 26 dependencies.
+Fetching dependency metadata from registry...
+    Updating package.json with dependency @angular/cdk @ "16.2.14" (was "15.2.9")...
+    Updating package.json with dependency @angular/material @ "16.2.14" (was "15.2.9")...
+UPDATE package.json (1580 bytes)
+- Installing packages...
+✔ Packages successfully installed.
+** Executing migrations of package '@angular/cdk' **
+
+▸ Updates the Angular CDK to v16.
+    
+      ✓  Updated Angular CDK to version 16
+    
+  Migration completed (No changes made).
+
+** Executing migrations of package '@angular/material' **
+
+▸ Updates the Angular Material to v16.
+    
+      ✓  Updated Angular Material to version 16
+    
+  Migration completed (No changes made).
+

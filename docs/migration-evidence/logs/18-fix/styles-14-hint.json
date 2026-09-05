@@ -1,0 +1,20 @@
+[
+ {
+  "tag": "mat-hint",
+  "cls": "mat-hint ng-tns-c92-1 ng-star-inserted",
+  "box": [
+   786,
+   552,
+   99,
+   13
+  ],
+  "font": "11.25px / 12.6562px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgba(0, 0, 0, 0.6)",
+  "lineHeight": "12.6562px",
+  "letterSpacing": "normal",
+  "padding": "0px",
+  "margin": "0px",
+  "height": "12.6562px",
+  "top": "auto"
+ }
+]

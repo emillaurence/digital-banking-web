@@ -1,0 +1,8 @@
+retail button-label:
+  [0].webkitFontSmoothing: 'antialiased' -> 'auto'
+retail button-base:
+  [1].webkitFontSmoothing: 'antialiased' -> 'auto'
+wealth button-label:
+  [0].webkitFontSmoothing: 'antialiased' -> 'auto'
+wealth button-base:
+  [0].webkitFontSmoothing: 'antialiased' -> 'auto'

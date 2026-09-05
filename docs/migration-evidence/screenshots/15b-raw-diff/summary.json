@@ -1,0 +1,132 @@
+[
+  {
+    "file": "retail-01-full.png",
+    "status": "DIFF",
+    "pixels": 50382,
+    "pct": "4.373%",
+    "size": "1280x900"
+  },
+  {
+    "file": "retail-02-cards.png",
+    "status": "SIZE",
+    "base": "1100x127",
+    "cur": "1100x116"
+  },
+  {
+    "file": "retail-03-table.png",
+    "status": "SIZE",
+    "base": "614x297",
+    "cur": "614x317"
+  },
+  {
+    "file": "retail-04-form.png",
+    "status": "SIZE",
+    "base": "398x298",
+    "cur": "398x283"
+  },
+  {
+    "file": "retail-05-primary-button.png",
+    "status": "DIFF",
+    "pixels": 722,
+    "pct": "4.903%",
+    "size": "398x37"
+  },
+  {
+    "file": "retail-06-form-focused.png",
+    "status": "SIZE",
+    "base": "398x298",
+    "cur": "398x283"
+  },
+  {
+    "file": "retail-07-form-filled.png",
+    "status": "SIZE",
+    "base": "398x298",
+    "cur": "398x283"
+  },
+  {
+    "file": "retail-08-datepicker-open.png",
+    "status": "DIFF",
+    "pixels": 48686,
+    "pct": "4.226%",
+    "size": "1280x900"
+  },
+  {
+    "file": "retail-09-dialog-open.png",
+    "status": "DIFF",
+    "pixels": 70708,
+    "pct": "6.138%",
+    "size": "1280x900"
+  },
+  {
+    "file": "retail-10-dialog.png",
+    "status": "SIZE",
+    "base": "420x160",
+    "cur": "420x234"
+  },
+  {
+    "file": "retail-11-after-confirm-table.png",
+    "status": "SIZE",
+    "base": "614x345",
+    "cur": "614x369"
+  },
+  {
+    "file": "retail-12-after-confirm-full.png",
+    "status": "DIFF",
+    "pixels": 53300,
+    "pct": "4.627%",
+    "size": "1280x900"
+  },
+  {
+    "file": "wealth-01-full.png",
+    "status": "DIFF",
+    "pixels": 34675,
+    "pct": "3.010%",
+    "size": "1280x900"
+  },
+  {
+    "file": "wealth-02-cards.png",
+    "status": "SIZE",
+    "base": "1000x127",
+    "cur": "1000x116"
+  },
+  {
+    "file": "wealth-03-table.png",
+    "status": "SIZE",
+    "base": "966x297",
+    "cur": "966x317"
+  },
+  {
+    "file": "wealth-04-secondary-button.png",
+    "status": "DIFF",
+    "pixels": 355,
+    "pct": "5.421%",
+    "size": "177x37"
+  },
+  {
+    "file": "wealth-05-dialog-open.png",
+    "status": "DIFF",
+    "pixels": 45498,
+    "pct": "3.949%",
+    "size": "1280x900"
+  },
+  {
+    "file": "wealth-06-dialog.png",
+    "status": "SIZE",
+    "base": "420x178",
+    "cur": "420x234"
+  },
+  {
+    "file": "wealth-07-after-confirm.png",
+    "status": "DIFF",
+    "pixels": 701,
+    "pct": "1.961%",
+    "size": "966x37"
+  },
+  {
+    "file": "wealth-08-after-confirm-full.png",
+    "status": "DIFF",
+    "pixels": 37102,
+    "pct": "3.221%",
+    "size": "1280x900"
+  }
+]

@@ -1,0 +1,20 @@
+[
+ {
+  "tag": "bofa-datepicker",
+  "cls": "ng-untouched ng-pristine ng-invalid",
+  "box": [
+   775,
+   575,
+   398,
+   84
+  ],
+  "font": "16px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgb(28, 37, 64)",
+  "lineHeight": "normal",
+  "letterSpacing": "normal",
+  "padding": "0px",
+  "margin": "0px",
+  "height": "84px",
+  "top": "auto"
+ }
+]

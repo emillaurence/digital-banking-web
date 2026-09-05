@@ -1,0 +1,23 @@
+Building Angular Package
+
+------------------------------------------------------------------------------
+Building entry point '@bofa/ui-components'
+------------------------------------------------------------------------------
+- Compiling with Angular sources in Ivy partial compilation mode.
+✔ Compiling with Angular sources in Ivy partial compilation mode.
+- Writing FESM bundles
+✔ Writing FESM bundles
+- Copying assets
+✔ Copying assets
+- Writing package manifest
+✔ Writing package manifest
+✔ Built @bofa/ui-components
+
+------------------------------------------------------------------------------
+Built Angular Package
+ - from: /home/ubuntu/repos/digital-banking-web/libs/ui-components
+ - to:   /home/ubuntu/repos/digital-banking-web/dist/ui-components
+------------------------------------------------------------------------------
+
+Build at: 2026-09-04T13:07:36.281Z - Time: 5200ms
+

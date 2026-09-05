@@ -1,0 +1,66 @@
+[
+ {
+  "tag": "mat-card-subtitle",
+  "cls": "mat-mdc-card-subtitle",
+  "box": [
+   173,
+   216,
+   188,
+   17
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "auto"
+ },
+ {
+  "tag": "mat-card-subtitle",
+  "cls": "mat-mdc-card-subtitle",
+  "box": [
+   513,
+   216,
+   166,
+   17
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "auto"
+ },
+ {
+  "tag": "mat-card-subtitle",
+  "cls": "mat-mdc-card-subtitle",
+  "box": [
+   853,
+   216,
+   136,
+   17
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "auto"
+ },
+ {
+  "tag": "mat-card-subtitle",
+  "cls": "mat-mdc-card-subtitle",
+  "box": [
+   173,
+   366,
+   187,
+   17
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "auto"
+ }
+]

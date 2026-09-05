@@ -1,0 +1,56 @@
+[
+ {
+  "tag": "label",
+  "cls": "mdc-floating-label mat-mdc-floating-label ng-tns-c508571215-0 ng-star-inserted",
+  "box": [
+   791,
+   419,
+   42,
+   17
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgba(0, 0, 0, 0.6)",
+  "lineHeight": "normal",
+  "letterSpacing": "normal",
+  "padding": "0px",
+  "margin": "0px",
+  "height": "17px",
+  "top": "28px"
+ },
+ {
+  "tag": "label",
+  "cls": "mdc-floating-label mat-mdc-floating-label ng-tns-c508571215-1 ng-star-inserted",
+  "box": [
+   791,
+   507,
+   99,
+   17
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgba(0, 0, 0, 0.6)",
+  "lineHeight": "normal",
+  "letterSpacing": "normal",
+  "padding": "0px",
+  "margin": "0px",
+  "height": "17px",
+  "top": "28px"
+ },
+ {
+  "tag": "label",
+  "cls": "mdc-floating-label mat-mdc-floating-label ng-tns-c508571215-2 ng-star-inserted",
+  "box": [
+   791,
+   595,
+   96,
+   17
+  ],
+  "font": "15px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgba(0, 0, 0, 0.6)",
+  "lineHeight": "normal",
+  "letterSpacing": "normal",
+  "padding": "0px",
+  "margin": "0px",
+  "height": "17px",
+  "top": "28px"
+ }
+]

@@ -1,0 +1,18 @@
+[
+ {
+  "tag": "body",
+  "cls": "",
+  "box": [
+   0,
+   0,
+   1280,
+   900
+  ],
+  "font": "16px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "normal",
+  "lineHeight": "normal",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "auto"
+ }
+]

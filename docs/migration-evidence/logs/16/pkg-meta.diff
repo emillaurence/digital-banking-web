@@ -1,0 +1,22 @@
+3,7c3,7
+<     "@angular/common": "^14.2.0",
+<     "@angular/core": "^14.2.0",
+<     "@angular/forms": "^14.2.0",
+<     "@angular/cdk": "^14.2.0",
+<     "@angular/material": "^14.2.0",
+---
+>     "@angular/common": "^16.2.0",
+>     "@angular/core": "^16.2.0",
+>     "@angular/forms": "^16.2.0",
+>     "@angular/cdk": "^16.2.0",
+>     "@angular/material": "^16.2.0",
+16,20c16,18
+<       "esm2020": "./esm2020/bofa-ui-components.mjs",
+<       "es2020": "./fesm2020/bofa-ui-components.mjs",
+<       "es2015": "./fesm2015/bofa-ui-components.mjs",
+<       "node": "./fesm2015/bofa-ui-components.mjs",
+<       "default": "./fesm2020/bofa-ui-components.mjs"
+---
+>       "esm2022": "./esm2022/bofa-ui-components.mjs",
+>       "esm": "./esm2022/bofa-ui-components.mjs",
+>       "default": "./fesm2022/bofa-ui-components.mjs"

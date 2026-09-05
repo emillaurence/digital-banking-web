@@ -1,0 +1,140 @@
+{
+  "hints": [
+    {
+      "text": "Daily limit $25,000",
+      "box": [
+        786.25,
+        552.03125,
+        99.171875,
+        12.65625
+      ],
+      "font": "11.25px / 12.6562px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "color": "rgba(0, 0, 0, 0.6)",
+      "lineHeight": "12.6562px",
+      "letterSpacing": "normal"
+    }
+  ],
+  "labels": [
+    {
+      "text": "Payee",
+      "box": [
+        786.25,
+        422.125,
+        375.5,
+        16.875
+      ],
+      "font": "15px / 16.875px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "color": "rgba(0, 0, 0, 0.6)",
+      "lineHeight": "16.875px",
+      "letterSpacing": "normal"
+    },
+    {
+      "text": "Amount (USD)",
+      "box": [
+        786.25,
+        485,
+        375.4921875,
+        12.65625
+      ],
+      "font": "15px / 16.875px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "color": "rgb(1, 33, 105)",
+      "lineHeight": "16.875px",
+      "letterSpacing": "normal"
+    },
+    {
+      "text": "Payment date",
+      "box": [
+        786.25,
+        595.6875,
+        338,
+        16.875
+      ],
+      "font": "15px / 16.875px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "color": "rgba(0, 0, 0, 0.6)",
+      "lineHeight": "16.875px",
+      "letterSpacing": "normal"
+    }
+  ],
+  "fields": [
+    {
+      "text": "Payee",
+      "box": [
+        775,
+        398.875,
+        398,
+        82.78125
+      ],
+      "font": "15px / 16.875px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "lineHeight": "16.875px",
+      "letterSpacing": "normal"
+    },
+    {
+      "text": "Amount (USD)Daily limit $25,000",
+      "box": [
+        775,
+        485.65625,
+        398,
+        82.78125
+      ],
+      "font": "15px / 16.875px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "lineHeight": "16.875px",
+      "letterSpacing": "normal"
+    },
+    {
+      "text": "Payment date",
+      "box": [
+        775,
+        572.4375,
+        398,
+        82.78125
+      ],
+      "font": "15px / 16.875px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "lineHeight": "16.875px",
+      "letterSpacing": "normal"
+    }
+  ],
+  "subscripts": [
+    {
+      "text": "",
+      "box": [
+        775,
+        465.25,
+        398,
+        0
+      ],
+      "font": "11.25px / 12.6562px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "lineHeight": "12.6562px",
+      "letterSpacing": "normal"
+    },
+    {
+      "text": "Daily limit $25,000",
+      "box": [
+        775,
+        552.03125,
+        398,
+        12.65625
+      ],
+      "font": "11.25px / 12.6562px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "lineHeight": "12.6562px",
+      "letterSpacing": "normal"
+    },
+    {
+      "text": "",
+      "box": [
+        775,
+        638.8125,
+        398,
+        0
+      ],
+      "font": "11.25px / 12.6562px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+      "color": "rgba(0, 0, 0, 0.87)",
+      "lineHeight": "12.6562px",
+      "letterSpacing": "normal"
+    }
+  ]
+}

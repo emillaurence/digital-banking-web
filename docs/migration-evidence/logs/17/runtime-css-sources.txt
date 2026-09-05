@@ -1,0 +1,50 @@
+step17-retail {
+  "computed": {
+    ".mdc-button": "auto",
+    ".mdc-button__label": "auto"
+  },
+  "rules": [],
+  "styles": [
+    "https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap",
+    "http://localhost:4200/styles.css",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline"
+  ]
+}
+step16-retail {
+  "computed": {
+    ".mdc-button": "antialiased",
+    ".mdc-button__label": "antialiased"
+  },
+  "rules": [],
+  "styles": [
+    "https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap",
+    "http://localhost:4600/styles.css",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline",
+    "inline"
+  ]
+}

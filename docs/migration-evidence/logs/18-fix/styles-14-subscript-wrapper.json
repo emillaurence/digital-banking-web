@@ -1,0 +1,56 @@
+[
+ {
+  "tag": "div",
+  "cls": "mat-form-field-subscript-wrapper ng-tns-c92-0",
+  "box": [
+   775,
+   465,
+   398,
+   0
+  ],
+  "font": "11.25px / 12.6562px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgba(0, 0, 0, 0.87)",
+  "lineHeight": "12.6562px",
+  "letterSpacing": "normal",
+  "padding": "0px 11.25px",
+  "margin": "7.5px 0px 0px",
+  "height": "0px",
+  "top": "55.125px"
+ },
+ {
+  "tag": "div",
+  "cls": "mat-form-field-subscript-wrapper ng-tns-c92-1",
+  "box": [
+   775,
+   552,
+   398,
+   13
+  ],
+  "font": "11.25px / 12.6562px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgba(0, 0, 0, 0.87)",
+  "lineHeight": "12.6562px",
+  "letterSpacing": "normal",
+  "padding": "0px 11.25px",
+  "margin": "7.5px 0px 0px",
+  "height": "12.6562px",
+  "top": "55.125px"
+ },
+ {
+  "tag": "div",
+  "cls": "mat-form-field-subscript-wrapper ng-tns-c92-2",
+  "box": [
+   775,
+   639,
+   398,
+   0
+  ],
+  "font": "11.25px / 12.6562px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "color": "rgba(0, 0, 0, 0.87)",
+  "lineHeight": "12.6562px",
+  "letterSpacing": "normal",
+  "padding": "0px 11.25px",
+  "margin": "7.5px 0px 0px",
+  "height": "0px",
+  "top": "55.125px"
+ }
+]

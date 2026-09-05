@@ -1,0 +1,56 @@
+--- /home/ubuntu/visual/18/metrics.json	2026-09-04 13:29:40.756536150 +0000
++++ /home/ubuntu/visual/18-fix/metrics.json	2026-09-04 13:49:26.032592668 +0000
+@@ -20,7 +20,7 @@
+       },
+       "firstButton": {
+         "x": 775,
+-        "y": 645,
++        "y": 663,
+         "w": 146,
+         "h": 36
+       },
+@@ -28,7 +28,7 @@
+         "x": 775,
+         "y": 399,
+         "w": 398,
+-        "h": 78
++        "h": 84
+       },
+       "dialog": null,
+       "h1Font": "700 32px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+@@ -67,7 +67,7 @@
+       },
+       "firstButton": {
+         "x": 775,
+-        "y": 645,
++        "y": 663,
+         "w": 146,
+         "h": 36
+       },
+@@ -75,7 +75,7 @@
+         "x": 775,
+         "y": 399,
+         "w": 398,
+-        "h": 78
++        "h": 84
+       },
+       "dialog": {
+         "x": 430,
+@@ -120,7 +120,7 @@
+       },
+       "firstButton": {
+         "x": 775,
+-        "y": 645,
++        "y": 663,
+         "w": 146,
+         "h": 36
+       },
+@@ -128,7 +128,7 @@
+         "x": 775,
+         "y": 399,
+         "w": 398,
+-        "h": 78
++        "h": 84
+       },
+       "dialog": null,
+       "h1Font": "700 32px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",

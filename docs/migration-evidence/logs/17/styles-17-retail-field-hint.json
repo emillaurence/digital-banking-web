@@ -1,0 +1,18 @@
+[
+ {
+  "tag": "mat-hint",
+  "cls": "mat-mdc-form-field-hint mat-mdc-form-field-bottom-align ng-tns-c3736059725-1 ng-star-inserted",
+  "box": [
+   791,
+   537,
+   113,
+   22
+  ],
+  "font": "12px / 20px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "0.4px",
+  "lineHeight": "20px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ }
+]

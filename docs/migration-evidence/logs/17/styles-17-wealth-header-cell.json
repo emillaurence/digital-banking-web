@@ -1,0 +1,66 @@
+[
+ {
+  "tag": "th",
+  "cls": "mat-mdc-header-cell mdc-data-table__header-cell cdk-header-cell cdk-column-name mat-column-name",
+  "box": [
+   157,
+   399,
+   503,
+   56
+  ],
+  "font": "600 13px / 22px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "0.52px",
+  "lineHeight": "22px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "th",
+  "cls": "mat-mdc-header-cell mdc-data-table__header-cell cdk-header-cell cdk-column-assetClass mat-column-assetClass",
+  "box": [
+   660,
+   399,
+   182,
+   56
+  ],
+  "font": "600 13px / 22px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "0.52px",
+  "lineHeight": "22px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "th",
+  "cls": "mat-mdc-header-cell mdc-data-table__header-cell cdk-header-cell cdk-column-value mat-column-value bofa-table__cell--right",
+  "box": [
+   842,
+   399,
+   130,
+   56
+  ],
+  "font": "600 13px / 22px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "0.52px",
+  "lineHeight": "22px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ },
+ {
+  "tag": "th",
+  "cls": "mat-mdc-header-cell mdc-data-table__header-cell cdk-header-cell cdk-column-weight mat-column-weight bofa-table__cell--right",
+  "box": [
+   973,
+   399,
+   150,
+   56
+  ],
+  "font": "600 13px / 22px \"Public Sans\", \"Helvetica Neue\", Arial, sans-serif",
+  "letterSpacing": "0.52px",
+  "lineHeight": "22px",
+  "fontFeatureSettings": "normal",
+  "textRendering": "auto",
+  "webkitFontSmoothing": "antialiased"
+ }
+]
