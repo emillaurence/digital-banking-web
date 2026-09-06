@@ -223,3 +223,46 @@ dialog `.d.ts` files are byte-identical to baseline again.
 - Tooling: `ng-packagr` wipes `dist/` on each lib build, which leaves a running `ng serve`
   in a permanent "Can't resolve @bofa/ui-components" state — dev servers must be restarted
   after every `build:lib` (`~/migration-artifacts/serve.sh`). Not a repo issue.
+
+## Phase 3 — Angular 15→16 (Node 16.20.2 / Angular 16.2.12 / Material 16.2.14 / TS 5.1.6)
+
+Commands: `ng update @angular/core@16 @angular/cli@16` (zone.js 0.11.8→0.13.3, ng-packagr
+16.2.3, build-angular 16.2.16; all four core/cli migrations "No changes made"), then
+`ng update @angular/material@16 --allow-dirty` (CDK/Material 16.2.14, no code changes).
+TypeScript pinned to 5.1.6 — the top of the v16 window `>=4.9.3 <5.2.0`, so the v17 jump
+to 5.2 is a single minor. `.nvmrc` unchanged: 16.20.2 is inside `^16.14.0`. Library
+peerDependencies → `^16.2.0`.
+
+### Loud — none. Builds and all three suites passed on the first run.
+
+### Silent (CSS) — 1 regression restored
+
+- **Outline colour reverted to Material grey.** Symptom: `text_input_outline/border`
+  `rgb(170,182,207)` → `rgba(0,0,0,.38)`. Cause: Material 16 paints the outlined
+  text-field border from the `--mdc-outlined-text-field-outline-color` token via
+  `.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading`,
+  which outranks the Phase 2 `border-color` rule. Fix: `_theme.scss` now sets that token
+  (rest state only, matching the baseline which never styled hover/focus) on
+  `.mat-mdc-form-field.mat-form-field-appearance-outline`; the `border-color` rule is kept
+  as a fallback. Evidence: metric back to `1px solid rgb(170,182,207)`.
+
+### Silent — framework change, no action
+
+- Table row text colour `#1c2540` (inherited, Phase 2) → `rgba(0,0,0,.87)`: Material 16
+  re-applies the theme foreground to `.mat-mdc-table` cells. This is the **baseline** value,
+  so the Phase 2 density-table entry "table text colour inherits body" no longer applies.
+  Card text still inherits `#1c2540`.
+- No other metric moved between Phase 2 and Phase 3 (buttons, cards, dialog, datepicker,
+  hover, calendar all identical).
+
+### Public API
+
+`.d.ts`: `ɵcmp` input metadata gains v16 `{ alias, required: false }` objects (compiler
+emit). Public surface still only differs from v14 by `declare type` → `type`.
+
+### Evidence
+
+- `build:lib` OK; `build:apps` OK (retail main 589.89 kB, wealth 379.96 kB; wealth budget
+  *warning* 707 kB > 500 kB pre-existing warning-level budget, not an error).
+- Tests ChromeHeadless 137: 5/5, 3/3, 2/2, 0 ERROR lines. `clearContext: true` intact ×3.
+- Screens + metrics: `~/migration-artifacts/screens/phase3/`.
