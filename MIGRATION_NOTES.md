@@ -266,3 +266,35 @@ emit). Public surface still only differs from v14 by `declare type` → `type`.
   *warning* 707 kB > 500 kB pre-existing warning-level budget, not an error).
 - Tests ChromeHeadless 137: 5/5, 3/3, 2/2, 0 ERROR lines. `clearContext: true` intact ×3.
 - Screens + metrics: `~/migration-artifacts/screens/phase3/`.
+
+## Phase 4 — Angular 16→17 (Node 18.20.8 / Angular 17.3.12 / Material 17.3.10 / TS 5.4.5)
+
+Precondition: `grep -rn legacy libs apps` → only a comment in `_typography.scss`; no
+`@angular/material/legacy-*` imports remain (removed in Phase 2). `.nvmrc` → 18.20.8
+(`^18.13.0`); `nvm install 18.20.8`. Commands: `ng update @angular/core@17 @angular/cli@17
+--allow-dirty` (dirty only because of the `.nvmrc` edit) — it also raised TypeScript
+itself to 5.4.5 (inside `>=5.2.0 <5.5.0`), zone.js → 0.14.10, ng-packagr 17.3.0;
+then `ng update @angular/material@17 --allow-dirty`. Library peerDependencies → `^17.3.0`.
+
+Migrations that changed files: **"Replace deprecated options in angular.json"** renamed
+`browserTarget` → `buildTarget` on both apps' `serve` and `extract-i18n` targets. Builders
+are unchanged: `build-angular:browser` ×2, `:karma` ×3, `:ng-packagr` ×1 — no
+application-builder migration (per approval). Control-flow migration: "No changes made"
+(it only escapes literal `@`/`}` in templates; none present). No standalone migration was run.
+
+### Loud — none.
+### Silent — none. `cmp.py phase3 phase4` → **0 differing metrics** across all captured
+surfaces (buttons, cards, table header/rows/hover, text-input, datepicker, calendar,
+dialog); screenshots visually identical. The grey pill behind the dialog's "Cancel" button
+in both baseline and current shots is the focus overlay on the auto-focused ghost button,
+not a background regression.
+
+### Public API
+Unchanged from Phase 3 (`declare type` → `type` only).
+
+### Evidence
+- `build:lib` OK; `build:apps` OK — retail main 607.26 kB, wealth 474.15 kB. Both apps
+  now exceed the 500 kB *warning* budget (730 kB / 597 kB); the 1 MB error budget is not hit.
+  Bundle growth is Material 17's token-based theming CSS; flagged for the owners, not changed.
+- Tests ChromeHeadless 137: 5/5, 3/3, 2/2, 0 ERROR lines. `clearContext: true` intact ×3.
+- Screens + metrics: `~/migration-artifacts/screens/phase4/`.

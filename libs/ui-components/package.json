@@ -2,11 +2,11 @@
   "name": "@bofa/ui-components",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^16.2.0",
-    "@angular/core": "^16.2.0",
-    "@angular/forms": "^16.2.0",
-    "@angular/cdk": "^16.2.0",
-    "@angular/material": "^16.2.0",
+    "@angular/common": "^17.3.0",
+    "@angular/core": "^17.3.0",
+    "@angular/forms": "^17.3.0",
+    "@angular/cdk": "^17.3.0",
+    "@angular/material": "^17.3.0",
     "rxjs": "^7.5.0"
   },
   "dependencies": {
