@@ -56,7 +56,7 @@ Every `karma.conf.js` sets `clearContext: true`; the schematic default of `false
 the Jasmine HTML reporter navigate after the run, which Karma logs as a spurious
 "full page reload" ERROR. If the launcher ever hangs or crashes on a new machine,
 install the pinned `puppeteer` contingency and point `CHROME_BIN` at its bundled
-Chromium in each `karma.conf.js` (see `plans/02-applications.md`).
+Chromium in each `karma.conf.js`.
 
 ## Migration baseline
 
