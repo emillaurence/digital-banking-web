@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatButtonModule } from '@angular/material/button';
 import { BofaButtonComponent } from './button.component';
 
 describe('BofaButtonComponent', () => {
@@ -16,7 +16,7 @@ describe('BofaButtonComponent', () => {
     fixture.detectChanges();
 
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
-    expect(button.classList).toContain('mat-flat-button');
+    expect(button.classList).toContain('mat-mdc-unelevated-button');
     expect(button.classList).toContain('bofa-button--secondary');
   });
 

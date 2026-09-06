@@ -129,3 +129,97 @@ signatures unchanged. Differences are all tooling-internal and approved:
 - Tests ChromeHeadless 137: ui-components 5/5, retail-banking 3/3, wealth-portal 2/2, 0 ERROR lines.
 - `clearContext: true` untouched in all three `karma.conf.js`.
 - Screens: `~/migration-artifacts/screens/phase1/` (18 PNGs + `metrics.json`).
+
+## Phase 2 — MDC migration on v15 (Node 16.20.2 / Angular 15.2.10 / Material 15.2.9 / TS 4.9.5)
+
+Command: `ng generate @angular/material:mdc-migration --components all --directory <dir>`,
+run once per project directory. **Deviation:** `--directory .` is rejected by the schema
+("must match format path") and an absolute path is accepted but matches nothing ("Nothing
+to be done"), so the three project roots were passed one at a time; only
+`libs/ui-components` produced changes (the apps contain no Material imports or classes).
+
+### Loud (compile/test) — none at compile time; 4 assertions retargeted
+
+Schematic changes: `legacy-*` imports → MDC entry points in `dialog.service.ts`,
+`confirm-dialog.component.ts` and the three specs; `_theme.scss` mixins back to
+`mat.core()` / `mat.all-component-typographies()` / `mat.all-component-themes()`; class
+selectors renamed (`.mat-button-base`→`.mat-mdc-button-base`, `.mat-card`→`.mat-mdc-card`,
+`table.mat-table`→`table.mat-mdc-table`, `th.mat-header-cell`→`th.mat-mdc-header-cell`,
+`tr.mat-row`→`tr.mat-mdc-row`, `.mat-dialog-container`→`.mat-mdc-dialog-container`);
+`_typography.scss` → `mat.define-typography-config` with 2018 level names
+(`headline`→`headline-5`, `title`→`headline-6`, `subheading-2`→`subtitle-1`,
+`body-1`→`body-2`). Again the schematic skipped `ui-components.module.ts`; it was
+repointed by hand to `@angular/material/{button,card,dialog,form-field,input,table}`.
+`grep -rn legacy libs apps` → no hits; the v17 precondition is met.
+
+Assertion changes — same checks, same counts, new class names (the DOM truth changed,
+not the behaviour under test):
+
+| Spec | Before | After | Why |
+|---|---|---|---|
+| `button.component.spec.ts` | `toContain('mat-flat-button')` | `toContain('mat-mdc-unelevated-button')` | MDC renames the `mat-flat-button` host class; the attribute selector in the template is unchanged |
+| `table.component.spec.ts` | `th.mat-header-cell` ×2, `tr.mat-row` ×2 | `th.mat-mdc-header-cell` ×2, `tr.mat-mdc-row` ×2 | MDC table cell/row classes |
+| `apps/retail-banking/.../app.component.spec.ts` | `bofa-table tr.mat-row` ×5 | `bofa-table tr.mat-mdc-row` ×5 | same |
+| `apps/wealth-portal/.../app.component.spec.ts` | `bofa-table tr.mat-row` ×5 | `bofa-table tr.mat-mdc-row` ×5 | same |
+
+### Silent (CSS/layout) — regressions found by the screenshot/metrics diff and restored
+
+1. **Dialog rendered as two boxes.** Symptom: a 16px-radius, 28px-padded shadow rectangle
+   around a smaller 4px-radius white surface. Cause: MDC splits the dialog into a
+   transparent `.mat-mdc-dialog-container` and an inner `.mdc-dialog__surface`; the
+   previously dead `border-radius/padding` on the container (see Phase 0 finding) suddenly
+   applied, and the shadow landed on the transparent wrapper. Fix: the override now targets
+   `.mat-mdc-dialog-container .mdc-dialog__surface { box-shadow }` only; the never-rendered
+   16px/28px declarations were dropped so the dialog matches the *rendered* baseline (420px
+   wide, 4px radius). Evidence: `retail-dialog-open.png` baseline vs phase2; dialog height
+   159→154px (retail), title now carries MDC's `0 24px 9px` padding instead of the container's 24px.
+   The unrealised 16px/28px design intent remains a question for the design-system owners.
+2. **Secondary/ghost buttons lost brand colour** (white bg, black text instead of
+   transparent/navy). Cause: MDC's `.mat-mdc-unelevated-button:not(:disabled)` sets
+   `background-color`/`color` from `--mdc-filled-button-*` tokens at higher specificity than
+   `.bofa-button--secondary`. Fix: `button.component.scss` sets
+   `--mdc-filled-button-container-color: transparent` and
+   `--mdc-filled-button-label-text-color: #012169` on both variant classes. Evidence: metrics
+   `button_secondary`/`dialog_ghost_button` colour+bg back to baseline values.
+3. **Form-field text 15px→16px.** Cause: MDC form fields read the `body-1` level, which the
+   schematic did not populate (legacy `body-1` became `body-2`). Fix: `$body-1` added to
+   `_typography.scss` with the same 15px/24px level. Evidence: `text_input_input/font` 15px.
+4. **Outline colour.** `.mat-form-field-outline` no longer exists; rewritten to
+   `.mat-mdc-form-field.mat-form-field-appearance-outline .mdc-notched-outline__{leading,notch,trailing} { border-color: #aab6cf }`.
+   Evidence: outline border `1px solid rgb(170,182,207)` ✓.
+5. `.mat-calendar-body-selected` is unchanged — the datepicker is not part of the MDC
+   migration; selected-cell metrics identical to baseline.
+
+### Silent — MDC density/typography differences left for human judgement (not auto-fixed)
+
+| Surface | Baseline (legacy) | Phase 2 (MDC) | Note |
+|---|---|---|---|
+| Card | 16px padding on `.mat-card`; header text inset 32px vs content 16px | padding moves to header/content (16px each); title/subtitle now flush with content | Card 126→115px tall. Title and body now left-aligned with each other (was a 16px offset). |
+| Table cells | `0 0 0 24px` padding, 48px rows | `0 16px` padding, 52px rows | Table 296→316px tall; columns still aligned with each other. Header bottom border/uppercase/navy intact. |
+| Table/card text colour | `rgba(0,0,0,.87)` (theme foreground) | inherits app body `#1c2540` | MDC table/card no longer force the theme text colour. |
+| Card content font | 15px (legacy `body-1`) | 16px (inherits body) | MDC card content has no typography level. |
+| Form field | 83px incl. subscript, 17px input line | 78px, 24px input line, hint subscript 22px | Hint "Daily limit" sits ~5px closer to the next field; no overlap. |
+| Datepicker toggle | 38×38 | 48×48 (`mat-mdc-icon-button`, 12px padding) | Still centred in the 56px field. |
+| Buttons | line-height 36px | `normal`; height still 36px | No visible change. |
+| Ripple/shadow | flat button carried a 0-px `box-shadow` triple | `none` | Not visible. |
+
+Alignment check: no element pairs that were aligned in the baseline are misaligned now;
+two pairs that were *mis*aligned in the baseline (card title vs card body, card title vs
+payment fields) now line up. Row hover `#f2f5fb`, header border and uppercase header
+styling unchanged.
+
+### Public API
+
+`.d.ts` public surface identical to v14 except `declare type` → `type` (TS emit). The
+`legacy-*` import paths from Phase 1 have reverted to the standard entry points, so the
+dialog `.d.ts` files are byte-identical to baseline again.
+
+### Evidence
+
+- `build:lib` OK; `build:apps` OK — retail main 573.13 kB, wealth 385.19 kB (MDC CSS is
+  larger; wealth now also trips the pre-existing 500 kB *warning* budget: 527 kB initial).
+- Tests ChromeHeadless 137: 5/5, 3/3, 2/2, 0 ERROR lines. `clearContext: true` untouched.
+- Screens + metrics: `~/migration-artifacts/screens/phase2/`.
+- Tooling: `ng-packagr` wipes `dist/` on each lib build, which leaves a running `ng serve`
+  in a permanent "Can't resolve @bofa/ui-components" state — dev servers must be restarted
+  after every `build:lib` (`~/migration-artifacts/serve.sh`). Not a repo issue.

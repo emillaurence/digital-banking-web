@@ -26,6 +26,6 @@ describe('AppComponent', () => {
   it('renders the recent transactions in the shared table', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelectorAll('bofa-table tr.mat-row').length).toBe(5);
+    expect(fixture.nativeElement.querySelectorAll('bofa-table tr.mat-mdc-row').length).toBe(5);
   });
 });
