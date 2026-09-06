@@ -88,7 +88,7 @@ Nothing failed. Schematic output that changed code:
 |---|---|---|
 | `tsconfig.json` | `target: ES2022`, `useDefineForClassFields: false` | CLI v15 migration |
 | `*/src/test.ts` (×3) | `require.context` block removed | CLI v15 migration — the karma builder now discovers specs itself. **No spec was removed**; counts unchanged 5/3/2. |
-| `apps/*/.browserslistrc` | deleted | CLI v15 migration — files matched the new defaults |
+| `apps/*/.browserslistrc` | deleted | CLI v15 migration — files matched the v15 defaults. **Consequence:** the browser matrix now tracks the CLI default, which widened by v18 to `last 2 Chrome versions` (was 1) plus `last 2 Android major versions`. Same ES2022 output target either way; restore the files if the explicit v14 matrix must be pinned. |
 | `dialog.service.ts`, `dialog.service.spec.ts`, `confirm-dialog.component.ts`, `button.component.spec.ts`, `table.component.spec.ts` | `@angular/material/<x>` → `@angular/material/legacy-<x>` with `MatLegacyX as MatX` aliases | Material v15 schematic keeps existing apps on the pre-MDC components |
 | `_theme.scss` | `mat.core()` → `mat.legacy-core()` + explicit `mat.all-legacy-component-typographies(...)`; `all-component-themes` → `all-legacy-component-themes` | Material v15: legacy core no longer emits typography |
 | `_typography.scss` | `define-typography-config` → `define-legacy-typography-config` | Material v15 (legacy levels `headline`/`title`/`subheading-2`/`body-1`/`button` still valid here) |
