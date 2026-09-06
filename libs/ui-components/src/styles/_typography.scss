@@ -3,12 +3,12 @@
 // 2018 (MDC) typography level names; legacy headline/title/subheading-2/body-1 map to
 // headline-5/headline-6/subtitle-1/body-2. body-1 drives MDC form fields, body-2 drives
 // table cells, so both carry the 15px body size.
-$bofa-typography: mat.define-typography-config(
+$bofa-typography: mat.m2-define-typography-config(
   $font-family: '"Public Sans", "Helvetica Neue", Arial, sans-serif',
-  $headline-5: mat.define-typography-level(28px, 36px, 700),
-  $headline-6: mat.define-typography-level(20px, 28px, 600),
-  $subtitle-1: mat.define-typography-level(16px, 24px, 600),
-  $body-1: mat.define-typography-level(15px, 24px, 400),
-  $body-2: mat.define-typography-level(15px, 24px, 400),
-  $button: mat.define-typography-level(15px, 16px, 600),
+  $headline-5: mat.m2-define-typography-level(28px, 36px, 700),
+  $headline-6: mat.m2-define-typography-level(20px, 28px, 600),
+  $subtitle-1: mat.m2-define-typography-level(16px, 24px, 600),
+  $body-1: mat.m2-define-typography-level(15px, 24px, 400),
+  $body-2: mat.m2-define-typography-level(15px, 24px, 400),
+  $button: mat.m2-define-typography-level(15px, 16px, 600),
 );

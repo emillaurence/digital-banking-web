@@ -298,3 +298,55 @@ Unchanged from Phase 3 (`declare type` → `type` only).
   Bundle growth is Material 17's token-based theming CSS; flagged for the owners, not changed.
 - Tests ChromeHeadless 137: 5/5, 3/3, 2/2, 0 ERROR lines. `clearContext: true` intact ×3.
 - Screens + metrics: `~/migration-artifacts/screens/phase4/`.
+
+## Phase 5 — Angular 17→18 (Node 18.20.8 / Angular 18.2.14 / Material 18.2.14 / TS 5.5.4)
+
+`.nvmrc` unchanged: 18.20.8 satisfies `^18.19.1`. Commands: `ng update @angular/core@18
+@angular/cli@18` (build-angular/cli 18.2.21, ng-packagr 18.2.1, zone.js stays 0.14.10),
+`ng update @angular/material@18 --allow-dirty`, then `npm i -D typescript@5.5.4
+--save-exact` (top of `>=5.4.0 <5.6.0`; `ng update` had left 5.4.5). Library
+peerDependencies → `^18.2.0`.
+
+**Deviation / declined optional migration:** the CLI offered
+`ng update @angular/cli --name use-application-builder`. Not run — browser builder retained
+per approval. Core migrations (HTTP provider functions, afterRender phases, two-way binding
+longform, `BootstrapContext`): all "No changes made".
+
+Material 18 migration **did** rewrite the Sass theming API (3 files): `mat.define-palette`
+→ `mat.m2-define-palette`, `mat.$red-palette` → `mat.$m2-red-palette`,
+`mat.define-light-theme` → `mat.m2-define-light-theme`, `mat.define-typography-config` /
+`-level` → `mat.m2-define-typography-config` / `-level`. The navy `#012169` / red
+`#e31837` palettes and their hand-authored contrast maps are untouched; only the function
+names changed (the M2 API is kept under the `m2-` prefix in v18; M3 was not adopted).
+
+### Loud — none.
+### Silent — 1 sub-pixel change, no action
+- Calendar selected-cell font `13.3333px` → `13px` (Material 18 rounds the calendar body
+  font-size token). Not perceptible; datepicker screenshot matches Phase 4.
+- All other metrics identical to Phase 4 (`cmp.py phase4 phase5` → 1 differing metric).
+
+### Public API
+Unchanged (`declare type` → `type` only, since Phase 1).
+
+### Evidence
+- `build:lib` OK; `build:apps` OK — retail 607.47 kB, wealth 487.89 kB; both over the
+  (now 512 kB-reported) warning budget, under the error budget.
+- Tests ChromeHeadless 137: 5/5, 3/3, 2/2, 0 ERROR lines. `clearContext: true` intact ×3.
+- Screens + metrics: `~/migration-artifacts/screens/phase5/`.
+
+## Final state vs UPGRADE_PLAN
+
+| | Plan | Actual |
+|---|---|---|
+| Angular / Material | 18.x | 18.2.14 / 18.2.14 |
+| Node | 18.19+ | 18.20.8 (`.nvmrc`) |
+| TypeScript | 5.4–5.5 | 5.5.4 |
+| Builders | browser / karma / ng-packagr | unchanged |
+| Legacy Material | removed by Phase 2 | none (`grep legacy` → comment only) |
+| Public API | stable | stable (`type` emit change only) |
+| Tests | 10 specs, 0 skipped | 5 + 3 + 2, all SUCCESS, none deleted/skipped |
+
+Open items for human judgement (not auto-fixed): the MDC density table in Phase 2
+(card padding model, 52px table rows, 78px form fields, 48px datepicker toggle), the
+dialog's never-rendered 16px-radius/28px-padding design intent, and both apps exceeding
+the 500 kB warning budget after MDC.
