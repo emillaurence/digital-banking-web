@@ -71,3 +71,61 @@ styles (appended later in `<head>`) and win the cascade; only the `box-shadow` l
 effect because the elevation comes from the theme mixin, which precedes `overrides()`.
 The migration target is *the rendered baseline* (4px / 24px / shadow), so this dead CSS
 is carried as-is and flagged for the design system owners rather than "fixed".
+
+## Phase 1 — 14→15 framework on legacy Material (Node 16.20.2 / Angular 15.2.10 / Material 15.2.9 / TS 4.9.5)
+
+Commands: `ng update @angular/core@15 @angular/cli@15`, then
+`ng update @angular/material@15 --allow-dirty` (the second update refuses to run on the
+dirty tree the first one leaves; `--allow-dirty` is the documented escape hatch — no
+other effect). Node stays 16.20.2 (inside `^14.20 || ^16.13 || ^18.10`); TS pinned 4.9.5
+(inside `>=4.8.2 <5.0`). Library peerDependencies bumped `^14.2.0` → `^15.2.0`.
+
+### Loud (compile/test) — none
+
+Nothing failed. Schematic output that changed code:
+
+| File | Change | Why |
+|---|---|---|
+| `tsconfig.json` | `target: ES2022`, `useDefineForClassFields: false` | CLI v15 migration |
+| `*/src/test.ts` (×3) | `require.context` block removed | CLI v15 migration — the karma builder now discovers specs itself. **No spec was removed**; counts unchanged 5/3/2. |
+| `apps/*/.browserslistrc` | deleted | CLI v15 migration — files matched the new defaults |
+| `dialog.service.ts`, `dialog.service.spec.ts`, `confirm-dialog.component.ts`, `button.component.spec.ts`, `table.component.spec.ts` | `@angular/material/<x>` → `@angular/material/legacy-<x>` with `MatLegacyX as MatX` aliases | Material v15 schematic keeps existing apps on the pre-MDC components |
+| `_theme.scss` | `mat.core()` → `mat.legacy-core()` + explicit `mat.all-legacy-component-typographies(...)`; `all-component-themes` → `all-legacy-component-themes` | Material v15: legacy core no longer emits typography |
+| `_typography.scss` | `define-typography-config` → `define-legacy-typography-config` | Material v15 (legacy levels `headline`/`title`/`subheading-2`/`body-1`/`button` still valid here) |
+
+Manual (schematic did not touch it): `ui-components.module.ts` repointed to
+`legacy-button`, `legacy-card`, `legacy-dialog`, `legacy-form-field`, `legacy-input`,
+`legacy-table`. `MatDatepickerModule` and `MatNativeDateModule` have no legacy variant
+and stay on `@angular/material/datepicker` / `core`. Schematic's 8-line TODO comment in
+`_theme.scss` replaced with a one-liner and indentation restored.
+
+### Silent (CSS/layout)
+
+Computed-style diff phase1 vs baseline over all §6 surfaces: **card, table header, row
+hover, text-input outline, button variants, dialog container, calendar selected cell are
+byte-identical** (only `ng-tns-cNN` scope ids changed — noise).
+
+One real difference, **datepicker toggle button**: v15's datepicker (which has no legacy
+variant) already renders its toggle with the MDC icon button
+(`mat-mdc-icon-button`, 40×40, `8px 0` padding) instead of `mat-icon-button` (38×38).
+The icon shifts 2px left/up but stays vertically centred in the 56px outline field —
+screenshots `retail-datepicker.png` baseline vs phase1 are indistinguishable. Alignment
+intact → no fix; reported here for human judgement (it is the first MDC density change
+to land, one phase early, and is upstream behaviour not under our control).
+
+### Public API
+
+`.d.ts` diff against the v14 snapshot: exported symbols, inputs, outputs and method
+signatures unchanged. Differences are all tooling-internal and approved:
+`declare type` → `type` (TS 4.9 emit), an extra `never` generic on `ɵɵComponentDeclaration`
+(Angular 15 compiler metadata), and the `dialog.service.d.ts`/`confirm-dialog.component.d.ts`/
+`ui-components.module.d.ts` import paths now referencing `@angular/material/legacy-*`
+(intended by this phase; reverts to non-legacy in Phase 2).
+
+### Evidence
+
+- `build:lib` OK (8.0 s); `build:apps` OK — retail main 538.38 kB (v14: 493.61 kB; the
+  pre-existing 500 kB *warning* budget is still a warning, not an error), wealth 355.68 kB.
+- Tests ChromeHeadless 137: ui-components 5/5, retail-banking 3/3, wealth-portal 2/2, 0 ERROR lines.
+- `clearContext: true` untouched in all three `karma.conf.js`.
+- Screens: `~/migration-artifacts/screens/phase1/` (18 PNGs + `metrics.json`).

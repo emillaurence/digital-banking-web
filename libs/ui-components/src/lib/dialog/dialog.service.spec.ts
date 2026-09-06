@@ -1,5 +1,5 @@
 import { of } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { BofaDialogService } from './dialog.service';
 
 describe('BofaDialogService', () => {
